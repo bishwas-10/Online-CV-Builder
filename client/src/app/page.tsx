@@ -3,8 +3,6 @@ import Navbar from './components/Navbar'
 
 export default function Home() {
   return (
-    <main className="">
-      <Navbar/>
-    </main>
+    <main className='bg-gary-300 h-max'></main>
   )
 }
