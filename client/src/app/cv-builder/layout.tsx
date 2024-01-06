@@ -12,7 +12,7 @@ export default function RootLayout({
 }) {
   return (
    
-      <div className="h-max px-10">
+      <div className="h-max">
       
         {children}
         </div>
