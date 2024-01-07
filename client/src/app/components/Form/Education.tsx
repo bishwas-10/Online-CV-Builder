@@ -1,12 +1,11 @@
 "use client"
-import { StyledInput, StyledLabel } from "@/app/utils/styles";
-import { zodResolver } from "@hookform/resolvers/zod";
-import React from "react";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
+import React from 'react'
+import { useForm, SubmitHandler } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
+import { StyledInput, StyledLabel } from '@/app/utils/styles';
 
-
-export const signUpSchema = z.object({
+export const educationSchema = z.object({
   firstName: z.string({required_error: "First Name is required"}),
   lastName: z.string({required_error: "Last Name is required"}),
   email: z.string().email({ message: "Invalid email address" }),
@@ -16,20 +15,20 @@ export const signUpSchema = z.object({
   city: z.string(),
 });
 
-export type TSignUpSchema = z.infer<typeof signUpSchema>;
-const About = () => {
+export type TEducationSchema = z.infer<typeof educationSchema>;
+const Education = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
     setValue
-  } = useForm<TSignUpSchema>({
-    resolver: zodResolver(signUpSchema),
+  } = useForm<TEducationSchema>({
+    resolver: zodResolver(educationSchema),
     reValidateMode:"onChange"
   });
 
-  const onSubmit = async (data: TSignUpSchema) => {
+  const onSubmit = async (data: TEducationSchema) => {
     // TODO: submit to servers
     // ...
  
@@ -37,15 +36,15 @@ const About = () => {
 
     reset();
   };
-  const handleInputChange = (fieldName: keyof TSignUpSchema, value: string ) => {
+  const handleInputChange = (fieldName: keyof TEducationSchema, value: string ) => {
    
     setValue(fieldName, value);
   };
   return (
     <div className="py-4 px-2">
       <div>
-        <h1 className="text-4xl text-blue-500 font-bold">About Yourself</h1>
-        <p className="text-md text-gray-600">Fill out about yourself</p>
+        <h1 className="text-4xl text-blue-500 font-bold">Education </h1>
+        <p className="text-md text-gray-600">Give a detailed look into your academic history.</p>
       </div>
       <div>
         <form
@@ -177,5 +176,4 @@ const About = () => {
   );
 };
 
-export default About;
-
+export default Education;

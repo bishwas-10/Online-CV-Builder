@@ -10,11 +10,13 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.4",
+    "@reduxjs/toolkit": "^2.0.1",
     "lucide-react": "^0.306.0",
     "next": "14.0.4",
     "react": "^18",
     "react-dom": "^18",
     "react-hook-form": "^7.49.2",
+    "react-redux": "^9.0.4",
     "styled-components": "^6.1.6",
     "zod": "^3.22.4"
   },

@@ -1,6 +1,6 @@
 import { LucideIcon,CircleUserRound ,GraduationCap ,Briefcase ,Rocket ,Lightbulb ,Trophy  ,Medal, LayoutPanelTop  } from "lucide-react";
 
-interface FieldProps{
+export interface FieldProps{
     name:string;
     icon:LucideIcon;
     
