@@ -15,3 +15,13 @@ export const StyledInput = styled.input`
     
   }
 `;
+export const StyledTextArea = styled.textarea`
+  background-color: #e2e8f0;
+  width:100%;
+  border-radius:10px;
+  &:focus {
+    outline:none ;
+    border-bottom: 3px solid blue;
+    
+  }
+`;
