@@ -4,7 +4,7 @@ type TFieldSlice={
     selectedField:string
 }
 
-const initialState={
+const initialState:TFieldSlice={
     selectedField:'About'
 }
 

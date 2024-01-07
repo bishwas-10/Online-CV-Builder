@@ -1,10 +1,12 @@
 import fieldReducer from './fieldSlice';
+import eduReducer from './eduSlice';
 import { configureStore } from '@reduxjs/toolkit';
 
 
 export const store = configureStore({
    reducer:{
-    field: fieldReducer
+    field: fieldReducer,
+    education: eduReducer,
    }
 })
 

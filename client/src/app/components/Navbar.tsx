@@ -27,7 +27,7 @@ const Navbar: React.FC = () => {
           <div
             onMouseEnter={() => setShowDiv(true)}
             onMouseLeave={() => setShowDiv(false)}
-            className="w-[40%] h-max absolute top-20 left-[50%] -translate-x-[30%] bg-white shadow-md p-4"
+            className="z-10 w-[40%] h-max absolute top-20 left-[50%] -translate-x-[30%] bg-white shadow-md p-4"
           >
             <div className="w-full flex items-center justify-between px-2 font-medium">
               <span className="text-lg">Resume Template</span>
