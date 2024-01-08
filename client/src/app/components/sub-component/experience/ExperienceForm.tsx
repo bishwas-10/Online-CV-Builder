@@ -17,7 +17,7 @@ export const experienceSchema = z
     endDate: z.string({required_error:"end date required"}),
     city: z.string({required_error:"city is required"}),
     description: z.string(),
-    visibility:z.boolean(),
+    visibility:z.boolean().default(false),
   })
   .refine(
     (data) => {

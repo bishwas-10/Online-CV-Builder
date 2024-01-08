@@ -17,7 +17,7 @@ export const educationSchema = z
     endDate: z.string({required_error:"this field is required"}),
     city:z.string({required_error:"this field is required"}),
     description: z.string({required_error:"this field is required"}),
-    visibility:z.boolean(),
+    visibility:z.boolean().default(false),
   })
   .refine(
     (data) => {
@@ -50,6 +50,7 @@ const EducationForm = ({ items }: { items: TEducationSchema }) => {
   const onSubmit = async (data: TEducationSchema) => {
     // TODO: submit to servers
     // ...
+    console.log(data)
     dispatch(setEducationField(data));
     setStartDate("");
     setEndDate("")

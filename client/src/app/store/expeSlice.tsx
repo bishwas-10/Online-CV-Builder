@@ -17,13 +17,17 @@ const expeSlice = createSlice({
         deleteExperienceField(state,action){
           return  state.filter((item)=>item.jobTitle !== action.payload.jobTitle)
         },
-        setVisibility(state,action){
-            return state.map((item)=> item.jobTitle===action.payload? { ...item, visibility: true } : item)
+        setExpeVisibility(state,action){
+            return state.map((item)=> item.jobTitle===action.payload.jobTitle? { ...item, visibility: true } : item)
+        }
+        ,
+        unsetExpeVisibility(state,action){
+            return state.map((item)=> item.jobTitle===action.payload.jobTitle? { ...item, visibility: false } : item)
         }
     }
 })
 
-export const{setExperienceField,deleteExperienceField,setVisibility}= expeSlice.actions;
+export const{setExperienceField,deleteExperienceField,setExpeVisibility,unsetExpeVisibility}= expeSlice.actions;
 
 export default expeSlice.reducer;
 

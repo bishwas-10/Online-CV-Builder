@@ -14,15 +14,22 @@ const eduSlice = createSlice({
             return [...state, action.payload]
         },
         deleteEducationField(state,action){
+            
           return  state.filter((item)=>item.school !== action.payload.school)
         },
-        setVisibility(state,action){
-            return state.map((item)=> item.school===action.payload? { ...item, visibility: true } : item)
-        }
+        setEduVisibility(state,action){
+           
+            return state.map((item)=> item.school===action.payload.school? { ...item, visibility: true } : item)
+        },
+        unsetEduVisibility(state,action){
+           
+            return state.map((item)=> item.school===action.payload.school? { ...item, visibility: false } : item)
+        },
+
     }
 })
 
-export const{setEducationField,deleteEducationField,setVisibility}= eduSlice.actions;
+export const{setEducationField,deleteEducationField,setEduVisibility,unsetEduVisibility}= eduSlice.actions;
 
 export default eduSlice.reducer;
 

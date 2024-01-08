@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
 import ExperienceForm, { TExperienceSchema } from "./ExperienceForm";
 
-import { deleteExperienceField } from "@/app/store/expeSlice";
+import { deleteExperienceField, setExpeVisibility, unsetExpeVisibility } from "@/app/store/expeSlice";
 
 const ExperienceHead = () => {
   const dispatch = useDispatch();
@@ -14,6 +14,15 @@ const ExperienceHead = () => {
 
   const handleTrashClick = (items: TExperienceSchema) => {
     dispatch(deleteExperienceField(items));
+  };
+  const handleDownClick = (items: TExperienceSchema) => {
+    if (showDetails) {
+      dispatch(unsetExpeVisibility(items));
+      setShowDetails(false);
+    } else {
+      dispatch(setExpeVisibility(items));
+      setShowDetails(true);
+    }
   };
   return (
     <>
@@ -38,16 +47,16 @@ const ExperienceHead = () => {
                 </div>
                 <div className="flex flex-row items-center gap-3">
                 <span
-                    onClick={(e) => setShowDetails(!showDetails)}
+                    onClick={(e) => handleDownClick(items)}
                     className="text-gray-500 hover:translate-y-1 transition-all"
-                  >{showDetails ? <ChevronUp/> : <ChevronDown/>}</span>
+                  >{items.visibility ? <ChevronUp/> : <ChevronDown/>}</span>
                   <Trash
                     onClick={(e) => handleTrashClick(items)}
                     className="text-gray-500 hover:text-red-500 transition-all"
                   />
                 </div>
               </div>
-               {showDetails && <ExperienceForm items={items}/>}
+               {items.visibility && <ExperienceForm items={items}/>}
               </div>
             )
           );
