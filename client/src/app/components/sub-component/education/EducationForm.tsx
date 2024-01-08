@@ -50,10 +50,10 @@ const EducationForm = ({ items }: { items: TEducationSchema }) => {
   const onSubmit = async (data: TEducationSchema) => {
     // TODO: submit to servers
     // ...
-    console.log(data)
+    
     dispatch(setEducationField(data));
     setStartDate("");
-    setEndDate("")
+    setEndDate("");
     reset();
   };
   const handleInputChange = (
