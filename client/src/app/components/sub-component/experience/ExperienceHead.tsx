@@ -1,25 +1,27 @@
 import React, { useState } from "react";
-import { Briefcase, ChevronDown, Trash } from "lucide-react";
+import { Briefcase, ChevronDown, ChevronUp, Trash } from "lucide-react";
 
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../store/store";
-import EducationForm, { TEducationSchema } from "./EducationForm";
-import { deleteEducationField } from "../store/eduSlice";
-const EducationHead = () => {
+import { RootState } from "../../../store/store";
+import ExperienceForm, { TExperienceSchema } from "./ExperienceForm";
+
+import { deleteExperienceField } from "@/app/store/expeSlice";
+
+const ExperienceHead = () => {
   const dispatch = useDispatch();
-  const eduDetails = useSelector((state: RootState) => state.education);
+  const expeDetails = useSelector((state: RootState) => state.experience);
   const [showDetails, setShowDetails] = useState<boolean>(false);
 
-  const handleTrashClick = (items: TEducationSchema) => {
-    dispatch(deleteEducationField(items));
+  const handleTrashClick = (items: TExperienceSchema) => {
+    dispatch(deleteExperienceField(items));
   };
   return (
     <>
-      {eduDetails &&
-        eduDetails.map((items, index) => {
+      {expeDetails &&
+        expeDetails.map((items, index) => {
           
           return (
-            items.school && (
+            items.jobTitle && (
               <div  key={index} className="flex flex-col">
                 <div
               
@@ -29,23 +31,23 @@ const EducationHead = () => {
                   <Briefcase className="text-gray-500" />
                   <div className="flex flex-col gap-1">
                     <h1 className="text-lg text-gray-700 font-medium">
-                      {items?.school}
+                      {items?.jobTitle}
                     </h1>
                     <span className="text-gray-500 text-sm">{`${items.startDate}-${items.endDate}`}</span>
                   </div>
                 </div>
                 <div className="flex flex-row items-center gap-3">
-                  <ChevronDown
+                <span
                     onClick={(e) => setShowDetails(!showDetails)}
                     className="text-gray-500 hover:translate-y-1 transition-all"
-                  />
+                  >{showDetails ? <ChevronUp/> : <ChevronDown/>}</span>
                   <Trash
                     onClick={(e) => handleTrashClick(items)}
                     className="text-gray-500 hover:text-red-500 transition-all"
                   />
                 </div>
               </div>
-               {showDetails && <EducationForm items={items}/>}
+               {showDetails && <ExperienceForm items={items}/>}
               </div>
             )
           );
@@ -55,4 +57,4 @@ const EducationHead = () => {
   );
 };
 
-export default EducationHead;
+export default ExperienceHead;

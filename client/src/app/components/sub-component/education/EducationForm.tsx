@@ -7,16 +7,17 @@ import { StyledInput, StyledLabel, StyledTextArea } from "@/app/utils/styles";
 // import "flatpickr/dist/themes/material_green.css";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { setEducationField } from "../store/eduSlice";
+import { setEducationField } from "../../../store/eduSlice";
 import { useDispatch } from "react-redux";
 export const educationSchema = z
   .object({
-    school: z.string(),
-    degree: z.string(),
-    startDate: z.string(),
-    endDate: z.string(),
-    city: z.string(),
-    description: z.string(),
+    school: z.string({required_error:"this field is required"}),
+    degree: z.string({required_error:"this field is required"}),
+    startDate: z.string({required_error:"this field is required"}),
+    endDate: z.string({required_error:"this field is required"}),
+    city:z.string({required_error:"this field is required"}),
+    description: z.string({required_error:"this field is required"}),
+    visibility:z.boolean(),
   })
   .refine(
     (data) => {
@@ -50,6 +51,8 @@ const EducationForm = ({ items }: { items: TEducationSchema }) => {
     // TODO: submit to servers
     // ...
     dispatch(setEducationField(data));
+    setStartDate("");
+    setEndDate("")
     reset();
   };
   const handleInputChange = (
@@ -73,7 +76,7 @@ const EducationForm = ({ items }: { items: TEducationSchema }) => {
               id="school"
               className="px-4 py-2 rounded"
               onChange={(e) => handleInputChange("school", e.target.value)}
-              //  {...register("school", { required: true })}
+             //   {...register("school", { required: true })}
             />
             {errors.school && (
               <span className="text-red-500">{errors.school.message}</span>
@@ -87,7 +90,7 @@ const EducationForm = ({ items }: { items: TEducationSchema }) => {
               defaultValue={items?.degree}
               className="px-4 py-2 rounded"
               onChange={(e) => handleInputChange("degree", e.target.value)}
-              //{...register("degree", { required: true })}
+            //  {...register("degree", { required: true })}
             />
             {errors.degree && (
               <p className="text-red-500">{`${errors.degree.message}`}</p>
@@ -102,7 +105,7 @@ const EducationForm = ({ items }: { items: TEducationSchema }) => {
             defaultValue={items?.city}
             className="px-4 py-2 rounded"
             onChange={(e) => handleInputChange("city", e.target.value)}
-            // {...register("city")}
+             //{...register("city")}
           />
           {errors.city && <p className="text-red-500">{errors.city.message}</p>}
         </div>
@@ -127,7 +130,7 @@ const EducationForm = ({ items }: { items: TEducationSchema }) => {
               dateFormat="dd/MM/yyyy"
               isClearable
               showMonthYearPicker
-              //{...register("startDate")}
+             // {...register("startDate")}
             />
             {errors.startDate && (
               <p className="text-red-500">{`${errors.startDate.message}`}</p>
@@ -170,7 +173,8 @@ const EducationForm = ({ items }: { items: TEducationSchema }) => {
             placeholder="Enter description..."
             className="w-full px-3 py-2 border rounded-md bg text-gray-700 
               leading-tight focus:outline-none focus:shadow-outline"
-            onChange={(e) => handleInputChange("description", e.target.value)}
+            //onChange={(e) => handleInputChange("description", e.target.value)}
+          {...register("description")}
           ></StyledTextArea>
           {errors.description && (
             <p className="text-red-500">{`${errors.description.message}`}</p>
