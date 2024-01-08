@@ -3,14 +3,8 @@ import { TEducationSchema } from "../components/EducationForm";
 
 
 
-const initialState:TEducationSchema[]=[{
-    school:'',
-    degree:'',
-    city:'',
-    startDate:'',
-    endDate:'',
-    description:'',
-},]
+const initialState:TEducationSchema[]=[
+ ]
 
 const eduSlice = createSlice({
     name:'education',
@@ -18,11 +12,14 @@ const eduSlice = createSlice({
     reducers:{
         setEducationField(state, action){
             return [...state, action.payload]
+        },
+        deleteEducationField(state,action){
+          return  state.filter((item)=>item.school !== action.payload.school)
         }
     }
 })
 
-export const{setEducationField}= eduSlice.actions;
+export const{setEducationField,deleteEducationField}= eduSlice.actions;
 
 export default eduSlice.reducer;
 
