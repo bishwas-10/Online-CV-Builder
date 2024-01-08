@@ -2,6 +2,7 @@ import fieldReducer from './fieldSlice';
 import eduReducer from './eduSlice';
 import expeReducer from './expeSlice';
 import projectReducer from './projectSlice';
+import skillReducer from './skillSlice'
 import { configureStore } from '@reduxjs/toolkit';
 
 
@@ -10,7 +11,8 @@ export const store = configureStore({
     field: fieldReducer,
     education: eduReducer,
     experience:expeReducer,
-    projects: projectReducer
+    projects: projectReducer,
+    skills:skillReducer
    }
 })
 

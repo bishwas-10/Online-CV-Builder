@@ -4,22 +4,18 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import {motion} from "framer-motion";
 import { StyledInput, StyledLabel, StyledTextArea } from "@/app/utils/styles";
-// import "flatpickr/dist/themes/material_green.css";
-import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useDispatch } from "react-redux";
-import { setExperienceField } from "@/app/store/expeSlice";
-import { setProjectField } from "@/app/store/projectSlice";
-export const projectSchema = z
+import { setskillField } from "@/app/store/skillSlice";
+export const skillSchema = z
   .object({
-    projectTitle: z.string({required_error:"project title is required"}),
-    description: z.string({required_error:"description is required"}),
-    projectLink: z.string(),
+    skillTitle: z.string({required_error:"Skill title is required"}),
+    level: z.string(),
     visibility:z.boolean().default(false),
   });
   
-export type TProjectSchema = z.infer<typeof projectSchema>;
-const ProjectForm = ({ items }: { items: TProjectSchema }) => {
+export type TSkillSchema = z.infer<typeof skillSchema>;
+const SkillsForm = ({ items }: { items: TSkillSchema }) => {
   const dispatch = useDispatch();
 //   const [jobTitle, setjobTitle] = useState<string>(items?.jobTitle);
 //   const [employer, setEmployer] = useState<string>(items?.employer);
@@ -32,21 +28,22 @@ const ProjectForm = ({ items }: { items: TProjectSchema }) => {
     formState: { errors },
     reset,
     setValue,
-  } = useForm<TProjectSchema>({
-    resolver: zodResolver(projectSchema),
+  } = useForm<TSkillSchema>({
+    resolver: zodResolver(skillSchema),
     reValidateMode:"onChange",
    
   });
 
-  const onSubmit = async (data: TProjectSchema) => {
+  const onSubmit = async (data: TSkillSchema) => {
     // TODO: submit to servers
     // ...
-    dispatch(setProjectField(data));
+    console.log(data);
+    dispatch(setskillField(data));
     
     reset();
   };
   const handleInputChange = (
-    fieldName: keyof TProjectSchema,
+    fieldName: keyof TSkillSchema,
     value: string
   ) => {
     setValue(fieldName, value);
@@ -71,50 +68,35 @@ const ProjectForm = ({ items }: { items: TProjectSchema }) => {
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col gap-y-2 mt-4 ease-in-out"
       >
-        <div className="flex flex-col gap-2 w-[100%]">
+        <div className="flex flex-row gap-2 w-[100%]">
           <div className="flex flex-col gap-1">
-            <StyledLabel htmlFor="projectTitle">Project Title</StyledLabel>
+            <StyledLabel htmlFor="skillTitle">Skill Title</StyledLabel>
             <StyledInput
-              defaultValue={items?.projectTitle}
+              defaultValue={items?.skillTitle}
               type="text"
-              id="projectTitle"
+              id="skillTitle"
               className="px-4 py-2 rounded"
              // onChange={(e) => handleInputChange("projectTitle", e.target.value)}
-               {...register("projectTitle",{required:true})}
+               {...register("skillTitle",{required:true})}
             />
-            {errors.projectTitle && (
-              <span className="text-red-500">{errors.projectTitle.message}</span>
+            {errors.skillTitle && (
+              <span className="text-red-500">{errors.skillTitle.message}</span>
             )}
           </div>
-          <div className="flex flex-col gap-1">
-            <StyledLabel htmlFor="description">Description</StyledLabel>
-            <StyledTextArea
-            id="description"
-            defaultValue={items?.description}
-            rows={6}
-            cols={50}
-            placeholder="Enter description..."
-            className="w-full px-3 py-2 border rounded-md bg text-gray-700 
-              leading-tight focus:outline-none focus:shadow-outline"
-            //onChange={(e) => handleInputChange("description", e.target.value)}
-          {...register("description")}
          
-          ></StyledTextArea>
-           {errors.description && (
-            <span className="text-red-500">{errors.description.message}</span>
-          )}
-        </div>
         <div className="flex flex-col  ">
-          <StyledLabel htmlFor="projectLink">Project Link</StyledLabel>
+          <StyledLabel htmlFor="level">Level</StyledLabel>
           <StyledInput
             type="text"
-            id="projectLink"
-            defaultValue={items?.projectLink}
+            id="level"
+            defaultValue={items?.level}
             className="px-4 py-2 rounded"
-            onChange={(e) => handleInputChange("projectLink", e.target.value)}
-            // {...register("city",{required:true})}
+            onChange={(e) => handleInputChange("level", e.target.value)}
+            //{...register("level")}
           />
-        
+         {errors.level && (
+              <span className="text-red-500">{errors.level.message}</span>
+            )}
         </div>
             </div>
 
@@ -132,4 +114,4 @@ const ProjectForm = ({ items }: { items: TProjectSchema }) => {
   );
 };
 
-export default ProjectForm;
+export default SkillsForm;

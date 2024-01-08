@@ -3,6 +3,7 @@ import React, { useRef, useEffect, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import {motion} from "framer-motion";
 import { StyledInput, StyledLabel, StyledTextArea } from "@/app/utils/styles";
 // import "flatpickr/dist/themes/material_green.css";
 import DatePicker from "react-datepicker";
@@ -67,8 +68,22 @@ const ExperienceForm = ({ items }: { items: TExperienceSchema }) => {
   ) => {
     setValue(fieldName, value);
   };
+  const variants = {
+    initial: {
+      opacity: 0,
+      y: -20,
+    },
+    animate: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.3,
+        ease: "easeInOut", // Choose an easing function (e.g., easeInOut, easeOut, etc.)
+      },
+    },
+  };
   return (
-    <div>
+    <motion.div initial="initial" animate="animate" variants={variants}>
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col gap-y-2 mt-4 ease-in-out"
@@ -197,7 +212,7 @@ const ExperienceForm = ({ items }: { items: TExperienceSchema }) => {
           Add
         </button>
       </form>
-    </div>
+    </motion.div>
   );
 };
 

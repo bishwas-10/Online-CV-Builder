@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-
+import {motion} from "framer-motion";
 
 export const signUpSchema = z.object({
   firstName: z.string({required_error: "First Name is required"}),
@@ -41,13 +41,27 @@ const About = () => {
    
     setValue(fieldName, value);
   };
+  const variants = {
+    initial: {
+      opacity: 0,
+      y: -20,
+    },
+    animate: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.3,
+        ease: "easeInOut", // Choose an easing function (e.g., easeInOut, easeOut, etc.)
+      },
+    },
+  };
   return (
     <div className="py-4 px-2">
       <div>
         <h1 className="text-4xl text-blue-500 font-bold">About Yourself</h1>
         <p className="text-md text-gray-600">Fill out about yourself</p>
       </div>
-      <div>
+      <motion.div initial="initial" animate="animate" variants={variants}>
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="flex flex-col gap-y-2 mt-4"
@@ -172,7 +186,7 @@ const About = () => {
             Submit
           </button>
         </form>
-      </div>
+      </motion.div>
     </div>
   );
 };

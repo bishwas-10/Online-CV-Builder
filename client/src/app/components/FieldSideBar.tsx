@@ -7,10 +7,14 @@ import { RootState } from '../store/store'
 
 const FieldSideBar = () => {
   const fieldName = useSelector((state:RootState)=> state.field.selectedField);
-  console.log(fieldName)
+  
   const dispatch = useDispatch();
   const handleFieldClick=(name:FieldProps["name"])=>{
    dispatch( setSelectedField(name));
+   window.scrollTo({
+    top: 80,
+    behavior: 'smooth' // Smooth scrolling
+  });
   }
   return (
     <div className="relative left-0 flex flex-col gap-2 w-30 bg-gray-200">
