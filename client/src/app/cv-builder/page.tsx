@@ -1,3 +1,4 @@
+"use client"
 import React from "react";
 import FieldSideBar from "../components/FieldSideBar";
 
@@ -60,89 +61,31 @@ export interface Training {
   institution: string;
   year: string;
 }
-
+export interface Project {
+  id: number;
+  title:string;
+  description:string;
+  link:string;
+}
 const page = () => {
   const dummyPersonalData: PersonalData = {
-    name: "John Doe",
+    name: "Bishwas Dahal",
     designation: "Web Developer",
     objective: "Detail-oriented web developer with experience...",
     email: "john@example.com",
     phoneNumber: "+1234567890",
   };
 
-  const dummyEducationData: Education[] = [
-    {
-      id: 1,
-      startedAt: "2010",
-      endedAt: "2014",
-      major: "Computer Science",
-      institution: "University ABC",
-      country: "Country XYZ",
-    },
-    // Add more education details if needed
-  ];
-
-  const dummyExperienceData: Experience[] = [
-    {
-      id: 1,
-      startedAt: "2015",
-      endedAt: "2020",
-      country: "Country XYZ",
-      years: "5",
-      designation: "Senior Developer",
-      company: "Company XYZ",
-      description: "Lead a team of developers... fejwmfpwem fkewkmdskndn cednewdnkw ednojwend jednowed nojnedonkondoe ndnewndkmwkdn",
-    },
-    {
-      id: 2,
-      startedAt: "2015",
-      endedAt: "2020",
-      country: "Country XYZ",
-      years: "5",
-      designation: "Senior Developer",
-      company: "Company XYZ",
-      description: "Lead a team of developers...",
-    },
-    // Add more experience details if needed
-  ];
-
-  const dummyExtrasData: ExtrasData[] = [
-    {
-      id: 1,
-      title: "Skills",
-      type: "NEW_LINE",
-      items: ["JavaScript", "React", "CSS"],
-    },
-    // Add more extras details if needed
-  ];
+  const dummyEducationData = useSelector((state:RootState)=>state.education)
+  const dummyExperienceData = useSelector((state:RootState)=>state.experience)
+  const dummyProjectData = useSelector((state:RootState)=>state.projects)
   // Dummy text for new sections
-  const dummyAchievementsData: Achievement[] = [
-    {
-      id: 1,
-      title: "Project Completion",
-      description: "Successfully completed a major project ahead of schedule.",
-    },
-    // Add more achievements if needed
-  ];
+  const dummyAchievementsData = useSelector((state:RootState)=>state.achievements)
+const dummySkillsData = useSelector((state:RootState)=>state.skills);
+  const dummyAwardsData = useSelector((state:RootState)=>state.awards)
 
-  const dummyAwardsData: Award[] = [
-    {
-      id: 1,
-      title: "Best Employee of the Year",
-      description: "Recognized for outstanding performance and dedication.",
-    },
-    // Add more awards if needed
-  ];
-
-  const dummyTrainingData: Training[] = [
-    {
-      id: 1,
-      title: "React Training Course",
-      institution: "Tech Institute XYZ",
-      year: "2022",
-    },
-    // Add more training details if needed
-  ];
+  const dummyTrainingData = useSelector((state:RootState)=>state.trainings)
+ 
   const customStyles = {
     font: "Arial, sans-serif",
     // Other custom styles
@@ -162,7 +105,8 @@ const page = () => {
             achievementsData={dummyAchievementsData}
             awardsData={dummyAwardsData}
             trainingData={dummyTrainingData}
-            extrasData={dummyExtrasData}
+        skillData={dummySkillsData}
+            projectData={dummyProjectData}
             customStyles={customStyles}
           />
         </div>

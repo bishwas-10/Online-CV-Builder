@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import {motion} from "framer-motion";
 
-export const signUpSchema = z.object({
+export const aboutSchema = z.object({
   firstName: z.string({required_error: "First Name is required"}),
   lastName: z.string({required_error: "Last Name is required"}),
   email: z.string().email({ message: "Invalid email address" }),
@@ -16,7 +16,7 @@ export const signUpSchema = z.object({
   city: z.string(),
 });
 
-export type TSignUpSchema = z.infer<typeof signUpSchema>;
+export type TAboutSchema = z.infer<typeof aboutSchema>;
 const About = () => {
   const {
     register,
@@ -24,12 +24,12 @@ const About = () => {
     formState: { errors },
     reset,
     setValue
-  } = useForm<TSignUpSchema>({
-    resolver: zodResolver(signUpSchema),
+  } = useForm<TAboutSchema>({
+    resolver: zodResolver(aboutSchema),
     reValidateMode:"onChange"
   });
 
-  const onSubmit = async (data: TSignUpSchema) => {
+  const onSubmit = async (data: TAboutSchema) => {
     // TODO: submit to servers
     // ...
  
@@ -37,7 +37,7 @@ const About = () => {
 
     reset();
   };
-  const handleInputChange = (fieldName: keyof TSignUpSchema, value: string ) => {
+  const handleInputChange = (fieldName: keyof TAboutSchema, value: string ) => {
    
     setValue(fieldName, value);
   };
