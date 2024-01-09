@@ -1,3 +1,18 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+html{
+    --line-color: #e5e7eb;
+}
+.resume-a4 {
+   max-height: 297mm;
+   max-width: 210mm;
+  }
+  
+  img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+  }
