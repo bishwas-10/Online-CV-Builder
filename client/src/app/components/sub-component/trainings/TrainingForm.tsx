@@ -8,43 +8,43 @@ import { StyledInput, StyledLabel, StyledTextArea } from "@/app/utils/styles";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useDispatch } from "react-redux";
-import { setExperienceField } from "@/app/store/expeSlice";
-import { setProjectField } from "@/app/store/projectSlice";
-export const projectSchema = z.object({
-  projectTitle: z.string({ required_error: "project title is required" }),
+import { setTrainingField } from "@/app/store/trainingSlice";
+export const trainingSchema = z.object({
+  trainingTitle: z.string({ required_error: "training title is required" }),
+  institute:  z.string(),
   description: z.string({ required_error: "description is required" }),
-  projectLink: z.string(),
+  completionDate:z.string(),
   visibility: z.boolean().default(false),
 });
 
-export type TProjectSchema = z.infer<typeof projectSchema>;
-const ProjectForm = ({ items }: { items: TProjectSchema }) => {
+export type TTrainingSchema = z.infer<typeof trainingSchema>;
+const TrainingForm = ({ items }: { items: TTrainingSchema }) => {
   const dispatch = useDispatch();
   //   const [jobTitle, setjobTitle] = useState<string>(items?.jobTitle);
   //   const [employer, setEmployer] = useState<string>(items?.employer);
   //   const [city, setCity] = useState<string>(items?.city);
   //   const [description, setDes] = useState<string>(items?.city);
-
+  const [completionDate, setCompletionDate] = useState<string>(items?.completionDate);
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
     setValue,
-  } = useForm<TProjectSchema>({
-    resolver: zodResolver(projectSchema),
+  } = useForm<TTrainingSchema>({
+    resolver: zodResolver(trainingSchema),
     reValidateMode: "onChange",
   });
 
-  const onSubmit = async (data: TProjectSchema) => {
+  const onSubmit = async (data: TTrainingSchema) => {
     // TODO: submit to servers
     // ...
-    dispatch(setProjectField(data));
-
+    dispatch(setTrainingField(data));
+setCompletionDate("");
     reset();
   };
   const handleInputChange = (
-    fieldName: keyof TProjectSchema,
+    fieldName: keyof TTrainingSchema,
     value: string
   ) => {
     setValue(fieldName, value);
@@ -69,7 +69,7 @@ const ProjectForm = ({ items }: { items: TProjectSchema }) => {
   return (
     <AnimatePresence>
       <motion.div
-       key={items.projectLink}
+       key={items.trainingTitle}
         initial="initial"
         exit="exit"
         animate="animate"
@@ -84,18 +84,61 @@ const ProjectForm = ({ items }: { items: TProjectSchema }) => {
         >
           <div className="flex flex-col gap-2 w-[100%]">
             <div className="flex flex-col gap-1">
-              <StyledLabel htmlFor="projectTitle">Project Title</StyledLabel>
+              <StyledLabel htmlFor="trainingTitle">Training Title</StyledLabel>
               <StyledInput
-                defaultValue={items?.projectTitle}
+                defaultValue={items?.trainingTitle}
                 type="text"
-                id="projectTitle"
+                id="trainingTitle"
                 className="px-4 py-2 rounded"
                 // onChange={(e) => handleInputChange("projectTitle", e.target.value)}
-                {...register("projectTitle", { required: true })}
+                {...register("trainingTitle", { required: true })}
               />
-              {errors.projectTitle && (
+              {errors.trainingTitle && (
                 <span className="text-red-500">
-                  {errors.projectTitle.message}
+                  {errors.trainingTitle.message}
+                </span>
+              )}
+            </div>
+            <div className="flex flex-col gap-1">
+              <StyledLabel htmlFor="institute">Institute</StyledLabel>
+              <StyledInput
+                defaultValue={items?.institute}
+                type="text"
+                id="institute"
+                className="px-4 py-2 rounded"
+                // onChange={(e) => handleInputChange("projectTitle", e.target.value)}
+                {...register("institute", { required: true })}
+              />
+              {errors.institute && (
+                <span className="text-red-500">
+                  {errors.institute.message}
+                </span>
+              )}
+            </div>
+            <div className="flex flex-col gap-1">
+              <StyledLabel htmlFor="completionDate">Completion Date</StyledLabel>
+            <DatePicker
+              value={completionDate}
+              id="completionDate"
+              className="w-[100%] px-4 py-2 rounded outline-none bg-gray-200 focus:border-b-4 focus:border-b-blue-500"
+              onChange={(date) => {
+                if (date) {
+                  const month = date.toLocaleString("default", {
+                    month: "long",
+                  });
+                  const year = date.getFullYear();
+                  handleInputChange("completionDate", `${month} ${year}`);
+                  setCompletionDate(`${month} ${year}`);
+                }
+              }}
+              dateFormat="dd/MM/yyyy"
+              isClearable
+              showMonthYearPicker
+             // {...register("startDate")}
+            />
+             {errors.completionDate && (
+                <span className="text-red-500">
+                  {errors.completionDate.message}
                 </span>
               )}
             </div>
@@ -118,19 +161,7 @@ const ProjectForm = ({ items }: { items: TProjectSchema }) => {
                 </span>
               )}
             </div>
-            <div className="flex flex-col  ">
-              <StyledLabel htmlFor="projectLink">Project Link</StyledLabel>
-              <StyledInput
-                type="text"
-                id="projectLink"
-                defaultValue={items?.projectLink}
-                className="px-4 py-2 rounded"
-                onChange={(e) =>
-                  handleInputChange("projectLink", e.target.value)
-                }
-                // {...register("city",{required:true})}
-              />
-            </div>
+          
           </div>
 
           {/* Existing email, password, confirmPassword inputs */}
@@ -148,4 +179,4 @@ const ProjectForm = ({ items }: { items: TProjectSchema }) => {
   );
 };
 
-export default ProjectForm;
+export default TrainingForm;

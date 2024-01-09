@@ -8,43 +8,44 @@ import { StyledInput, StyledLabel, StyledTextArea } from "@/app/utils/styles";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useDispatch } from "react-redux";
-import { setExperienceField } from "@/app/store/expeSlice";
-import { setProjectField } from "@/app/store/projectSlice";
-export const projectSchema = z.object({
-  projectTitle: z.string({ required_error: "project title is required" }),
+import { setAwardField } from "@/app/store/awardSlice";
+export const awardSchema = z.object({
+  awardTitle: z.string({ required_error: "award title is required" }),
+  organization:  z.string(),
+  city:z.string(),
   description: z.string({ required_error: "description is required" }),
-  projectLink: z.string(),
+  receivedDate:z.string(),
   visibility: z.boolean().default(false),
 });
 
-export type TProjectSchema = z.infer<typeof projectSchema>;
-const ProjectForm = ({ items }: { items: TProjectSchema }) => {
+export type TAwardSchema = z.infer<typeof awardSchema>;
+const AwardForm = ({ items }: { items: TAwardSchema }) => {
   const dispatch = useDispatch();
   //   const [jobTitle, setjobTitle] = useState<string>(items?.jobTitle);
   //   const [employer, setEmployer] = useState<string>(items?.employer);
   //   const [city, setCity] = useState<string>(items?.city);
   //   const [description, setDes] = useState<string>(items?.city);
-
+  const [receivedDate, setReceivedDate] = useState<string>(items?.receivedDate);
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
     setValue,
-  } = useForm<TProjectSchema>({
-    resolver: zodResolver(projectSchema),
+  } = useForm<TAwardSchema>({
+    resolver: zodResolver(awardSchema),
     reValidateMode: "onChange",
   });
 
-  const onSubmit = async (data: TProjectSchema) => {
+  const onSubmit = async (data: TAwardSchema) => {
     // TODO: submit to servers
     // ...
-    dispatch(setProjectField(data));
-
+    dispatch(setAwardField(data));
+setReceivedDate("");
     reset();
   };
   const handleInputChange = (
-    fieldName: keyof TProjectSchema,
+    fieldName: keyof TAwardSchema,
     value: string
   ) => {
     setValue(fieldName, value);
@@ -69,7 +70,7 @@ const ProjectForm = ({ items }: { items: TProjectSchema }) => {
   return (
     <AnimatePresence>
       <motion.div
-       key={items.projectLink}
+       key={items.awardTitle}
         initial="initial"
         exit="exit"
         animate="animate"
@@ -84,18 +85,77 @@ const ProjectForm = ({ items }: { items: TProjectSchema }) => {
         >
           <div className="flex flex-col gap-2 w-[100%]">
             <div className="flex flex-col gap-1">
-              <StyledLabel htmlFor="projectTitle">Project Title</StyledLabel>
+              <StyledLabel htmlFor="awardTitle">AwardTitle</StyledLabel>
               <StyledInput
-                defaultValue={items?.projectTitle}
+                defaultValue={items?.awardTitle}
                 type="text"
-                id="projectTitle"
+                id="awardTitle"
                 className="px-4 py-2 rounded"
                 // onChange={(e) => handleInputChange("projectTitle", e.target.value)}
-                {...register("projectTitle", { required: true })}
+                {...register("awardTitle", { required: true })}
               />
-              {errors.projectTitle && (
+              {errors.awardTitle && (
                 <span className="text-red-500">
-                  {errors.projectTitle.message}
+                  {errors.awardTitle.message}
+                </span>
+              )}
+            </div>
+            <div className="flex flex-col gap-1">
+              <StyledLabel htmlFor="organization">Organization</StyledLabel>
+              <StyledInput
+                defaultValue={items?.organization}
+                type="text"
+                id="organization"
+                className="px-4 py-2 rounded"
+                // onChange={(e) => handleInputChange("projectTitle", e.target.value)}
+                {...register("organization", { required: true })}
+              />
+              {errors.organization && (
+                <span className="text-red-500">
+                  {errors.organization.message}
+                </span>
+              )}
+            </div>
+            <div className="flex flex-col gap-1">
+              <StyledLabel htmlFor="city">City</StyledLabel>
+              <StyledInput
+                defaultValue={items?.organization}
+                type="text"
+                id="city"
+                className="px-4 py-2 rounded"
+                // onChange={(e) => handleInputChange("projectTitle", e.target.value)}
+                {...register("city", { required: true })}
+              />
+              {errors.city && (
+                <span className="text-red-500">
+                  {errors.city.message}
+                </span>
+              )}
+            </div>
+            <div className="flex flex-col gap-1">
+              <StyledLabel htmlFor="receivedDate">Received Date</StyledLabel>
+            <DatePicker
+              value={receivedDate}
+              id="completionDate"
+              className="w-[100%] px-4 py-2 rounded outline-none bg-gray-200 focus:border-b-4 focus:border-b-blue-500"
+              onChange={(date) => {
+                if (date) {
+                  const month = date.toLocaleString("default", {
+                    month: "long",
+                  });
+                  const year = date.getFullYear();
+                  handleInputChange("receivedDate", `${month} ${year}`);
+                  setReceivedDate(`${month} ${year}`);
+                }
+              }}
+              dateFormat="dd/MM/yyyy"
+              isClearable
+              showMonthYearPicker
+             // {...register("startDate")}
+            />
+             {errors.receivedDate && (
+                <span className="text-red-500">
+                  {errors.receivedDate.message}
                 </span>
               )}
             </div>
@@ -118,19 +178,7 @@ const ProjectForm = ({ items }: { items: TProjectSchema }) => {
                 </span>
               )}
             </div>
-            <div className="flex flex-col  ">
-              <StyledLabel htmlFor="projectLink">Project Link</StyledLabel>
-              <StyledInput
-                type="text"
-                id="projectLink"
-                defaultValue={items?.projectLink}
-                className="px-4 py-2 rounded"
-                onChange={(e) =>
-                  handleInputChange("projectLink", e.target.value)
-                }
-                // {...register("city",{required:true})}
-              />
-            </div>
+          
           </div>
 
           {/* Existing email, password, confirmPassword inputs */}
@@ -148,4 +196,4 @@ const ProjectForm = ({ items }: { items: TProjectSchema }) => {
   );
 };
 
-export default ProjectForm;
+export default AwardForm;

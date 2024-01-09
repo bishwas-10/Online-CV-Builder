@@ -30,7 +30,7 @@ const Experience = () => {
           Show your relevant experience(last 10 years).
         </p>
       </div>
-      <div className="mt-6">
+      <div className="mt-6" >
         <div>
           <ExperienceHead />
         </div>

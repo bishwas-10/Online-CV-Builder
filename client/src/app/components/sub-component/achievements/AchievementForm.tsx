@@ -8,17 +8,16 @@ import { StyledInput, StyledLabel, StyledTextArea } from "@/app/utils/styles";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useDispatch } from "react-redux";
-import { setExperienceField } from "@/app/store/expeSlice";
-import { setProjectField } from "@/app/store/projectSlice";
-export const projectSchema = z.object({
-  projectTitle: z.string({ required_error: "project title is required" }),
+import { setAchieveField } from "@/app/store/achieveSlice";
+export const achieveSchema = z.object({
+  achieveTitle: z.string({ required_error: "achieve title is required" }),
   description: z.string({ required_error: "description is required" }),
-  projectLink: z.string(),
+  
   visibility: z.boolean().default(false),
 });
 
-export type TProjectSchema = z.infer<typeof projectSchema>;
-const ProjectForm = ({ items }: { items: TProjectSchema }) => {
+export type TAchieveSchema = z.infer<typeof achieveSchema>;
+const AcheivementForm = ({ items }: { items: TAchieveSchema }) => {
   const dispatch = useDispatch();
   //   const [jobTitle, setjobTitle] = useState<string>(items?.jobTitle);
   //   const [employer, setEmployer] = useState<string>(items?.employer);
@@ -31,20 +30,20 @@ const ProjectForm = ({ items }: { items: TProjectSchema }) => {
     formState: { errors },
     reset,
     setValue,
-  } = useForm<TProjectSchema>({
-    resolver: zodResolver(projectSchema),
+  } = useForm<TAchieveSchema>({
+    resolver: zodResolver(achieveSchema),
     reValidateMode: "onChange",
   });
 
-  const onSubmit = async (data: TProjectSchema) => {
+  const onSubmit = async (data: TAchieveSchema) => {
     // TODO: submit to servers
     // ...
-    dispatch(setProjectField(data));
+    dispatch(setAchieveField(data));
 
     reset();
   };
   const handleInputChange = (
-    fieldName: keyof TProjectSchema,
+    fieldName: keyof TAchieveSchema,
     value: string
   ) => {
     setValue(fieldName, value);
@@ -69,7 +68,7 @@ const ProjectForm = ({ items }: { items: TProjectSchema }) => {
   return (
     <AnimatePresence>
       <motion.div
-       key={items.projectLink}
+       key={items.achieveTitle}
         initial="initial"
         exit="exit"
         animate="animate"
@@ -86,16 +85,16 @@ const ProjectForm = ({ items }: { items: TProjectSchema }) => {
             <div className="flex flex-col gap-1">
               <StyledLabel htmlFor="projectTitle">Project Title</StyledLabel>
               <StyledInput
-                defaultValue={items?.projectTitle}
+                defaultValue={items?.achieveTitle}
                 type="text"
-                id="projectTitle"
+                id="achieveTitle"
                 className="px-4 py-2 rounded"
                 // onChange={(e) => handleInputChange("projectTitle", e.target.value)}
-                {...register("projectTitle", { required: true })}
+                {...register("achieveTitle", { required: true })}
               />
-              {errors.projectTitle && (
+              {errors.achieveTitle && (
                 <span className="text-red-500">
-                  {errors.projectTitle.message}
+                  {errors.achieveTitle.message}
                 </span>
               )}
             </div>
@@ -118,19 +117,7 @@ const ProjectForm = ({ items }: { items: TProjectSchema }) => {
                 </span>
               )}
             </div>
-            <div className="flex flex-col  ">
-              <StyledLabel htmlFor="projectLink">Project Link</StyledLabel>
-              <StyledInput
-                type="text"
-                id="projectLink"
-                defaultValue={items?.projectLink}
-                className="px-4 py-2 rounded"
-                onChange={(e) =>
-                  handleInputChange("projectLink", e.target.value)
-                }
-                // {...register("city",{required:true})}
-              />
-            </div>
+          
           </div>
 
           {/* Existing email, password, confirmPassword inputs */}
@@ -148,4 +135,4 @@ const ProjectForm = ({ items }: { items: TProjectSchema }) => {
   );
 };
 
-export default ProjectForm;
+export default AcheivementForm;

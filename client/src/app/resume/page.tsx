@@ -16,7 +16,7 @@ const page = () => {
           faster with field-tested resume templates.
         </p>
         <Link
-          href={"/#"}
+          href="/cv-builder"
           className="p-3 rounded-lg bg-blue-500 text-gray-100 hover:bg-blue-700 transition-all"
         >
           Create Your Resume

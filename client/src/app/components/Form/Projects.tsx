@@ -25,7 +25,7 @@ const Projects = () => {
           Add your projects that makes you stand out.
         </p>
       </div>
-      <div className="mt-6">
+      <div className="mt-6" >
         <div>
           <ProjectHead />
         </div>

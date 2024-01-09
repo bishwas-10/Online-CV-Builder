@@ -28,7 +28,7 @@ const Education = () => {
           learnings and background will bring to job.
         </p>
       </div>
-      <div className="mt-6">
+      <div className="mt-6" >
         <div>
           <EducationHead />
         </div>
