@@ -1,8 +1,9 @@
-import {z} from "zod";
+import {ZodError, z} from "zod";
 import User from "../models/users";
 import { NextFunction, Request, Response } from "express";
 import createSecretToken from "../utils/secretToken";
-import { hashPassword } from "../utils/password";
+import { hashPassword, verifyPassword } from "../utils/password";
+import createRefreshToken from "../utils/createRefreshToken";
 
 //sigup
 
@@ -26,23 +27,23 @@ const signUpSchema = z
     next: NextFunction
   ) => {
     
-    
+    console.log(req.body)
     try {
       const validation=  signUpSchema.safeParse(req.body);
         if(!validation.success){
-            return res.status(404).send({status:false, message: validation.error });
+            return res.status(404).send({status:false, message: validation.error.issues[0].message });
         }
-        const { email, password, firstName, lastName, photo } = req.body;
+        const { email, password, username, photo } = req.body;
 
       const existingUser = await User.findOne({ email });
       if (existingUser) {
         return res.status(404).send({status:false, message: "user already exists" });
       }
-      const name = `${firstName} ${lastName}`;
+      
       const hashedPassword =  await hashPassword(password);
      
       const user = await User.create({
-        username: name.split(" ").join("").toLowerCase() +
+        username: username +
         Math.random().toString(36).slice(-8),
         email,
         password: hashedPassword,
@@ -58,3 +59,72 @@ const signUpSchema = z
     }
   };
   
+
+  //signin
+
+  export const logIn = async (req: Request, res: Response) => {
+   
+  
+    try {
+      const { email, password } = req.body;
+      if (!email || !password) {
+        return res
+          .status(403)
+          .send({ status: false, message: "all fields are mandatory" });
+      }
+  
+      const existingUser = await User.findOne({ email });
+  
+      if (!existingUser) {
+        return res
+          .status(403)
+          .send({ status: false, message: "user doesnt exist" });
+      }
+  
+      const isPasswordMatched = await verifyPassword(
+        password,
+        existingUser.password as string
+      );
+  
+      if (!isPasswordMatched) {
+        return res
+          .status(403)
+          .send({ status: false, message: "invalid credentials" });
+      }
+      const token = createSecretToken(existingUser._id);
+      
+      const refreshToken = createRefreshToken(existingUser._id);
+      const user = {
+        _id: existingUser._id,
+        username: existingUser.username,
+        email: existingUser.email,
+      };
+      const expiryDate = new Date(Date.now() + 3600000); //1hour
+  
+      res
+        .cookie("refresh_token", refreshToken, {
+          expires: expiryDate,
+          httpOnly: true,
+          sameSite: "none",
+          secure: true,
+        })
+        .status(200)
+        .send({ status: true, message: "user logged in successfully", user,token });
+    } catch (error) {
+      res.status(500).send({status:false, message:"internal server error"})
+    }
+  };
+
+
+
+  //signout
+
+  
+export const signOut=(req:Request, res:Response)=>{
+  try {
+    console.log("aaipugyo yaha samma")
+    res.clearCookie("refresh_token").status(200).send({status:true,message:"signout succesfull"});
+  } catch (error) {
+    res.status(500).send({status:false, message:"internal server error"})
+  }
+}

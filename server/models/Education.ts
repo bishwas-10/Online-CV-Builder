@@ -4,27 +4,36 @@ import mongoose from 'mongoose';
 
 
 interface EducationProps{
-   
+   resumeId: mongoose.Types.ObjectId ;
     userId:string;
-    institution:string;
-    major:string;
+    school:string;
+    degree:string;
+    city:string;
     startedAt:string;
     endedAt:string;
-    country:string;
+    description:string;
 }
-const EducationSchema = new mongoose.Schema<EducationProps>(
-  {
+const EducationSchema = new mongoose.Schema<EducationProps>({
+  resumeId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Resume',
+    
+  },
     userId: {
       type: String,
       required: [true, "Please enter the Education's owner id."],
     },
-    institution: {
+    school: {
       type: String,
       required: [true, 'Please provide a institution your education.'],
     },
-    major: {
+    degree: {
       type: String,
-      required: [true, "Please provide your education's major."],
+      required: [true, 'Please provide your degree.'],
+    },
+    city: {
+      type: String,
+      required: [true, "Please provide place from where you gradauated"],
     },
     startedAt: {
       type: String,
@@ -34,7 +43,7 @@ const EducationSchema = new mongoose.Schema<EducationProps>(
       type: String,
       required: [true, 'Please specify the end date of your experience.'],
     },
-    country: {
+    description: {
       type: String,
       required: [true, 'Please enter the country where you had this experience.'],
     },
