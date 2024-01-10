@@ -7,8 +7,10 @@ const signUpSchema = z
   .object({
     username: z.string({ required_error: "username is required" }),
     email: z.string().email(),
-    password: z.string().min(8).max(16),
-    confirmPassword: z.string().min(8).max(16),
+    password: z.string().min(8).max(16).refine((value) => /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[a-zA-Z\d!@#$%^&*]{8,}$/.test(value), {
+      message: "Password must contain at least one uppercase letter, one lowercase letter, one digit, and one symbol",
+    }),
+    confirmPassword: z.string().min(8).max(16)
   })
   .refine((data) => data.password === data.confirmPassword, {
     path: ["password"],
