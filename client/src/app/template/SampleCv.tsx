@@ -141,7 +141,7 @@ const CV: FC<CvProps> = ({
               {personalData?.name && personalData?.name?.split(" ")[0]}
             </h1>
             <h1
-              className="pl-10 z-10 font-bold text-t2-2xl text-t2-primary uppercase"
+              className="pl-10  font-bold text-t2-2xl text-t2-primary uppercase"
               style={{ letterSpacing: "12px" }}
             >
               {personalData?.name && personalData?.name?.split(" ")[1]}

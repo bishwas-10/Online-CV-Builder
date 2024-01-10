@@ -7,6 +7,7 @@ export const StyledLabel = styled.label`
   
 `;
 export const StyledInput = styled.input`
+
   background-color: #e2e8f0;
   width:100%;
   &:focus {

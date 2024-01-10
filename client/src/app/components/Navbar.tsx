@@ -69,12 +69,12 @@ const Navbar: React.FC = () => {
         <span className="w-1 h-6 bg-blue-500"></span>
         <div className="w-60 flex flex-row items-center justify-between">
           <div className="w-full flex flex-row items-center ">
-            <button className="px-4 py-2  text-blue-800 hover:text-blue-500 font-medium tracking-wide transition-all">
+            <Link href="/signpage" className="px-4 py-2  text-blue-800 hover:text-blue-500 font-medium tracking-wide transition-all">
               Log In
-            </button>
-            <button className="px-4 py-2  bg-blue-600 rounded-md text-gray-100 hover:bg-blue-800 transition-all  font-medium  tracking-wide">
+            </Link>
+            <Link href="/signpage" className="px-4 py-2  bg-blue-600 rounded-md text-gray-100 hover:bg-blue-800 transition-all  font-medium  tracking-wide">
               Sign up
-            </button>
+            </Link>
           </div>
         </div>
       </div>
