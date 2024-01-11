@@ -106,7 +106,7 @@ const signUpSchema = z
           expires: expiryDate,
           httpOnly: true,
           sameSite: "none",
-          secure: true,
+          secure: false,
         })
         .status(200)
         .send({ status: true, message: "user logged in successfully", user,token });

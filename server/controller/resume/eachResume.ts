@@ -21,7 +21,7 @@ export const eachResume=async(req:Request,res:Response)=>{
             const resume = await Resume.findOne({ _id: id, userId }).populate([
               { path: 'experience', model: Experience },
               { path: 'education', model: Education },
-              { path: 'achievement', model: Achievement },
+              { path: 'acheivement', model: Achievement },
               { path: 'award', model: Awards },
               { path: 'training', model: Trainings },
               { path: 'skill', model: Skills },

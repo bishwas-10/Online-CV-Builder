@@ -17,7 +17,7 @@ const EducationSchema = new mongoose.Schema<EducationProps>({
   resumeId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Resume',
-    
+    required: [true, 'Resume Required'],
   },
     userId: {
       type: String,
@@ -37,7 +37,7 @@ const EducationSchema = new mongoose.Schema<EducationProps>({
     },
     startedAt: {
       type: String,
-      required: [true, 'Please specify the end date of your experience'],
+      required: [true, 'Please specify the start date of your experience'],
     },
     endedAt: {
       type: String,
