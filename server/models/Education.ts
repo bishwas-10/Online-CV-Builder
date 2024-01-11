@@ -45,7 +45,6 @@ const EducationSchema = new mongoose.Schema<EducationProps>({
     },
     description: {
       type: String,
-      required: [true, 'Please enter the country where you had this experience.'],
     },
   },
   {

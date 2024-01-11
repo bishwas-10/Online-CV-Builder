@@ -1,11 +1,26 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
+interface ResumeProps {
+  title: string;
+  template: boolean;
+  templateName: string;
+  userId: string;
+  experience?: { type: mongoose.Schema.Types.ObjectId; };
+  education?: { type: mongoose.Schema.Types.ObjectId; };
+  award?: { type: mongoose.Schema.Types.ObjectId; };
+  acheivement?: { type: mongoose.Schema.Types.ObjectId; };
+  project?: { type: mongoose.Schema.Types.ObjectId; };
+  skill?: { type: mongoose.Schema.Types.ObjectId; };
+  training?: { type: mongoose.Schema.Types.ObjectId; };
+
+  customStyles?:{font:string;}
+}
 /* ResumeSchema will correspond to a collection in your MongoDB database. */
-const ResumeSchema = new mongoose.Schema(
+const ResumeSchema = new mongoose.Schema<ResumeProps>(
   {
     title: {
       type: String,
-      required: [true, 'A Resume must have a title.'],
+      required: [true, "A Resume must have a title."],
     },
     template: {
       type: Boolean,
@@ -21,19 +36,49 @@ const ResumeSchema = new mongoose.Schema(
     experience: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Experience',
+        ref: "Experience",
       },
     ],
     education: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Education',
+        ref: "Education",
+      },
+    ],
+    acheivement: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Acheivement",
+      },
+    ],
+    award: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Award",
+      },
+    ],
+    project: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref:"Project",
+      },
+    ],
+    skill: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Skill",
+      },
+    ],
+    training: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Training",
       },
     ],
     customStyles: {
       font: {
         type: String,
-        default: 'Poppins',
+        default: "Poppins",
       },
     },
   },
@@ -41,7 +86,7 @@ const ResumeSchema = new mongoose.Schema(
     toJSON: { virtuals: true },
     toObject: { virtuals: true },
     timestamps: true,
-  },
+  }
 );
 
-export default mongoose.models.Resume || mongoose.model('Resume', ResumeSchema);
+export default mongoose.models.Resume || mongoose.model<ResumeProps>("Resume", ResumeSchema);

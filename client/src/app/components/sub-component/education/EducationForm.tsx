@@ -10,8 +10,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { setEducationField } from "../../../store/eduSlice";
 import { useDispatch } from "react-redux";
-export const educationSchema = z
-  .object({
+export const educationSchema = z.object({
     school: z.string({required_error:"this field is required"}),
     degree: z.string({required_error:"this field is required"}),
     startDate: z.string({required_error:"this field is required"}),
