@@ -1,11 +1,20 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import SignIn from "./sign-component/signIn";
 import SignUp from "./sign-component/signUp";
+import { RootState } from "../store/store";
+import { useSelector } from "react-redux";
+import { useRouter } from "next/navigation";
 
 const page = () => {
+  const router=useRouter();
   const [isSignedUp, setIsSignedUp] = useState<boolean>(true);
-
+  const userDetails = useSelector((state:RootState)=>state.users);
+useEffect(()=>{
+ if(userDetails?.currentUser){
+  router.push('/')
+ }
+},[])
   return (
     <div className="bg-gray-200  w-full py-10 px-10 min-h-screen  flex md:flex-row flex-col md:items-start items-center md:justify-center">
       <div className="flex md:flex-row rounded-md  bg-white flex-col  h-max">
@@ -117,7 +126,7 @@ const page = () => {
                 : "Didn't have an account?"}
             </p>
             <button
-              onClick={() => setIsSignedUp(!isSignedUp)}
+              onClick={(e) => setIsSignedUp(!isSignedUp)}
               className="outline-none text-blue-600"
             >
               {isSignedUp ? "Sign up" : " Sign in"}

@@ -1,10 +1,20 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { TEducationSchema } from "../components/sub-component/education/EducationForm";
-import { TExperienceSchema } from "../components/sub-component/experience/ExperienceForm";
 
 
+type TExperienceProps = {
+    resumeId:string;
+    userId:string;
+    startDate: string;
+    endDate: string;
+    city: string;
+    description: string;
+    visibility: boolean;
+    jobTitle: string;
+    employer: string;
+}
 
-const initialState:TExperienceSchema[]=[
+const initialState:TExperienceProps[]=[
  ]
 
 const expeSlice = createSlice({

@@ -7,22 +7,57 @@ import achieveReducer from './achieveSlice';
 import trainingReducer from './trainingSlice';
 import awardReducer from './awardSlice';
 import userReducer from './userSlice';
-import { configureStore } from '@reduxjs/toolkit';
-
-
-export const store = configureStore({
-   reducer:{
-    field: fieldReducer,
-    education: eduReducer,
-    experience:expeReducer,
-    projects: projectReducer,
-    skills:skillReducer,
-    achievements:achieveReducer,
-    trainings:trainingReducer,
-    awards:awardReducer,
-    users:userReducer
-   }
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import storage from "redux-persist/lib/storage";
+import {persistReducer,persistStore} from "redux-persist";
+import tokenReducer from './tokenSlice';
+import resumeReducer from './resumeSlice';
+const rootReducer = combineReducers({
+   field: fieldReducer,
+   education: eduReducer,
+   experience:expeReducer,
+   projects: projectReducer,
+   skills:skillReducer,
+   achievements:achieveReducer,
+   trainings:trainingReducer,
+   awards:awardReducer,
+   users:userReducer,
+   token:tokenReducer,
+   resume:resumeReducer
 })
 
+const persistConfig ={
+   key:'users',
+   version:1,
+   storage,
+   whitelist: ['users']
+}
+// export const store = configureStore({
+//    reducer:{
+//     field: fieldReducer,
+//     education: eduReducer,
+//     experience:expeReducer,
+//     projects: projectReducer,
+//     skills:skillReducer,
+//     achievements:achieveReducer,
+//     trainings:trainingReducer,
+//     awards:awardReducer,
+//     users:userReducer
+//    }
+// })
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+
+
+const store= configureStore({
+reducer:persistedReducer,
+middleware: (getDefaultMiddleware) => getDefaultMiddleware({
+    serializableCheck:false
+}),
+})
+
+export default store
 export type RootState = ReturnType<typeof store.getState>
 export type AppDispatch = typeof store.dispatch
+
+
+export const persistor = persistStore(store);

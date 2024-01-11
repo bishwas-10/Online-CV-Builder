@@ -8,8 +8,10 @@ import { StyledInput, StyledLabel, StyledTextArea } from "@/app/utils/styles";
 // import "flatpickr/dist/themes/material_green.css";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setExperienceField } from "@/app/store/expeSlice";
+import { instance } from "@/app/api/instance";
+import { RootState } from "@/app/store/store";
 export const experienceSchema = z
   .object({
     jobTitle: z.string({required_error:"job title is required"}),
@@ -39,7 +41,9 @@ const ExperienceForm = ({ items }: { items: TExperienceSchema }) => {
 //   const [employer, setEmployer] = useState<string>(items?.employer);
 //   const [city, setCity] = useState<string>(items?.city);
 //   const [description, setDes] = useState<string>(items?.city);
-
+const token = useSelector((state:RootState)=>state.token);
+const resumeId = useSelector((state:RootState)=>state.resume.resumeId);
+console.log(resumeId)
   const [startDate, setStartDate] = useState<string>(items?.startDate);
   const [endDate, setEndDate] = useState<string>(items?.endDate);
   const {
@@ -57,7 +61,26 @@ const ExperienceForm = ({ items }: { items: TExperienceSchema }) => {
   const onSubmit = async (data: TExperienceSchema) => {
     // TODO: submit to servers
     // ...
-    dispatch(setExperienceField(data));
+    const expeRes = await instance({
+      url: `/experience`,
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      data: {
+        jobTitle: data.jobTitle,
+        description: data.description,
+        startDate: data.startDate,
+        endDate: data.endDate,
+        city: data.city,
+        company:"bishwas",
+        employer: data.employer,
+        resumeId:resumeId,
+      },
+    });
+    console.log(expeRes);
+    //dispatch(setExperienceField(data));
     setStartDate("");
     setEndDate("");
     reset();

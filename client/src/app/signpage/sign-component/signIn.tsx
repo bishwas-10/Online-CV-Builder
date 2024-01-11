@@ -2,11 +2,14 @@ import { userLogin } from '@/app/api/auth';
 import { signInFailure, signInSuccess } from '@/app/store/userSlice';
 import { StyledInput, StyledLabel } from '@/app/utils/styles';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Url } from 'next/dist/shared/lib/router/router';
+
 import React from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { z } from 'zod';
-
+import { useRouter } from 'next/navigation';
+import { setToken } from '@/app/store/tokenSlice';
 const signInSchema = z
   .object({
     email: z.string().email(),
@@ -14,6 +17,8 @@ const signInSchema = z
   });
 export type TSignInShema = z.infer<typeof signInSchema>;
 const SignIn = () => {
+  const router = useRouter();
+ 
   const dispatch = useDispatch();
     const {
         register,
@@ -24,8 +29,12 @@ const SignIn = () => {
       const onSubmit: SubmitHandler<TSignInShema> =async (data) => {
         const userLogInRes = await userLogin(data);
         const {status ,message, user,token}= userLogInRes;
+        if(token){
+          dispatch(setToken(token));
+        }
         if(status){
           dispatch(signInSuccess(user));
+         router.back();
         }else{
           dispatch(signInFailure());
         }

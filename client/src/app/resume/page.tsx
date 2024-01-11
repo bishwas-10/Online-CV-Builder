@@ -1,9 +1,35 @@
+"use client"
 import Link from "next/link";
 import React from "react";
 import { LayoutPanelTop } from 'lucide-react';
 import { resumeTemplate } from "../utils/template";
+import axios from "axios";
+import { instance } from "../api/instance";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../store/store";
+import { setResume } from "../store/resumeSlice";
+
 
 const page = () => {
+  const dispatch= useDispatch();
+  const token= useSelector((state:RootState)=>state.token);
+  const resumeHandler=async(title:string)=>{
+    const { data } = await instance({
+      url: '/resume',
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      data: {
+        templateName: title,
+        title: 'Your Resume',
+      },
+      
+    });
+    dispatch(setResume(data?.data._id));
+  
+  }
   return (
     <div className="w-screen h-screen px-10">
       <div className="h-[50%] mt-5 w-full flex flex-col items-center justify-center md:gap-8 gap-4 px-80 text-center">
@@ -26,7 +52,7 @@ const page = () => {
         <Link href={"/resume"} className="flex flex-row gap-3  opacity-60 hover:text-blue-500 transition-all"><LayoutPanelTop/>All templates</Link>
         {
             resumeTemplate.map((resume, index)=>{
-               return <Link key={index} href={`/resume/${resume.to}`}
+               return <Link key={index} onClick={()=>resumeHandler(resume.name)} href={`/resume`}
                className="flex flex-row gap-3 capitalize opacity-60 hover:text-blue-500 transition-all"
                >
                 <span><resume.icon/></span>

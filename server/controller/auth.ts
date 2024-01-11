@@ -99,7 +99,7 @@ const signUpSchema = z
         username: existingUser.username,
         email: existingUser.email,
       };
-      const expiryDate = new Date(Date.now() + 3600000); //1hour
+      const expiryDate = new Date(Date.now() + 7200000); //1hour
   
       res
         .cookie("refresh_token", refreshToken, {
