@@ -1,3 +1,4 @@
+import { userSignUp } from "@/app/api/auth";
 import { StyledInput, StyledLabel } from "@/app/utils/styles";
 import { zodResolver } from "@hookform/resolvers/zod";
 import React from "react";
@@ -16,7 +17,7 @@ const signUpSchema = z
     path: ["password"],
     message: "Password and confirm password must match",
   });
-type TSignUpShema = z.infer<typeof signUpSchema>;
+export type TSignUpShema = z.infer<typeof signUpSchema>;
 const SignUp = () => {
   const {
     register,
@@ -24,8 +25,9 @@ const SignUp = () => {
     formState: { errors },
     reset,
   } = useForm<TSignUpShema>({ resolver: zodResolver(signUpSchema) });
-  const onSubmit: SubmitHandler<TSignUpShema> = (data) => {
-    console.log(data);
+  const onSubmit: SubmitHandler<TSignUpShema> =async (data) => {
+    const signUpRes = await userSignUp(data);
+    console.log(signUpRes);
     reset();
   };
   return (

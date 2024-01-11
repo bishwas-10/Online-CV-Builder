@@ -9,7 +9,7 @@ import allRouter from './routes/fieldRouter/allRoute';
 const app = express();
 
 app.use(cors({
-    origin:'https://localhost:3000',
+    origin:'http://localhost:3000',
     methods: "GET,POST, PUT, DELETE, PATCH",
     credentials: true,
     exposedHeaders: ['Access-Control-Allow-Origin'],

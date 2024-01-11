@@ -3,9 +3,13 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { ChevronDown, ChevronRight } from "lucide-react";
 import { resumeTemplate } from "../utils/template";
+import { useSelector } from "react-redux";
+import { RootState } from "../store/store";
+
 const Navbar: React.FC = () => {
   const [showDiv, setShowDiv] = useState<Boolean>(false);
-
+const userDetails = useSelector((state:RootState)=>state.users);
+console.log(userDetails);
   return (
     <div className=" px-10 min-w-full h-20  shadow-md flex flex-row items-center justify-between">
       <div>Logo</div>
@@ -66,6 +70,7 @@ const Navbar: React.FC = () => {
         <span className="flex flex-row items-center hover:text-blue-500 cursor-pointer ">
           Support
         </span>
+        <span className="font-bold text-xl text-yellow-600">{userDetails?.currentUser?.username}</span>
         <span className="w-1 h-6 bg-blue-500"></span>
         <div className="w-60 flex flex-row items-center justify-between">
           <div className="w-full flex flex-row items-center ">

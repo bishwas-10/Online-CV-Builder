@@ -1,7 +1,10 @@
+import { userLogin } from '@/app/api/auth';
+import { signInFailure, signInSuccess } from '@/app/store/userSlice';
 import { StyledInput, StyledLabel } from '@/app/utils/styles';
 import { zodResolver } from '@hookform/resolvers/zod';
 import React from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
 import { z } from 'zod';
 
 const signInSchema = z
@@ -9,16 +12,24 @@ const signInSchema = z
     email: z.string().email(),
     password: z.string().min(8).max(16),
   });
-type TSignInShema = z.infer<typeof signInSchema>;
+export type TSignInShema = z.infer<typeof signInSchema>;
 const SignIn = () => {
+  const dispatch = useDispatch();
     const {
         register,
         handleSubmit,
         formState: { errors },
         reset,
       } = useForm<TSignInShema>({ resolver: zodResolver(signInSchema) });
-      const onSubmit: SubmitHandler<TSignInShema> = (data) => {
-        console.log(data);
+      const onSubmit: SubmitHandler<TSignInShema> =async (data) => {
+        const userLogInRes = await userLogin(data);
+        const {status ,message, user,token}= userLogInRes;
+        if(status){
+          dispatch(signInSuccess(user));
+        }else{
+          dispatch(signInFailure());
+        }
+        
         reset();
       };
   return (

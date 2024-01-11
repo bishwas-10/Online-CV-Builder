@@ -106,7 +106,7 @@ const signUpSchema = z
           expires: expiryDate,
           httpOnly: true,
           sameSite: "none",
-          secure: false,
+          secure: true,
         })
         .status(200)
         .send({ status: true, message: "user logged in successfully", user,token });
@@ -115,7 +115,27 @@ const signUpSchema = z
     }
   };
 
+//user
 
+export const getUser =async(req:Request, res:Response)=>{
+  const userId = req.body.userId;
+const token = req.body.token;
+try {
+  const userExists = await User.findOne({_id:userId});
+  const user = {
+      _id: userExists?._id,
+      username: userExists?.username,
+      email: userExists?.email,
+    };
+    if(token){
+      return  res.status(200).send({status:true, user,token})
+    }
+ return res.status(200).send({status:true, user})
+} catch (error) {
+  res.status(500).send({status:false, message:"you cant acces this user"})
+}
+
+}
 
   //signout
 

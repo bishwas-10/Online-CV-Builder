@@ -6,6 +6,7 @@ import skillReducer from './skillSlice';
 import achieveReducer from './achieveSlice';
 import trainingReducer from './trainingSlice';
 import awardReducer from './awardSlice';
+import userReducer from './userSlice';
 import { configureStore } from '@reduxjs/toolkit';
 
 
@@ -19,6 +20,7 @@ export const store = configureStore({
     achievements:achieveReducer,
     trainings:trainingReducer,
     awards:awardReducer,
+    users:userReducer
    }
 })
 
