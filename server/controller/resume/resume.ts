@@ -8,18 +8,19 @@ interface FilterProps {
 }
 export const resume = async (req: Request, res: Response) => {
   const { body, method } = req;
-  const userId = body.userId;
+  
+  const {userId} = body;
+
   switch (method) {
     case "GET":
       try {
-        const { template, user } = req.query;
+        const { templatename } = req.query;
         const filterObj: FilterProps = {
           template: false, // Provide a default value or the appropriate value based on your logic
           userId: "",
         };
-        if (template) filterObj.template = true;
-        if (user) filterObj.userId = userId;
-        const resume = await Resume.find(filterObj);
+   
+        const resume = await Resume.findOne({userId:userId,templateName:templatename});
         if (!resume) {
           return res.status(400).json({ success: false });
         }

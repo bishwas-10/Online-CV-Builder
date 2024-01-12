@@ -14,11 +14,11 @@ import { addResume } from "../store/resumeSlice";
 const page = () => {
   const dispatch= useDispatch();
   const token= useSelector((state:RootState)=>state.token.token);
-  
+  const resumeId= useSelector((state:RootState)=>state.resumeToken.resumeId);
   const resumeHandler=async(title:string)=>{
     const { data } = await instance({
-      url: '/resume',
-      method: 'POST',
+    url: resumeId ? `/resume?templatename=${title}`:'/resume',
+      method:  resumeId? 'GET' :'POST',
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
@@ -29,7 +29,7 @@ const page = () => {
       },
       
     });
-    console.log(data?.data._id)
+    console.log(data)
     dispatch(setResume(data?.data._id));
   
   }
