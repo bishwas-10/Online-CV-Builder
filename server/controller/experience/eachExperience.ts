@@ -19,6 +19,7 @@ export const eachExperience=async(req:Request,res:Response)=>{
             if (!experience) {
               return res.status(400).json({ success: false, error: 'Unable to edit experience data.' });
             }
+            console.log(experience)
             res.status(200).json({ success: true, experience });
           } catch (error) {
             res.status(400).json({ success: false, error });

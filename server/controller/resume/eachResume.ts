@@ -15,7 +15,7 @@ export const eachResume=async(req:Request,res:Response)=>{
         method,
       } = req;
       //const userId = body.userId;
-      const userId = "659e9ce9dd9d0c848ccc3013"
+      const userId = body.userId;
       switch (method) {
         case 'GET':
           try {

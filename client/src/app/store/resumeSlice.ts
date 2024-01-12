@@ -35,16 +35,19 @@ const resumeSlice = createSlice({
 
       // Use Immer's produce function to create a new state with the changes
       return produce(state, (draft) => {
-        draft.personal = { ...draft.personal, ...action.payload.personal };
-        draft.resumeMeta = { ...draft.resumeMeta, ...action.payload.resumeMeta };
-        draft.experience = [...draft.experience, ...action.payload.experience];
-        draft.acheivement = [...draft.acheivement, ...action.payload.acheivement];
-        draft.education = [...draft.education, ...action.payload.education];
+        draft.personal = { ...action.payload.personal };
+        draft.resumeMeta = { ...action.payload.resumeMeta };
+        draft.experience = [ ...action.payload.experience];
+        draft.acheivement = [ ...action.payload.acheivement];
+        draft.education = [ ...action.payload.education];
         //draft.projects = [...draft.projects, ...action.payload.projects];
        // draft.skills = [...draft.skills, ...action.payload.skills];
         //draft.trainings = [...draft.trainings, ...action.payload.trainings];
         //draft.awards = [...draft.awards, ...action.payload.awards];
       })
+    },
+    removeResume(state){
+      state=initialState
     },
     addPersonal(state, action) {
         state.personal = action.payload;
@@ -53,7 +56,8 @@ const resumeSlice = createSlice({
         state.resumeMeta= action.payload;
     },
     addExperience(state, action) {
-        state.experience= action.payload;
+      console.log(action.payload)
+        state.experience= [...state.experience,action.payload];
     },
     deleteSingleExperience(state,action){
       state.experience.filter((item)=>item.jobTitle !== action.payload.jobTitle)
@@ -98,7 +102,7 @@ const resumeSlice = createSlice({
   },
 });
 
-export const {addResume,
+export const {addResume,removeResume,
     addPersonal,
   addAcheivement,
   addAwards,

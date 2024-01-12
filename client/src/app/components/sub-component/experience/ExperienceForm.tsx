@@ -12,6 +12,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { setExperienceField } from "@/app/store/expeSlice";
 import { instance } from "@/app/api/instance";
 import { RootState } from "@/app/store/store";
+import { setResume } from "@/app/store/resumeTokenSlice";
+import { addExperience } from "@/app/store/resumeSlice";
 export const experienceSchema = z
   .object({
     jobTitle: z.string({required_error:"job title is required"}),
@@ -79,8 +81,13 @@ const resumeId = useSelector((state:RootState)=>state.resumeToken.resumeId);
         resumeId:resumeId,
       },
     });
+    console.log(expeRes.data.success);
+   // console.log([...expeRes?.data.experience])
+     if(expeRes.data.success){
+       dispatch(addExperience(expeRes?.data.experience));
+     }
     
-  dispatch(setExperienceField(expeRes?.data.experience));
+ // dispatch(setExperienceField(expeRes?.data.experience));
     setStartDate("");
     setEndDate("");
     reset();

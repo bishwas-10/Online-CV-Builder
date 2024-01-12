@@ -10,6 +10,7 @@ const Navbar: React.FC = () => {
   const [showDiv, setShowDiv] = useState<Boolean>(false);
 const userDetails = useSelector((state:RootState)=>state.users);
 console.log(userDetails);
+
   return (
     <div className=" px-10 min-w-full h-20  shadow-md flex flex-row items-center justify-between">
       <div>Logo</div>
