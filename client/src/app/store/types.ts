@@ -12,8 +12,8 @@ export type TExperienceProps = {
 export type TEducationProps={
     school: string;
     degree: string;
-    startDate: string;
-    endDate: string;
+    startedAt: string;
+    endedAt: string;
     city: string;
     description: string;
     visibility: boolean;

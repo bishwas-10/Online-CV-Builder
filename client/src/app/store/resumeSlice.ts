@@ -8,10 +8,10 @@ type TInitialProps={
     experience:TExperienceProps[],
     acheivement: TAcheivementProps[],
     education: TEducationProps[],
-    projects: TProjectProps[],
-    skills: TSkillProps[],
-    trainings: TTrainingProps[],
-    awards: TAwardProps[],
+    project: TProjectProps[],
+    skill: TSkillProps[],
+    training: TTrainingProps[],
+    award: TAwardProps[],
 }
 
 const initialState:TInitialProps = {
@@ -20,10 +20,10 @@ const initialState:TInitialProps = {
   experience: [],
   acheivement: [],
   education: [],
-  projects: [],
-  skills: [],
-  trainings: [],
-  awards: [],
+  project: [],
+  skill: [],
+  training: [],
+  award: [],
 };
 
 const resumeSlice = createSlice({
@@ -40,10 +40,10 @@ const resumeSlice = createSlice({
         draft.experience = [ ...action.payload.experience];
         draft.acheivement = [ ...action.payload.acheivement];
         draft.education = [ ...action.payload.education];
-        //draft.projects = [...draft.projects, ...action.payload.projects];
-       // draft.skills = [...draft.skills, ...action.payload.skills];
-        //draft.trainings = [...draft.trainings, ...action.payload.trainings];
-        //draft.awards = [...draft.awards, ...action.payload.awards];
+        draft.project = [ ...action.payload.project];
+       draft.skill = [...action.payload.skill];
+        draft.training = [ ...action.payload.training];
+        draft.award = [ ...action.payload.award];
       })
     },
     removeResume(state){
@@ -69,19 +69,19 @@ const resumeSlice = createSlice({
 
     },
     addProjects(state, action) {
-      state.projects= [...state.projects,action.payload];
+      state.project= [...state.project,action.payload];
     },
     deleteSingleProjects(state,action){
 
     },
     addTrainings(state, action) {
-      state.trainings= [...state.trainings,action.payload];
+      state.training= [...state.training,action.payload];
     },
     deleteSingleTrainings(state,action){
 
     },
     addSKills(state, action) {
-      state.skills= [...state.skills,action.payload];
+      state.skill= [...state.skill,action.payload];
     },
     deleteSingleSkills(state,action){
 
@@ -93,7 +93,7 @@ const resumeSlice = createSlice({
 
     },
     addAwards(state, action) {
-      state.awards= [...state.awards,action.payload];
+      state.award= [...state.award,action.payload];
     },
     deleteSingleAwards(state,action){
 

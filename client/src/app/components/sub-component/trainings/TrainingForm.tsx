@@ -60,7 +60,7 @@ const TrainingForm = ({ items }: { items: TTrainingSchema }) => {
         resumeId:resumeId
       },
     });
-    console.log(trainingRes.data.success);
+    
    // console.log([...expeRes?.data.experience])
      if(trainingRes.data.success){
        dispatch(addTrainings(trainingRes?.data.training));

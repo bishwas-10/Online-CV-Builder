@@ -23,16 +23,17 @@ import { TAwardSchema } from "../components/sub-component/awards/AwardForm";
 import { TTrainingSchema } from "../components/sub-component/trainings/TrainingForm";
 import { TProjectSchema } from "../components/sub-component/projects/ProjectForm";
 import { TSkillSchema } from "../components/sub-component/skills/SkillsForm";
+import { TAcheivementProps, TAwardProps, TEducationProps, TExperienceProps, TProjectProps, TSkillProps, TTrainingProps } from "../store/types";
 
 interface CvProps {
   personalData: PersonalData ;
-  educationData: TEducationSchema[];
-  experienceData: TExperienceSchema[];
-  achievementsData: TAchieveSchema[];
-  awardsData: TAwardSchema[];
-  trainingData: TTrainingSchema[];
-  skillData:TSkillSchema[];
-  projectData:TProjectSchema[];
+  educationData: TEducationProps[];
+  experienceData: TExperienceProps[];
+  achievementsData: TAcheivementProps[];
+  awardsData: TAwardProps[];
+  trainingData: TTrainingProps[];
+  skillData:TSkillProps[];
+  projectData:TProjectProps[];
   customStyles: { font: string };
 }
 
@@ -48,7 +49,7 @@ const CV: FC<CvProps> = ({
   customStyles,
 }) => {
   const ref = useRef<HTMLDivElement>(null);
-
+console.log(educationData)
   // // Dummy text for placeholders
   // const dummyPersonalData: PersonalData = {
   //   name: "John Doe",
@@ -166,8 +167,8 @@ const CV: FC<CvProps> = ({
                 {educationData.map((edu, i) => (
                   <Description classes="mb-3" key={i} index={i}>
                     <Paragraph classes="text-t2-sub-heading font-bold">
-                      {`${edu?.startDate} -${
-                        edu?.endDate
+                      {`${edu?.startedAt} -${
+                        edu?.endedAt
                       }`}
                     </Paragraph>
                     <Paragraph classes="text-t2-sub-heading font-bold">

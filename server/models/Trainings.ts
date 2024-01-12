@@ -4,7 +4,7 @@ import mongoose from 'mongoose';
 interface TrainingProps {
     resumeId: mongoose.Types.ObjectId ;
     userId:string;
-    trainigTitle:string;
+    trainingTitle:string;
     institute:string;
     completionDate:string;
     description:string;
@@ -21,7 +21,7 @@ const TrainingSchema =new mongoose.Schema<TrainingProps>({
         type: String,
         required: [true, 'Please enter the training owner id.'],
       },
-    trainigTitle:{
+    trainingTitle:{
     type:String,
     required:[true, 'training title is required']
 },

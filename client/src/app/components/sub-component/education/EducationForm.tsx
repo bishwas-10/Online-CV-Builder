@@ -66,14 +66,14 @@ const resumeId = useSelector((state:RootState)=>state.resumeToken.resumeId);
       data: {
         school: data.school,
         degree: data.degree,
-        startDate: data.startDate,
-        endDate: data.endDate,
+        startedAt: data.startDate,
+        endedAt: data.endDate,
         city: data.city,
         description: data.description,
         resumeId:resumeId
       },
     });
-    console.log(eduRes.data.success);
+    console.log(eduRes.data);
    // console.log([...expeRes?.data.experience])
      if(eduRes.data.success){
        dispatch(addEducation(eduRes?.data.education));

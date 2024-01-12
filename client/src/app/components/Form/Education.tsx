@@ -8,7 +8,7 @@ import { RootState } from "@/app/store/store";
 
 const Education = () => {
   const items = useSelector((state:RootState)=> state.education)
-  console.log(items[0])
+ 
   const [showEduForm, setShowEduForm] = useState<boolean>(false);
   const initialEduState={
     startDate:'',

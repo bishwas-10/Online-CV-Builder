@@ -133,10 +133,10 @@ const page = () => {
             educationData={resumeData.education}
             experienceData={resumeData.experience}
             achievementsData={resumeData.acheivement}
-            awardsData={resumeData.awards}
-            trainingData={resumeData.trainings}
-            skillData={resumeData.skills}
-            projectData={resumeData.projects}
+            awardsData={resumeData.award}
+            trainingData={resumeData.training}
+            skillData={resumeData.skill}
+            projectData={resumeData.project}
             customStyles={customStyles}
           />
         </div>
