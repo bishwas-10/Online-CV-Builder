@@ -7,8 +7,11 @@ import { StyledInput, StyledLabel, StyledTextArea } from "@/app/utils/styles";
 // import "flatpickr/dist/themes/material_green.css";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setTrainingField } from "@/app/store/trainingSlice";
+import { RootState } from "@/app/store/store";
+import { instance } from "@/app/api/instance";
+import { addTrainings } from "@/app/store/resumeSlice";
 export const trainingSchema = z.object({
   trainingTitle: z.string({ required_error: "training title is required" }),
   institute:  z.string(),
@@ -20,6 +23,8 @@ export const trainingSchema = z.object({
 export type TTrainingSchema = z.infer<typeof trainingSchema>;
 const TrainingForm = ({ items }: { items: TTrainingSchema }) => {
   const dispatch = useDispatch();
+  const token = useSelector((state:RootState)=>state.token);
+  const resumeId = useSelector((state:RootState)=>state.resumeToken.resumeId);
   //   const [jobTitle, setjobTitle] = useState<string>(items?.jobTitle);
   //   const [employer, setEmployer] = useState<string>(items?.employer);
   //   const [city, setCity] = useState<string>(items?.city);
@@ -39,8 +44,27 @@ const TrainingForm = ({ items }: { items: TTrainingSchema }) => {
   const onSubmit = async (data: TTrainingSchema) => {
     // TODO: submit to servers
     // ...
-    dispatch(setTrainingField(data));
-setCompletionDate("");
+     const trainingRes = await instance({
+      url: `/training`,
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      data: {
+        description: data.description,
+        
+        trainingTitle: data.trainingTitle,
+        institute: data.institute,
+        completionDate: data.completionDate,
+        resumeId:resumeId
+      },
+    });
+    console.log(trainingRes.data.success);
+   // console.log([...expeRes?.data.experience])
+     if(trainingRes.data.success){
+       dispatch(addTrainings(trainingRes?.data.training));
+     }
     reset();
   };
   const handleInputChange = (

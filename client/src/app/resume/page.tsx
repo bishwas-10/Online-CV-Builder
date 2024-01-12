@@ -29,11 +29,11 @@ const page = () => {
       },
       
     });
-    console.log(data)
+    
     dispatch(setResume(data?.data._id));
   
   }
-  console.log(token);
+  
   const getResume=async()=>{
     // const { data } = await axios({
     //   url: `http://localhost:4000/api/users/resume/65a0b94a7321a16322c3c648`,

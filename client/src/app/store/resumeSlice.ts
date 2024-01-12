@@ -1,17 +1,17 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import {TExperienceProps} from "./types";
+import {TAcheivementProps, TAwardProps, TEducationProps, TExperienceProps, TProjectProps, TSkillProps, TTrainingProps} from "./types";
 import { produce } from "immer";
 
 type TInitialProps={
     personal: {},
     resumeMeta: {},
     experience:TExperienceProps[],
-    acheivement: [],
-    education: [],
-    projects: [],
-    skills: [],
-    trainings: [],
-    awards: [],
+    acheivement: TAcheivementProps[],
+    education: TEducationProps[],
+    projects: TProjectProps[],
+    skills: TSkillProps[],
+    trainings: TTrainingProps[],
+    awards: TAwardProps[],
 }
 
 const initialState:TInitialProps = {
@@ -56,44 +56,44 @@ const resumeSlice = createSlice({
         state.resumeMeta= action.payload;
     },
     addExperience(state, action) {
-      console.log(action.payload)
+     
         state.experience= [...state.experience,action.payload];
     },
     deleteSingleExperience(state,action){
       state.experience.filter((item)=>item.jobTitle !== action.payload.jobTitle)
     },
     addEducation(state, action) {
-        state.education= action.payload;
+        state.education= [...state.education,action.payload];
     },
     deleteSingleEducation(state,action){
 
     },
     addProjects(state, action) {
-        state.projects= action.payload;
+      state.projects= [...state.projects,action.payload];
     },
     deleteSingleProjects(state,action){
 
     },
     addTrainings(state, action) {
-        state.trainings= action.payload;
+      state.trainings= [...state.trainings,action.payload];
     },
     deleteSingleTrainings(state,action){
 
     },
     addSKills(state, action) {
-        state.skills= action.payload;
+      state.skills= [...state.skills,action.payload];
     },
     deleteSingleSkills(state,action){
 
     },
     addAcheivement(state, action) {
-        state.acheivement= action.payload;
+      state.acheivement= [...state.acheivement,action.payload];
     },
     deleteSingleAcheivement(state,action){
 
     },
     addAwards(state, action) {
-        state.awards= action.payload;
+      state.awards= [...state.awards,action.payload];
     },
     deleteSingleAwards(state,action){
 

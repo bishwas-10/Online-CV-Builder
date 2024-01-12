@@ -7,8 +7,11 @@ import { StyledInput, StyledLabel, StyledTextArea } from "@/app/utils/styles";
 // import "flatpickr/dist/themes/material_green.css";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setAwardField } from "@/app/store/awardSlice";
+import { RootState } from "@/app/store/store";
+import { instance } from "@/app/api/instance";
+import { addAwards } from "@/app/store/resumeSlice";
 export const awardSchema = z.object({
   awardTitle: z.string({ required_error: "award title is required" }),
   organization:  z.string(),
@@ -25,6 +28,8 @@ const AwardForm = ({ items }: { items: TAwardSchema }) => {
   //   const [employer, setEmployer] = useState<string>(items?.employer);
   //   const [city, setCity] = useState<string>(items?.city);
   //   const [description, setDes] = useState<string>(items?.city);
+  const token = useSelector((state:RootState)=>state.token);
+  const resumeId = useSelector((state:RootState)=>state.resumeToken.resumeId);
   const [receivedDate, setReceivedDate] = useState<string>(items?.receivedDate);
   const {
     register,
@@ -40,7 +45,29 @@ const AwardForm = ({ items }: { items: TAwardSchema }) => {
   const onSubmit = async (data: TAwardSchema) => {
     // TODO: submit to servers
     // ...
-    dispatch(setAwardField(data));
+    const awardRes = await instance({
+      url: `/award`,
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      data: {
+        city: data.city,
+        description: data.description,
+        
+        awardTitle: data.awardTitle,
+        organization: data.organization,
+        receivedDate: data.receivedDate,
+        resumeId:resumeId
+      },
+    });
+    console.log(awardRes.data.success);
+   // console.log([...expeRes?.data.experience])
+     if(awardRes.data.success){
+       dispatch(addAwards(awardRes?.data.award));
+     }
+
 setReceivedDate("");
     reset();
   };

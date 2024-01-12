@@ -5,8 +5,11 @@ import { z } from "zod";
 import {motion} from "framer-motion";
 import { StyledInput, StyledLabel, StyledTextArea } from "@/app/utils/styles";
 import "react-datepicker/dist/react-datepicker.css";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setskillField } from "@/app/store/skillSlice";
+import { RootState } from "@/app/store/store";
+import { instance } from "@/app/api/instance";
+import { addSKills } from "@/app/store/resumeSlice";
 export const skillSchema = z
   .object({
     skillTitle: z.string({required_error:"Skill title is required"}),
@@ -17,6 +20,8 @@ export const skillSchema = z
 export type TSkillSchema = z.infer<typeof skillSchema>;
 const SkillsForm = ({ items }: { items: TSkillSchema }) => {
   const dispatch = useDispatch();
+  const token = useSelector((state:RootState )=>state.token);
+  const resumeId = useSelector((state:RootState)=>state.resumeToken.resumeId);
 //   const [jobTitle, setjobTitle] = useState<string>(items?.jobTitle);
 //   const [employer, setEmployer] = useState<string>(items?.employer);
 //   const [city, setCity] = useState<string>(items?.city);
@@ -37,8 +42,24 @@ const SkillsForm = ({ items }: { items: TSkillSchema }) => {
   const onSubmit = async (data: TSkillSchema) => {
     // TODO: submit to servers
     // ...
-    console.log(data);
-    dispatch(setskillField(data));
+    const skillRes = await instance({
+      url: `/skill`,
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      data: {
+        skillTitle: data.skillTitle,
+        level: data.level,
+        resumeId:resumeId
+      },
+    });
+    console.log(skillRes.data.success);
+   // console.log([...expeRes?.data.experience])
+     if(skillRes.data.success){
+       dispatch(addSKills(skillRes?.data.skill));
+     }
     
     reset();
   };

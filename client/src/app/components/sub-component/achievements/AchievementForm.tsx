@@ -7,8 +7,11 @@ import { StyledInput, StyledLabel, StyledTextArea } from "@/app/utils/styles";
 // import "flatpickr/dist/themes/material_green.css";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setAchieveField } from "@/app/store/achieveSlice";
+import { RootState } from "@/app/store/store";
+import { instance } from "@/app/api/instance";
+import { addAcheivement } from "@/app/store/resumeSlice";
 export const achieveSchema = z.object({
   achieveTitle: z.string({ required_error: "achieve title is required" }),
   description: z.string({ required_error: "description is required" }),
@@ -19,6 +22,8 @@ export const achieveSchema = z.object({
 export type TAchieveSchema = z.infer<typeof achieveSchema>;
 const AcheivementForm = ({ items }: { items: TAchieveSchema }) => {
   const dispatch = useDispatch();
+  const token = useSelector((state:RootState)=>state.token);
+  const resumeId = useSelector((state:RootState)=>state.resumeToken.resumeId);
   //   const [jobTitle, setjobTitle] = useState<string>(items?.jobTitle);
   //   const [employer, setEmployer] = useState<string>(items?.employer);
   //   const [city, setCity] = useState<string>(items?.city);
@@ -38,7 +43,24 @@ const AcheivementForm = ({ items }: { items: TAchieveSchema }) => {
   const onSubmit = async (data: TAchieveSchema) => {
     // TODO: submit to servers
     // ...
-    dispatch(setAchieveField(data));
+    const acheiveRes = await instance({
+      url: `/acheivement`,
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      data: {
+        description: data.description,
+    achieveTitle: data.achieveTitle,
+        resumeId:resumeId
+      },
+    });
+    console.log(acheiveRes.data.success);
+   // console.log([...expeRes?.data.experience])
+     if(acheiveRes.data.success){
+       dispatch(addAcheivement(acheiveRes?.data.acheivement));
+     }
 
     reset();
   };

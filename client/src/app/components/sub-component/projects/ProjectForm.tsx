@@ -7,9 +7,12 @@ import { StyledInput, StyledLabel, StyledTextArea } from "@/app/utils/styles";
 // import "flatpickr/dist/themes/material_green.css";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setExperienceField } from "@/app/store/expeSlice";
 import { setProjectField } from "@/app/store/projectSlice";
+import { RootState } from "@/app/store/store";
+import { instance } from "@/app/api/instance";
+import { addProjects } from "@/app/store/resumeSlice";
 export const projectSchema = z.object({
   projectTitle: z.string({ required_error: "project title is required" }),
   description: z.string({ required_error: "description is required" }),
@@ -20,6 +23,8 @@ export const projectSchema = z.object({
 export type TProjectSchema = z.infer<typeof projectSchema>;
 const ProjectForm = ({ items }: { items: TProjectSchema }) => {
   const dispatch = useDispatch();
+  const token = useSelector((state:RootState)=>state.token);
+  const resumeId = useSelector((state:RootState)=>state.resumeToken.resumeId);
   //   const [jobTitle, setjobTitle] = useState<string>(items?.jobTitle);
   //   const [employer, setEmployer] = useState<string>(items?.employer);
   //   const [city, setCity] = useState<string>(items?.city);
@@ -39,7 +44,25 @@ const ProjectForm = ({ items }: { items: TProjectSchema }) => {
   const onSubmit = async (data: TProjectSchema) => {
     // TODO: submit to servers
     // ...
-    dispatch(setProjectField(data));
+    const projectRes = await instance({
+      url: `/project`,
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      data: {
+        description: data.description,
+        projectTitle: data.projectTitle,
+        projectLink: data.projectLink,
+        resumeId:resumeId
+      },
+    });
+    console.log(projectRes.data.success);
+   // console.log([...expeRes?.data.experience])
+     if(projectRes.data.success){
+       dispatch(addProjects(projectRes?.data.project));
+     }
 
     reset();
   };

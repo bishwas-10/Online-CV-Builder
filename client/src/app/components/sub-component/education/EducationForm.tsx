@@ -9,7 +9,10 @@ import { StyledInput, StyledLabel, StyledTextArea } from "@/app/utils/styles";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { setEducationField } from "../../../store/eduSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { addEducation } from "@/app/store/resumeSlice";
+import { instance } from "@/app/api/instance";
+import { RootState } from "@/app/store/store";
 export const educationSchema = z.object({
     school: z.string({required_error:"this field is required"}),
     degree: z.string({required_error:"this field is required"}),
@@ -36,6 +39,8 @@ const EducationForm = ({ items }: { items: TEducationSchema }) => {
   const dispatch = useDispatch();
   const [startDate, setStartDate] = useState<string>(items?.startDate);
   const [endDate, setEndDate] = useState<string>(items?.endDate);
+  const token = useSelector((state:RootState)=>state.token);
+const resumeId = useSelector((state:RootState)=>state.resumeToken.resumeId);
   const {
     register,
     handleSubmit,
@@ -51,7 +56,29 @@ const EducationForm = ({ items }: { items: TEducationSchema }) => {
     // TODO: submit to servers
     // ...
     
-    dispatch(setEducationField(data));
+    const eduRes = await instance({
+      url: `/education`,
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      data: {
+        school: data.school,
+        degree: data.degree,
+        startDate: data.startDate,
+        endDate: data.endDate,
+        city: data.city,
+        description: data.description,
+        resumeId:resumeId
+      },
+    });
+    console.log(eduRes.data.success);
+   // console.log([...expeRes?.data.experience])
+     if(eduRes.data.success){
+       dispatch(addEducation(eduRes?.data.education));
+     }
+    
     setStartDate("");
     setEndDate("");
     reset();
