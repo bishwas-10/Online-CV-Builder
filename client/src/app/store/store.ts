@@ -11,6 +11,7 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import storage from "redux-persist/lib/storage";
 import {persistReducer,persistStore} from "redux-persist";
 import tokenReducer from './tokenSlice';
+import resumeTokenReducer from './resumeTokenSlice';
 import resumeReducer from './resumeSlice';
 const rootReducer = combineReducers({
    field: fieldReducer,
@@ -23,6 +24,7 @@ const rootReducer = combineReducers({
    awards:awardReducer,
    users:userReducer,
    token:tokenReducer,
+   resumeToken:resumeTokenReducer,
    resume:resumeReducer
 })
 
@@ -30,7 +32,7 @@ const persistConfig ={
    key:'users',
    version:1,
    storage,
-   whitelist: ['users']
+   whitelist: ['users','resumeToken','token']
 }
 // export const store = configureStore({
 //    reducer:{

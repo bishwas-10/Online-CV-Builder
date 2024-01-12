@@ -29,6 +29,7 @@ const SignIn = () => {
       const onSubmit: SubmitHandler<TSignInShema> =async (data) => {
         const userLogInRes = await userLogin(data);
         const {status ,message, user,token}= userLogInRes;
+        
         if(token){
           dispatch(setToken(token));
         }

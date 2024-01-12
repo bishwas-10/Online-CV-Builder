@@ -10,7 +10,7 @@ import ExperienceHead from '../sub-component/experience/ExperienceHead';
 
 const Experience = () => {
   const items = useSelector((state:RootState)=> state.experience)
-  console.log(items[0])
+
   const [showExpeForm, setShowExpeForm] = useState<boolean>(false);
   const initialExpeState={
     startDate:'',

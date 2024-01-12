@@ -42,8 +42,8 @@ const ExperienceForm = ({ items }: { items: TExperienceSchema }) => {
 //   const [city, setCity] = useState<string>(items?.city);
 //   const [description, setDes] = useState<string>(items?.city);
 const token = useSelector((state:RootState)=>state.token);
-const resumeId = useSelector((state:RootState)=>state.resume.resumeId);
-console.log(resumeId)
+const resumeId = useSelector((state:RootState)=>state.resumeToken.resumeId);
+
   const [startDate, setStartDate] = useState<string>(items?.startDate);
   const [endDate, setEndDate] = useState<string>(items?.endDate);
   const {
@@ -79,8 +79,8 @@ console.log(resumeId)
         resumeId:resumeId,
       },
     });
-    console.log(expeRes);
-    //dispatch(setExperienceField(data));
+    
+  dispatch(setExperienceField(expeRes?.data.experience));
     setStartDate("");
     setEndDate("");
     reset();
