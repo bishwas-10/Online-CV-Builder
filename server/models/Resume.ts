@@ -5,16 +5,16 @@ interface ResumeProps {
   template: boolean;
   templateName: string;
   userId: string;
-  personal?: { type: mongoose.Schema.Types.ObjectId };
-  experience?: { type: mongoose.Schema.Types.ObjectId };
-  education?: { type: mongoose.Schema.Types.ObjectId };
-  award?: { type: mongoose.Schema.Types.ObjectId };
-  acheivement?: { type: mongoose.Schema.Types.ObjectId };
-  project?: { type: mongoose.Schema.Types.ObjectId };
-  skill?: { type: mongoose.Schema.Types.ObjectId };
-  training?: { type: mongoose.Schema.Types.ObjectId };
+  about?:   mongoose.Schema.Types.ObjectId [];
+  experience?:  mongoose.Schema.Types.ObjectId [];
+  education?:  mongoose.Schema.Types.ObjectId [];
+  award?: mongoose.Schema.Types.ObjectId [];
+  acheivement?:  mongoose.Schema.Types.ObjectId [];
+  project?: mongoose.Schema.Types.ObjectId[];
+  skill?:mongoose.Schema.Types.ObjectId[];
+  training?:   mongoose.Schema.Types.ObjectId [];
 
-  customStyles?: { font: string };
+  //customStyles?: { font: string };
 }
 /* ResumeSchema will correspond to a collection in your MongoDB database. */
 const ResumeSchema = new mongoose.Schema<ResumeProps>(
@@ -35,10 +35,10 @@ const ResumeSchema = new mongoose.Schema<ResumeProps>(
       type: String,
       required: [true, "Please enter the resume's owner id."],
     },
-    personal: {
+    about:[ {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Personal',
-    },
+      ref: "About",
+    }],
     experience: [
       {
         type: mongoose.Schema.Types.ObjectId,
@@ -81,12 +81,12 @@ const ResumeSchema = new mongoose.Schema<ResumeProps>(
         ref: "Training",
       },
     ],
-    customStyles: {
-      font: {
-        type: String,
-        default: "Poppins",
-      },
-    },
+    // customStyles: {
+    //   font: {
+    //     type: String,
+    //     default: "Poppins",
+    //   },
+    // },
   },
   {
     toJSON: { virtuals: true },

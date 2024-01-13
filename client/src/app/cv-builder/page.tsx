@@ -14,7 +14,8 @@ import { instance } from "../api/instance";
 import useAuth from "../utils/authCheck";
 import { useMediaQuery } from "@mui/material";
 export interface PersonalData {
-  name?: string;
+  firstName?: string;
+  lastName?:string;
   designation?: string;
   objective?: string;
   email?: string;
@@ -78,13 +79,7 @@ const page = () => {
   const dispatch = useDispatch();
   const token= useSelector((state:RootState)=>state.token.token);
   const resumeId= useSelector((state:RootState)=>state.resumeToken.resumeId);
-  const dummyPersonalData: PersonalData = {
-    name: "Bishwas Dahal",
-    designation: "Web Developer",
-    objective: "Detail-oriented web developer with experience...",
-    email: "john@example.com",
-    phoneNumber: "+1234567890",
-  };
+ 
   useAuth();
   const setResumeData=async()=>{
     const {data}=await instance({
@@ -97,6 +92,7 @@ const page = () => {
               },
     });
     if(data.success){
+      
       dispatch(addResume(data.resume));
     }
     
@@ -111,7 +107,7 @@ return ()=>{
 },[])
 
   const resumeData = useSelector((state: RootState) => state.resume);
- 
+
   //   const dummyEducationData = useSelector((state:RootState)=>state.education)
   //   const dummyExperienceData = useSelector((state:RootState)=>state.experience)
   //   const dummyProjectData = useSelector((state:RootState)=>state.projects)
@@ -140,7 +136,7 @@ return ()=>{
         </div>
         <div className="min-w-[60%] flex justify-center">
           <CV
-            personalData={dummyPersonalData}
+            personalData={resumeData.personal}
             educationData={resumeData.education}
             experienceData={resumeData.experience}
             achievementsData={resumeData.acheivement}

@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 
 /* PersonalSchema will correspond to a collection in your MongoDB database. */
 
-type PersonalProps ={
+type AboutProps ={
   resumeId: mongoose.Types.ObjectId ;
   userId:string;
   firstName: string;
@@ -14,7 +14,7 @@ type PersonalProps ={
   address?: string;
   city?:string;
 }
-const PersonalSchema = new mongoose.Schema<PersonalProps>(
+const AboutSchema = new mongoose.Schema<AboutProps>(
   {
     resumeId: {
       type: mongoose.Schema.Types.ObjectId,
@@ -61,4 +61,4 @@ const PersonalSchema = new mongoose.Schema<PersonalProps>(
   },
 );
 
-export default mongoose.models.Personal || mongoose.model<PersonalProps>('Personal', PersonalSchema);
+export default mongoose.models.About || mongoose.model<AboutProps>('About', AboutSchema);

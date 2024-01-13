@@ -64,6 +64,7 @@ const About = () => {
       },
     });
     if(eduRes.data.success){
+      console.log(eduRes.data)
       dispatch(addPersonal(eduRes.data.personal));
     }
     

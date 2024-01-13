@@ -139,7 +139,7 @@ const page = () => {
           
           className="p-3 rounded-lg bg-blue-500 text-gray-100 hover:bg-blue-700 transition-all"
         >
-          {token ? "Update your resume": "Create your resume"}
+          {resumeId ? "Update your resume": "Create your resume"}
         </span>
       </div>
       <div className="mt-4 py-6 flex md:flex-row flex-wrap md:gap-10 justify-center items-center font-medium tracking-lighter text-lg border-b-2 border-gray-300">

@@ -30,12 +30,13 @@ const resumeSlice = createSlice({
   name: "resume",
   initialState,
   reducers: {
-    addResume(state,action: PayloadAction<TInitialProps>){
+    addResume(state,action){
         const payloadData = action.payload;
 
       // Use Immer's produce function to create a new state with the changes
       return produce(state, (draft) => {
-        draft.personal = { ...action.payload.personal };
+        
+        draft.personal = { ...action.payload.about[0] };
         draft.resumeMeta = { ...action.payload.resumeMeta };
        
         draft.experience = [ ...action.payload.experience];

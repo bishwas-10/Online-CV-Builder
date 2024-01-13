@@ -139,13 +139,13 @@ const CV: FC<CvProps> = ({
               className="pl-10 font-semibold text-t2-xl tracking-widest text-t1-black uppercase"
               style={{ letterSpacing: "7px" }}
             >
-              {personalData?.name && personalData?.name?.split(" ")[0]}
+              {personalData?.firstName }
             </h1>
             <h1
               className="pl-10  font-bold text-t2-2xl text-t2-primary uppercase"
               style={{ letterSpacing: "12px" }}
             >
-              {personalData?.name && personalData?.name?.split(" ")[1]}
+              {personalData?.lastName}
             </h1>
             <h3
               className="pr-10 top-3 font-medium text-t2-md text-t2-primary uppercase absolute w-full bg-t2-secondary text-right"

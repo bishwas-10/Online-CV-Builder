@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import Resume from "../../models/Resume";
-import Personal from "../../models/Personal";
+import About from "../../models/About";
 
 export const eachPersonal=async(req:Request,res:Response)=>{
     const {
@@ -12,7 +12,7 @@ export const eachPersonal=async(req:Request,res:Response)=>{
       switch (method) {
         case 'PUT':
           try {
-            const personal = await Personal.findOneAndUpdate({ _id: id, userId }, body, {
+            const personal = await About.findOneAndUpdate({ _id: id, userId }, body, {
               new: true,
               runValidators: true,
             });
@@ -28,12 +28,12 @@ export const eachPersonal=async(req:Request,res:Response)=>{
     
         case 'DELETE':
           try {
-            const personal = await Personal.findById(id);
+            const personal = await About.findById(id);
             await Resume.findOneAndUpdate(
               { resumeId: personal.resumeId, userId },
               {
                 $pull: {
-                  experience: personal.id,
+                  about: personal.id,
                 },
               },
             );

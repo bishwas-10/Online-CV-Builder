@@ -3,10 +3,10 @@ import { createSlice } from "@reduxjs/toolkit";
 
 
 export interface ResumeProps{
-resumeId:string ;
+resumeId:string | null;
 }
 const initialState:ResumeProps={
-    resumeId:""
+    resumeId:null
 }
 
 const resumeTokenSlice = createSlice({
@@ -16,8 +16,8 @@ const resumeTokenSlice = createSlice({
        setResume:(state, action)=>{
         state.resumeId = action.payload;
        },
-       removeResume:(state, action)=>{
-        state.resumeId = "";
+       removeResume:(state)=>{
+        state.resumeId = null;
        }
     }
 })

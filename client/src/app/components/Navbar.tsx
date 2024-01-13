@@ -9,6 +9,8 @@ import { signOut } from "../store/userSlice";
 import { useRouter } from "next/navigation";
 import { instance } from "../api/instance";
 import { removeToken } from "../store/tokenSlice";
+import { removeResume } from "../store/resumeTokenSlice";
+
 
 const Navbar: React.FC = () => {
   const dispatch = useDispatch();
@@ -30,6 +32,7 @@ const Navbar: React.FC = () => {
     if (data.status) {
       dispatch(signOut());
       dispatch(removeToken());
+      dispatch(removeResume());
       navigate.push("/signpage")
     }
   };
