@@ -5,10 +5,10 @@ import { useRouter } from 'next/navigation';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store/store';
 
-const useAuth = (redirectPath = '/login') => {
+const useAuth = (redirectPath = '/signpage') => {
   const router = useRouter();
 const isAuthenticated = !! useSelector((state:RootState)=>state.token.token);
-console.log(isAuthenticated);
+
   useEffect(() => {
     // Check if the user is authenticated
     // Replace this with your actual authentication logic

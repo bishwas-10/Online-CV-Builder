@@ -9,10 +9,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store/store";
 import { setResume } from "../store/resumeTokenSlice";
 import { addResume } from "../store/resumeSlice";
+import useAuth from "../utils/authCheck";
+import { useRouter } from "next/navigation";
 
 
 const page = () => {
   const dispatch= useDispatch();
+  
+  const router = useRouter();
   const token= useSelector((state:RootState)=>state.token.token);
   const resumeId= useSelector((state:RootState)=>state.resumeToken.resumeId);
   // const resumeHandler=async(title:string)=>{
@@ -36,6 +40,9 @@ const page = () => {
   
   const getResume=async()=>{
      try {
+      if(!token){
+        return router.push('/signpage');
+      }
       const  {data}  = await axios({
         url: `http://localhost:4000/api/users/resume`,
         withCredentials: true,
@@ -48,8 +55,9 @@ const page = () => {
   
       });
       if(data.success){
-       
+       console.log(data)
         dispatch(setResume(data.data._id));
+        router.push('/cv-builder');
       }
       
       
@@ -73,11 +81,46 @@ const page = () => {
             });
             console.log(data);
             
-            dispatch(setResume(data.data._id));
+            if(data.success){
+       
+              dispatch(setResume(data.data._id));
+              router.push('/cv-builder');
+            }
       }
      }
     }
   
+    const resumeHandler=async(title:string)=>{
+      try {
+        if(!token){
+          return router.push('/signpage');
+        }
+        if(!resumeId){
+        return getResume();
+        }else{
+          const { data } = await instance({
+              url: `/resume?templatename=${title}`,
+                method:   'GET' ,
+                headers: {
+                  'Content-Type': 'application/json',
+                  Authorization: `Bearer ${token}`,
+                },
+                data: {
+                  templateName: title,
+                  title: 'Your Resume',
+                },
+                
+              });
+              if(data.success){
+                dispatch(setResume(data?.data._id));
+                router.push('/cv-builder');
+              }
+              
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
   //const resume= useSelector((state:RootState)=>state.resume)
 
   return (
@@ -91,24 +134,24 @@ const page = () => {
           “resume rules” hiring managers look for. Stand out and get hired
           faster with field-tested resume templates.
         </p>
-        <Link
+        <span
         onClick={getResume}
-          href="/cv-builder"
+          
           className="p-3 rounded-lg bg-blue-500 text-gray-100 hover:bg-blue-700 transition-all"
         >
-          {resumeId ? "Update your resume": "Create your resume"}
-        </Link>
+          {token ? "Update your resume": "Create your resume"}
+        </span>
       </div>
       <div className="mt-4 py-6 flex md:flex-row flex-wrap md:gap-10 justify-center items-center font-medium tracking-lighter text-lg border-b-2 border-gray-300">
         <Link href={"/resume"} className="flex flex-row gap-3  opacity-60 hover:text-blue-500 transition-all"><LayoutPanelTop/>All templates</Link>
         {
             resumeTemplate.map((resume, index)=>{
-               return <Link key={index} href={`/resume`}
+               return <span key={index} onClick={()=>resumeHandler(resume.name)}
                className="flex flex-row gap-3 capitalize opacity-60 hover:text-blue-500 transition-all"
                >
                 <span><resume.icon/></span>
                 <span>{resume.name}</span>
-               </Link>
+               </span>
             })
         }
       </div>

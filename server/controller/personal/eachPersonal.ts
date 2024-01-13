@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
-import Experience from "../../models/Experience";
 import Resume from "../../models/Resume";
+import Personal from "../../models/Personal";
 
-export const eachExperience=async(req:Request,res:Response)=>{
+export const eachPersonal=async(req:Request,res:Response)=>{
     const {
         params: { id },
         body,
@@ -12,15 +12,15 @@ export const eachExperience=async(req:Request,res:Response)=>{
       switch (method) {
         case 'PUT':
           try {
-            const experience = await Experience.findOneAndUpdate({ _id: id, userId }, body, {
+            const personal = await Personal.findOneAndUpdate({ _id: id, userId }, body, {
               new: true,
               runValidators: true,
             });
-            if (!experience) {
-              return res.status(400).json({ success: false, error: 'Unable to edit experience data.' });
+            if (!personal) {
+              return res.status(400).json({ success: false, error: 'Unable to edit personal data.' });
             }
             
-            res.status(200).json({ success: true, experience });
+            res.status(200).json({ success: true, personal });
           } catch (error) {
             res.status(400).json({ success: false, error });
           }
@@ -28,16 +28,16 @@ export const eachExperience=async(req:Request,res:Response)=>{
     
         case 'DELETE':
           try {
-            const experience = await Experience.findById(id);
+            const personal = await Personal.findById(id);
             await Resume.findOneAndUpdate(
-              { resumeId: experience.resumeId, userId },
+              { resumeId: personal.resumeId, userId },
               {
                 $pull: {
-                  experience: experience.id,
+                  experience: personal.id,
                 },
               },
             );
-            experience.remove();
+            personal.remove();
             res.status(200).json({ success: true });
           } catch (error) {
             res.status(400).json({ success: false, error });

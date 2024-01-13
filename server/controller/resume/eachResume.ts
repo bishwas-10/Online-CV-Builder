@@ -7,6 +7,7 @@ import Trainings from "../../models/Trainings";
 import Skills from "../../models/Skills";
 import Projects from "../../models/Projects";
 import Achievement from "../../models/Achievement";
+import Personal from "../../models/Personal";
 
 export const eachResume=async(req:Request,res:Response)=>{
     const {
@@ -20,6 +21,7 @@ export const eachResume=async(req:Request,res:Response)=>{
         case 'GET':
           try {
             const resume = await Resume.findOne({ _id: id, userId }).populate([
+              { path: 'personal', model: Personal },
               { path: 'experience', model: Experience },
               { path: 'education', model: Education },
               { path: 'acheivement', model: Achievement },
@@ -28,6 +30,7 @@ export const eachResume=async(req:Request,res:Response)=>{
               { path: 'skill', model: Skills },
               { path: 'project', model: Projects },
           ]);
+          console.log(resume)
             if (!resume) {
               return res.status(404).json({ success: false, error: 'No such resume exist!' });
             }
@@ -45,6 +48,7 @@ export const eachResume=async(req:Request,res:Response)=>{
             }).populate([
               { path: 'experience', model: Experience },
               { path: 'education', model: Education },
+              { path: 'personal', model: Personal },
               { path: 'achievement', model: Achievement },
               { path: 'award', model: Awards },
               { path: 'training', model: Trainings },
@@ -71,6 +75,8 @@ export const eachResume=async(req:Request,res:Response)=>{
     
             const education = await Education.find({ resumeId: resume._id, userId });
             education.forEach(exp => exp.remove());
+            const personal = await Personal.find({ resumeId: resume._id, userId });
+            personal.forEach(exp => exp.remove());
             const achievement = await Achievement.find({ resumeId: resume._id, userId });
             achievement.forEach(exp => exp.remove());
             const award = await Awards.find({ resumeId: resume._id, userId });

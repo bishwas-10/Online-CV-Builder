@@ -12,6 +12,7 @@ import axios, { AxiosError } from "axios";
 import { addResume, removeResume } from "../store/resumeSlice";
 import { instance } from "../api/instance";
 import useAuth from "../utils/authCheck";
+import { useMediaQuery } from "@mui/material";
 export interface PersonalData {
   name?: string;
   designation?: string;
@@ -72,6 +73,8 @@ export interface Project {
   link: string;
 }
 const page = () => {
+  const desktop = useMediaQuery('(min-width:1024px)');
+  
   const dispatch = useDispatch();
   const token= useSelector((state:RootState)=>state.token.token);
   const resumeId= useSelector((state:RootState)=>state.resumeToken.resumeId);
@@ -108,7 +111,7 @@ return ()=>{
 },[])
 
   const resumeData = useSelector((state: RootState) => state.resume);
-  console.log(resumeData)
+ 
   //   const dummyEducationData = useSelector((state:RootState)=>state.education)
   //   const dummyExperienceData = useSelector((state:RootState)=>state.experience)
   //   const dummyProjectData = useSelector((state:RootState)=>state.projects)
@@ -123,6 +126,11 @@ return ()=>{
     font: "Arial, sans-serif",
     // Other custom styles
   };
+  if(!desktop){
+    return <div className="h-screen w-screen flex items-center justify-center">
+      pleas open it in a desktop for better experience
+    </div>
+  }
   return (
     <div>
       <div className="flex flex-row ">

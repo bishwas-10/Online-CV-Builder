@@ -16,9 +16,14 @@ import { eachTraining } from '../../controller/training/eachTraining';
 import { training } from '../../controller/training/training';
 import { eachResume } from '../../controller/resume/eachResume';
 import { resume } from '../../controller/resume/resume';
+import { eachPersonal } from '../../controller/personal/eachPersonal';
+import { personals } from '../../controller/personal/personal';
 
 
 const router = express.Router();
+//personal
+router.use('/personal/:id',authUser,eachPersonal);
+router.use('/personal',authUser,personals);
 //achievement
 router.use('/acheivement/:id',authUser,eachAcheivement);
 router.use('/acheivement',authUser,acheivement);

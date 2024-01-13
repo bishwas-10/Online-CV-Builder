@@ -17,7 +17,7 @@ const Navbar: React.FC = () => {
   const [signDiv, setSignDiv] = useState<Boolean>(false);
   const token = useSelector((state: RootState) => state.token);
   const userDetails = useSelector((state: RootState) => state.users);
-  console.log("home rendered")
+  
   const handleSignOut = async () => {
     const data = await instance({
       url: "/signout",

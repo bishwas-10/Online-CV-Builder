@@ -49,7 +49,7 @@ const CV: FC<CvProps> = ({
   customStyles,
 }) => {
   const ref = useRef<HTMLDivElement>(null);
-console.log(educationData)
+
   // // Dummy text for placeholders
   // const dummyPersonalData: PersonalData = {
   //   name: "John Doe",

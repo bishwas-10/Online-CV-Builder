@@ -5,15 +5,16 @@ interface ResumeProps {
   template: boolean;
   templateName: string;
   userId: string;
-  experience?: { type: mongoose.Schema.Types.ObjectId; };
-  education?: { type: mongoose.Schema.Types.ObjectId; };
-  award?: { type: mongoose.Schema.Types.ObjectId; };
-  acheivement?: { type: mongoose.Schema.Types.ObjectId; };
-  project?: { type: mongoose.Schema.Types.ObjectId; };
-  skill?: { type: mongoose.Schema.Types.ObjectId; };
-  training?: { type: mongoose.Schema.Types.ObjectId; };
+  personal?: { type: mongoose.Schema.Types.ObjectId };
+  experience?: { type: mongoose.Schema.Types.ObjectId };
+  education?: { type: mongoose.Schema.Types.ObjectId };
+  award?: { type: mongoose.Schema.Types.ObjectId };
+  acheivement?: { type: mongoose.Schema.Types.ObjectId };
+  project?: { type: mongoose.Schema.Types.ObjectId };
+  skill?: { type: mongoose.Schema.Types.ObjectId };
+  training?: { type: mongoose.Schema.Types.ObjectId };
 
-  customStyles?:{font:string;}
+  customStyles?: { font: string };
 }
 /* ResumeSchema will correspond to a collection in your MongoDB database. */
 const ResumeSchema = new mongoose.Schema<ResumeProps>(
@@ -28,12 +29,15 @@ const ResumeSchema = new mongoose.Schema<ResumeProps>(
     },
     templateName: {
       type: String,
-      default:"Simple"
+      default: "Simple",
     },
     userId: {
       type: String,
       required: [true, "Please enter the resume's owner id."],
-     
+    },
+    personal: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Personal',
     },
     experience: [
       {
@@ -62,7 +66,7 @@ const ResumeSchema = new mongoose.Schema<ResumeProps>(
     project: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref:"Project",
+        ref: "Project",
       },
     ],
     skill: [
@@ -91,4 +95,5 @@ const ResumeSchema = new mongoose.Schema<ResumeProps>(
   }
 );
 
-export default mongoose.models.Resume || mongoose.model<ResumeProps>("Resume", ResumeSchema);
+export default mongoose.models.Resume ||
+  mongoose.model<ResumeProps>("Resume", ResumeSchema);
