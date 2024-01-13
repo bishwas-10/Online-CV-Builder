@@ -37,6 +37,7 @@ const resumeSlice = createSlice({
       return produce(state, (draft) => {
         draft.personal = { ...action.payload.personal };
         draft.resumeMeta = { ...action.payload.resumeMeta };
+       
         draft.experience = [ ...action.payload.experience];
         draft.acheivement = [ ...action.payload.acheivement];
         draft.education = [ ...action.payload.education];

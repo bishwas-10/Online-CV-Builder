@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'Online-CV Builder',
-  description: 'Buil your CV online for free and get hired',
+  description: 'Build your CV online for free and get hired',
 }
 
 export default function RootLayout({

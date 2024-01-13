@@ -28,10 +28,12 @@ const ResumeSchema = new mongoose.Schema<ResumeProps>(
     },
     templateName: {
       type: String,
+      default:"Simple"
     },
     userId: {
       type: String,
       required: [true, "Please enter the resume's owner id."],
+     
     },
     experience: [
       {

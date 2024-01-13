@@ -15,37 +15,65 @@ const page = () => {
   const dispatch= useDispatch();
   const token= useSelector((state:RootState)=>state.token.token);
   const resumeId= useSelector((state:RootState)=>state.resumeToken.resumeId);
-  const resumeHandler=async(title:string)=>{
-    const { data } = await instance({
-    url: resumeId ? `/resume?templatename=${title}`:'/resume',
-      method:  resumeId? 'GET' :'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
-      data: {
-        templateName: title,
-        title: 'Your Resume',
-      },
+  // const resumeHandler=async(title:string)=>{
+  //   const { data } = await instance({
+  //   url: resumeId ? `/resume?templatename=${title}`:'/resume',
+  //     method:  resumeId? 'GET' :'POST',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //       Authorization: `Bearer ${token}`,
+  //     },
+  //     data: {
+  //       templateName: title,
+  //       title: 'Your Resume',
+  //     },
       
-    });
+  //   });
     
-    dispatch(setResume(data?.data._id));
+  //   dispatch(setResume(data?.data._id));
   
-  }
+  // }
   
   const getResume=async()=>{
-    // const { data } = await axios({
-    //   url: `http://localhost:4000/api/users/resume/65a0b94a7321a16322c3c648`,
-    //   method: 'GET',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //     Authorization: `Bearer ${token}`,
-    //   },
-    // });
-    // console.log(data.resume);
-    // dispatch(addResume(data.resume))
-  }
+     try {
+      const  {data}  = await axios({
+        url: `http://localhost:4000/api/users/resume`,
+        withCredentials: true,
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+          
+        },
+  
+      });
+    //  console.log(data.data)
+      dispatch(addResume(data.data))
+     } catch (error:any) {
+      console.log(error)
+      if(!error.response.data.success){
+        const { data } = await axios({
+              url: `http://localhost:4000/api/users/resume`,
+              withCredentials: true,
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+                
+              },
+              data: {
+               
+                title: 'Your Resume',
+              },
+        
+            });
+            console.log(data);
+            dispatch(addResume(data.data))
+            
+      }
+     }
+    }
+  
   //const resume= useSelector((state:RootState)=>state.resume)
 
   return (
@@ -61,17 +89,17 @@ const page = () => {
         </p>
         <Link
         onClick={getResume}
-          href="/cv-builder"
+          href="/"
           className="p-3 rounded-lg bg-blue-500 text-gray-100 hover:bg-blue-700 transition-all"
         >
-          Create Your Resume
+          {resumeId ? "Update your resume": "Create your resume"}
         </Link>
       </div>
       <div className="mt-4 py-6 flex md:flex-row flex-wrap md:gap-10 justify-center items-center font-medium tracking-lighter text-lg border-b-2 border-gray-300">
         <Link href={"/resume"} className="flex flex-row gap-3  opacity-60 hover:text-blue-500 transition-all"><LayoutPanelTop/>All templates</Link>
         {
             resumeTemplate.map((resume, index)=>{
-               return <Link key={index} onClick={()=>resumeHandler(resume.name)} href={`/resume`}
+               return <Link key={index} href={`/resume`}
                className="flex flex-row gap-3 capitalize opacity-60 hover:text-blue-500 transition-all"
                >
                 <span><resume.icon/></span>

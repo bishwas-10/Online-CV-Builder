@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store/store";
 import FIeldSelector from "../components/FIeldSelector";
 import CV from "@/app/template/SampleCv";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { addResume, removeResume } from "../store/resumeSlice";
 export interface PersonalData {
   name?: string;
@@ -70,34 +70,7 @@ export interface Project {
   link: string;
 }
 const page = () => {
-  const dispatch= useDispatch();
-  const resumeId = useSelector((state:RootState)=>state.resumeToken.resumeId);
-  console.log(resumeId)
-  const token= useSelector((state:RootState)=>state.token.token);
-  const getResume=async(authToken:string)=>{
-    const { data } = await axios({
-      url: `http://localhost:4000/api/users/resume/${resumeId}`,
-      withCredentials: true,
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${authToken}`,
-        
-      },
-
-    });
-    console.log(data.resume);
-    dispatch(addResume(data.resume))
-  }
-  useEffect(()=>{
-  if(token){
-    getResume(token)
-    
-  }
-  return ()=>{
-    dispatch(removeResume())
-  }
-  },[])
+ 
   const dummyPersonalData: PersonalData = {
     name: "Bishwas Dahal",
     designation: "Web Developer",

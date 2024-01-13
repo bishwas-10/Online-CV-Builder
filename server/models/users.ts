@@ -1,4 +1,4 @@
-import {Document ,model, Schema} from "mongoose";
+import mongoose, {Document ,model, Schema} from "mongoose";
 
 
 
@@ -7,6 +7,7 @@ export interface UserProps extends Document{
     email:string;
     password?:string;
     confirmPassword?:string;
+    resume?:{ type: mongoose.Schema.Types.ObjectId; }[];
 
 }
 
@@ -24,7 +25,13 @@ const userSchema = new Schema<UserProps>({
     password:{
         type:String,
         required:[true, 'is required feild']
-    }
+    },
+    resume: [
+        {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Resume",
+        },
+      ],
 },
 {
     timestamps:true

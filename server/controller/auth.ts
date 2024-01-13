@@ -4,6 +4,7 @@ import { NextFunction, Request, Response } from "express";
 import createSecretToken from "../utils/secretToken";
 import { hashPassword, verifyPassword } from "../utils/password";
 import createRefreshToken from "../utils/createRefreshToken";
+import Resume from "../models/Resume";
 
 //sigup
 
@@ -27,7 +28,7 @@ const signUpSchema = z
     next: NextFunction
   ) => {
     
-    console.log(req.body)
+ 
     try {
       const validation=  signUpSchema.safeParse(req.body);
         if(!validation.success){
@@ -73,7 +74,9 @@ const signUpSchema = z
           .send({ status: false, message: "all fields are mandatory" });
       }
   
-      const existingUser = await User.findOne({ email });
+      const existingUser = await User.findOne({ email }).populate([
+        {path:"resume",model:Resume}
+      ]);
   
       if (!existingUser) {
         return res
@@ -98,6 +101,7 @@ const signUpSchema = z
         _id: existingUser._id,
         username: existingUser.username,
         email: existingUser.email,
+        resume:existingUser.resume
       };
       const expiryDate = new Date(Date.now() + 7200000); //1hour
   

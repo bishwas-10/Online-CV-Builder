@@ -20,7 +20,8 @@ export const resume = async (req: Request, res: Response) => {
           userId: "",
         };
    
-        const resume = await Resume.findOne({userId:userId,templateName:templatename});
+        const resume = await Resume.findOne({userId:userId});
+      console.log("triggered")
         if (!resume) {
           return res.status(400).json({ success: false });
         }
@@ -38,6 +39,7 @@ export const resume = async (req: Request, res: Response) => {
           userId,
           templateName: body.templateName,
         });
+        
         if (!resume) {
           return res.status(400).json({ success: false });
         }
