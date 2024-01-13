@@ -8,6 +8,7 @@ import { RootState } from "../store/store";
 import { signOut } from "../store/userSlice";
 import { useRouter } from "next/navigation";
 import { instance } from "../api/instance";
+import { removeToken } from "../store/tokenSlice";
 
 const Navbar: React.FC = () => {
   const dispatch = useDispatch();
@@ -28,6 +29,8 @@ const Navbar: React.FC = () => {
     });
     if (data.status) {
       dispatch(signOut());
+      dispatch(removeToken());
+      navigate.push("/signpage")
     }
   };
   return (

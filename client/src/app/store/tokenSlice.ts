@@ -16,7 +16,7 @@ const tokenSlice = createSlice({
        setToken:(state, action)=>{
         state.token = action.payload;
        },
-       removeToken:(state, action)=>{
+       removeToken:(state)=>{
         state.token = null;
        }
     }

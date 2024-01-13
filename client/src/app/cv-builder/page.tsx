@@ -10,6 +10,8 @@ import FIeldSelector from "../components/FIeldSelector";
 import CV from "@/app/template/SampleCv";
 import axios, { AxiosError } from "axios";
 import { addResume, removeResume } from "../store/resumeSlice";
+import { instance } from "../api/instance";
+import useAuth from "../utils/authCheck";
 export interface PersonalData {
   name?: string;
   designation?: string;
@@ -70,7 +72,9 @@ export interface Project {
   link: string;
 }
 const page = () => {
- 
+  const dispatch = useDispatch();
+  const token= useSelector((state:RootState)=>state.token.token);
+  const resumeId= useSelector((state:RootState)=>state.resumeToken.resumeId);
   const dummyPersonalData: PersonalData = {
     name: "Bishwas Dahal",
     designation: "Web Developer",
@@ -78,7 +82,33 @@ const page = () => {
     email: "john@example.com",
     phoneNumber: "+1234567890",
   };
+  useAuth();
+  const setResumeData=async()=>{
+    const {data}=await instance({
+      url:`/resume/${resumeId}`,
+      method: 'GET',
+              headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+                
+              },
+    });
+    if(data.success){
+      dispatch(addResume(data.resume));
+    }
+    
+  }
+useEffect(()=>{
+if(resumeId){
+  setResumeData();
+}
+return ()=>{
+  dispatch(removeResume());
+}
+},[])
+
   const resumeData = useSelector((state: RootState) => state.resume);
+  console.log(resumeData)
   //   const dummyEducationData = useSelector((state:RootState)=>state.education)
   //   const dummyExperienceData = useSelector((state:RootState)=>state.experience)
   //   const dummyProjectData = useSelector((state:RootState)=>state.projects)

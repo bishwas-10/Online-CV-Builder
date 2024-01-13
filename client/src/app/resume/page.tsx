@@ -47,8 +47,12 @@ const page = () => {
         },
   
       });
-    //  console.log(data.data)
-      dispatch(addResume(data.data))
+      if(data.success){
+       
+        dispatch(setResume(data.data._id));
+      }
+      
+      
      } catch (error:any) {
       console.log(error)
       if(!error.response.data.success){
@@ -68,8 +72,8 @@ const page = () => {
         
             });
             console.log(data);
-            dispatch(addResume(data.data))
             
+            dispatch(setResume(data.data._id));
       }
      }
     }
@@ -89,7 +93,7 @@ const page = () => {
         </p>
         <Link
         onClick={getResume}
-          href="/"
+          href="/cv-builder"
           className="p-3 rounded-lg bg-blue-500 text-gray-100 hover:bg-blue-700 transition-all"
         >
           {resumeId ? "Update your resume": "Create your resume"}
