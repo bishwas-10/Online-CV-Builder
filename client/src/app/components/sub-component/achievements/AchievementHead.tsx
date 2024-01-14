@@ -3,27 +3,39 @@ import { Briefcase, ChevronDown, ChevronUp, Trash } from "lucide-react";
 
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
-import AcheivementForm, { TAchieveSchema } from "./AchievementForm";
-import {
-  deleteAchieveField,
-  setAchieveVisibility,
-  unsetAchieveVisibility,
-} from "@/app/store/achieveSlice";
+import AcheivementForm from "./AchievementForm";
+import { deleteSingleAcheivement, setAcheiveVisibility, unsetAcheiveVisibility } from "@/app/store/resumeSlice";
+import { instance } from "@/app/api/instance";
+import { TAcheivementProps } from "@/app/store/types";
+
 
 const AchievementHead = () => {
   const dispatch = useDispatch();
-  const achieveDetails = useSelector((state: RootState) => state.achievements);
+  const achieveDetails = useSelector((state: RootState) => state.resume.acheivement);
   const [showDetails, setShowDetails] = useState<boolean>(false);
-
-  const handleTrashClick = (items: TAchieveSchema) => {
-    dispatch(deleteAchieveField(items));
+  const token = useSelector((state:RootState)=>state.token);
+  const handleTrashClick =async (items: TAcheivementProps) => {
+    const delRes = await instance({
+      url:`/education/${items._id}`,
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+     
+    });
+    
+   // console.log([...expeRes?.data.experience])
+     if(delRes.data.success){
+      dispatch(deleteSingleAcheivement(items));
+     }
   };
-  const handleDownClick = (items: TAchieveSchema) => {
+  const handleDownClick = (items: TAcheivementProps) => {
     if (showDetails) {
-      dispatch(unsetAchieveVisibility(items));
+      dispatch(unsetAcheiveVisibility(items));
       setShowDetails(false);
     } else {
-      dispatch(setAchieveVisibility(items));
+      dispatch(setAcheiveVisibility(items));
       setShowDetails(true);
     }
   };

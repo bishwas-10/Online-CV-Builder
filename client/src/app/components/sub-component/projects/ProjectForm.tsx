@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/store/store";
 import { instance } from "@/app/api/instance";
 import { addProjects } from "@/app/store/resumeSlice";
+import { TProjectProps } from "@/app/store/types";
 export const projectSchema = z.object({
   projectTitle: z.string({ required_error: "project title is required" }),
   description: z.string({ required_error: "description is required" }),
@@ -17,7 +18,7 @@ export const projectSchema = z.object({
 });
 
 export type TProjectSchema = z.infer<typeof projectSchema>;
-const ProjectForm = ({ items }: { items: TProjectSchema }) => {
+const ProjectForm = ({ items }: { items: TProjectProps }) => {
   const dispatch = useDispatch();
   const token = useSelector((state:RootState)=>state.token);
   const resumeId = useSelector((state:RootState)=>state.resumeToken.resumeId);
@@ -41,8 +42,8 @@ const ProjectForm = ({ items }: { items: TProjectSchema }) => {
     // TODO: submit to servers
     // ...
     const projectRes = await instance({
-      url: `/project`,
-      method: 'POST',
+      url:items._id ? `/project/${items._id}`:`/project`,
+      method: items._id ?'PUT':'POST',
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,

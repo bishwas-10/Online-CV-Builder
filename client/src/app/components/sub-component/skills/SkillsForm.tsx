@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/store/store";
 import { instance } from "@/app/api/instance";
 import { addSKills } from "@/app/store/resumeSlice";
+import { TSkillProps } from "@/app/store/types";
 export const skillSchema = z
   .object({
     skillTitle: z.string({required_error:"Skill title is required"}),
@@ -17,7 +18,7 @@ export const skillSchema = z
   });
   
 export type TSkillSchema = z.infer<typeof skillSchema>;
-const SkillsForm = ({ items }: { items: TSkillSchema }) => {
+const SkillsForm = ({ items }: { items: TSkillProps }) => {
   const dispatch = useDispatch();
   const token = useSelector((state:RootState )=>state.token);
   const resumeId = useSelector((state:RootState)=>state.resumeToken.resumeId);
@@ -42,8 +43,8 @@ const SkillsForm = ({ items }: { items: TSkillSchema }) => {
     // TODO: submit to servers
     // ...
     const skillRes = await instance({
-      url: `/skill`,
-      method: 'POST',
+      url:items._id ? `/skill/${items._id}`:`/skill`,
+      method: items._id ?'PUT':'POST',
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,

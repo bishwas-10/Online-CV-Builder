@@ -3,21 +3,36 @@ import { Briefcase, ChevronDown, ChevronUp, Trash } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
 import TrainingForm, { TTrainingSchema } from "./TrainingForm";
-import {
-  deleteTrainingField,
-  setTrainingVisibility,
-  unsetTrainingVisibility,
-} from "@/app/store/trainingSlice";
+import { deleteSingleTrainings, setTrainingVisibility, unsetTrainingVisibility } from "@/app/store/resumeSlice";
+import { TTrainingProps } from "@/app/store/types";
+import { instance } from "@/app/api/instance";
+
 
 const TrainingHead = () => {
   const dispatch = useDispatch();
-  const trainingDetails = useSelector((state: RootState) => state.trainings);
+  const trainingDetails = useSelector((state: RootState) => state.resume.training);
   const [showDetails, setShowDetails] = useState<boolean>(false);
-
-  const handleTrashClick = (items: TTrainingSchema) => {
-    dispatch(deleteTrainingField(items));
+  const token = useSelector((state:RootState )=>state.token);
+  const handleTrashClick =async (items: TTrainingProps) => {
+    
+    const delRes = await instance({
+      url:`/experience/${items._id}`,
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+     
+    });
+    console.log(delRes.data);
+   // console.log([...expeRes?.data.experience])
+     if(delRes.data.success){
+      dispatch(deleteSingleTrainings(items));
+     }
+    
+  
   };
-  const handleDownClick = (items: TTrainingSchema) => {
+  const handleDownClick = (items: TTrainingProps) => {
     if (showDetails) {
       dispatch(unsetTrainingVisibility(items));
       setShowDetails(false);

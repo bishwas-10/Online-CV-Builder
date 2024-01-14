@@ -12,7 +12,7 @@ export const eachSkill=async(req:Request,res:Response)=>{
       switch (method) {
         case 'PUT':
           try {
-            const skill = await Skill.findOneAndUpdate({ _id: id, userId }, body, {
+            const skill = await Skill.findOneAndUpdate({ _id: id,  userId:userId  }, body, {
               new: true,
               runValidators: true,
             });
@@ -29,14 +29,14 @@ export const eachSkill=async(req:Request,res:Response)=>{
           try {
             const skill = await Skill.findById(id);
             await Resume.findOneAndUpdate(
-              { resumeId: skill.resumeId, userId },
+              { resumeId: skill.resumeId,  userId:userId  },
               {
                 $pull: {
                     skill: skill.id,
                 },
               },
             );
-            skill.remove();
+            await Skill.findByIdAndDelete(id);
             res.status(200).json({ success: true });
           } catch (error) {
             res.status(400).json({ success: false, error });

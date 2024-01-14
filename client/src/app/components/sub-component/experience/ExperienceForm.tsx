@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { instance } from "@/app/api/instance";
 import { RootState } from "@/app/store/store";
 import { addExperience } from "@/app/store/resumeSlice";
+import { TExperienceProps } from "@/app/store/types";
 export const experienceSchema = z
   .object({
     jobTitle: z.string({ required_error: "job title is required" }),
@@ -35,7 +36,7 @@ export const experienceSchema = z
     }
   );
 export type TExperienceSchema = z.infer<typeof experienceSchema>;
-const ExperienceForm = ({ items }: { items: TExperienceSchema }) => {
+const ExperienceForm = ({ items }: { items: TExperienceProps }) => {
   const dispatch = useDispatch();
   //   const [jobTitle, setjobTitle] = useState<string>(items?.jobTitle);
   //   const [employer, setEmployer] = useState<string>(items?.employer);
@@ -63,10 +64,10 @@ const ExperienceForm = ({ items }: { items: TExperienceSchema }) => {
     // TODO: submit to servers
     // ...
     const expeRes = await instance({
-      url: `/experience`,
-      method: "POST",
+      url:items._id ? `/experience/${items._id}`:`/experience`,
+      method: items._id ?'PUT':'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
       },
       data: {

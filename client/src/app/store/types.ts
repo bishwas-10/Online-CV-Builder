@@ -23,13 +23,15 @@ export type TEducationProps={
 }
 
 export type TAcheivementProps = {
-    _id:string;
+    _id:string | null;
+    resumeId:string | null;
     description: string;
     visibility: boolean;
     achieveTitle: string;
 }
 export type TAwardProps = {
-    _id:string;
+    _id:string | null;
+    resumeId:string | null;
     city: string;
     description: string;
     visibility: boolean;
@@ -38,20 +40,23 @@ export type TAwardProps = {
     receivedDate: string;
 }
 export type TProjectProps = {
-    _id:string;
+    _id:string | null;
+    resumeId:string | null;
     description: string;
     visibility: boolean;
     projectTitle: string;
     projectLink: string;
 }
 export type TSkillProps = {
-    _id:string;
+    _id:string | null;
+    resumeId:string | null;
     visibility: boolean;
     skillTitle: string;
     level: string;
 }
 export type TTrainingProps = {
-    _id:string;
+    _id:string | null;
+    resumeId:string | null;
     description: string;
     visibility: boolean;
     trainingTitle: string;

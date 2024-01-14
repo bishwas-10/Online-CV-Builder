@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/store/store";
 import { instance } from "@/app/api/instance";
 import { addTrainings } from "@/app/store/resumeSlice";
+import { TTrainingProps } from "@/app/store/types";
 export const trainingSchema = z.object({
   trainingTitle: z.string({ required_error: "training title is required" }),
   institute: z.string(),
@@ -19,7 +20,7 @@ export const trainingSchema = z.object({
 });
 
 export type TTrainingSchema = z.infer<typeof trainingSchema>;
-const TrainingForm = ({ items }: { items: TTrainingSchema }) => {
+const TrainingForm = ({ items }: { items: TTrainingProps }) => {
   const dispatch = useDispatch();
   const token = useSelector((state: RootState) => state.token);
   const resumeId = useSelector(
@@ -47,10 +48,10 @@ const TrainingForm = ({ items }: { items: TTrainingSchema }) => {
     // TODO: submit to servers
     // ...
     const trainingRes = await instance({
-      url: `/training`,
-      method: "POST",
+      url:items._id ? `/training/${items._id}`:`/training`,
+      method: items._id ?'PUT':'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
       },
       data: {

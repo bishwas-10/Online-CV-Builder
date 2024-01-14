@@ -35,7 +35,7 @@ const expeSlice = createSlice({
     }
 })
 
-export const{setExperienceField,deleteExperienceField,setExpeVisibility,unsetExpeVisibility}= expeSlice.actions;
+export const{setExperienceField,deleteExperienceField,}= expeSlice.actions;
 
 export default expeSlice.reducer;
 

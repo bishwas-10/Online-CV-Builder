@@ -26,7 +26,7 @@ const projectSlice = createSlice({
     }
 })
 
-export const{setProjectField,deleteProjectField,setProjectVisibility,unsetProjectVisibility}= projectSlice.actions;
+export const{setProjectField,deleteProjectField,}= projectSlice.actions;
 
 export default projectSlice.reducer;
 

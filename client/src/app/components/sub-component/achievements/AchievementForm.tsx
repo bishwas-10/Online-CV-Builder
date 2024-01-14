@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/store/store";
 import { instance } from "@/app/api/instance";
 import { addAcheivement } from "@/app/store/resumeSlice";
+import { TAcheivementProps } from "@/app/store/types";
 export const achieveSchema = z.object({
   achieveTitle: z.string({ required_error: "achieve title is required" }),
   description: z.string({ required_error: "description is required" }),
@@ -16,7 +17,7 @@ export const achieveSchema = z.object({
 });
 
 export type TAchieveSchema = z.infer<typeof achieveSchema>;
-const AcheivementForm = ({ items }: { items: TAchieveSchema }) => {
+const AcheivementForm = ({ items }: { items: TAcheivementProps }) => {
   const dispatch = useDispatch();
   const token = useSelector((state:RootState)=>state.token);
   const resumeId = useSelector((state:RootState)=>state.resumeToken.resumeId);
@@ -39,8 +40,8 @@ const AcheivementForm = ({ items }: { items: TAchieveSchema }) => {
     // TODO: submit to servers
     // ...
     const acheiveRes = await instance({
-      url: `/acheivement`,
-      method: 'POST',
+      url:items._id ? `/acheivement/${items._id}`:`/acheivement`,
+      method: items._id ?'PUT':'POST',
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
@@ -100,7 +101,7 @@ const AcheivementForm = ({ items }: { items: TAchieveSchema }) => {
         >
           <div className="flex flex-col gap-2 w-[100%]">
             <div className="flex flex-col gap-1">
-              <StyledLabel htmlFor="projectTitle">Project Title</StyledLabel>
+              <StyledLabel htmlFor="acheiveTitle">Acheivement Title</StyledLabel>
               <StyledInput
                 defaultValue={items?.achieveTitle}
                 type="text"

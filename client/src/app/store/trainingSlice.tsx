@@ -30,7 +30,7 @@ const trainingSlice = createSlice({
     }
 })
 
-export const{setTrainingField,deleteTrainingField,setTrainingVisibility,unsetTrainingVisibility}= trainingSlice.actions;
+export const{setTrainingField,deleteTrainingField,}= trainingSlice.actions;
 
 export default trainingSlice.reducer;
 

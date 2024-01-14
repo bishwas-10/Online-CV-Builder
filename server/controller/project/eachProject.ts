@@ -12,7 +12,7 @@ export const eachProject=async(req:Request,res:Response)=>{
       switch (method) {
         case 'PUT':
           try {
-            const project = await Project.findOneAndUpdate({ _id: id, userId }, body, {
+            const project = await Project.findOneAndUpdate({ _id: id,  userId:userId  }, body, {
               new: true,
               runValidators: true,
             });
@@ -29,14 +29,14 @@ export const eachProject=async(req:Request,res:Response)=>{
           try {
             const project = await Project.findById(id);
             await Resume.findOneAndUpdate(
-              { resumeId: project.resumeId, userId },
+              { resumeId: project.resumeId,  userId:userId  },
               {
                 $pull: {
                     project: project.id,
                 },
               },
             );
-            project.remove();
+            await Project.findByIdAndDelete(id);
             res.status(200).json({ success: true });
           } catch (error) {
             res.status(400).json({ success: false, error });

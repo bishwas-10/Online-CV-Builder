@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/store/store";
 import { instance } from "@/app/api/instance";
 import { addAwards } from "@/app/store/resumeSlice";
+import { TAwardProps } from "@/app/store/types";
 export const awardSchema = z.object({
   awardTitle: z.string({ required_error: "award title is required" }),
   organization: z.string(),
@@ -21,7 +22,7 @@ export const awardSchema = z.object({
 });
 
 export type TAwardSchema = z.infer<typeof awardSchema>;
-const AwardForm = ({ items }: { items: TAwardSchema }) => {
+const AwardForm = ({ items }: { items: TAwardProps }) => {
   const dispatch = useDispatch();
   //   const [jobTitle, setjobTitle] = useState<string>(items?.jobTitle);
   //   const [employer, setEmployer] = useState<string>(items?.employer);
@@ -47,10 +48,10 @@ const AwardForm = ({ items }: { items: TAwardSchema }) => {
     // TODO: submit to servers
     // ...
     const awardRes = await instance({
-      url: `/award`,
-      method: "POST",
+      url:items._id ? `/acheivement/${items._id}`:`/acheivement`,
+      method: items._id ?'PUT':'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
       },
       data: {

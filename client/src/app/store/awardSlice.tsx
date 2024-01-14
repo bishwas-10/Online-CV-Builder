@@ -30,7 +30,7 @@ const awardSlice = createSlice({
     }
 })
 
-export const{setAwardField,deleteAwardField,setAwardVisibility,unsetAwardVisibility}= awardSlice.actions;
+export const{setAwardField,deleteAwardField}= awardSlice.actions;
 
 export default awardSlice.reducer;
 

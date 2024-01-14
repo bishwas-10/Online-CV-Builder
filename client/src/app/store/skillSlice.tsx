@@ -30,7 +30,7 @@ const skillSlice = createSlice({
     }
 })
 
-export const{setskillField,deleteSkillField,setSkillVisibility,unsetSkillVisibility}= skillSlice.actions;
+export const{setskillField,deleteSkillField,}= skillSlice.actions;
 
 export default skillSlice.reducer;
 

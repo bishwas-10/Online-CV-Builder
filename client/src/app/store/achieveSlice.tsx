@@ -30,7 +30,7 @@ const achieveSlice = createSlice({
     }
 })
 
-export const{setAchieveField,deleteAchieveField,setAchieveVisibility,unsetAchieveVisibility}= achieveSlice.actions;
+export const{setAchieveField,deleteAchieveField,}= achieveSlice.actions;
 
 export default achieveSlice.reducer;
 

@@ -32,7 +32,7 @@ const Projects = () => {
             className="flex flex-row items-center gap-2 text-lg text-blue-500"
           >
             <span className="font-bold">+</span>
-            <span>Add Projects</span>
+            <span>Add Acheivements</span>
           </button>
         </div>
       </div>

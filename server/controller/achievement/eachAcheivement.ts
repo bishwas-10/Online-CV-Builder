@@ -12,7 +12,7 @@ export const eachAcheivement=async(req:Request,res:Response)=>{
       switch (method) {
         case 'PUT':
           try {
-            const acheivement = await Acheivement.findOneAndUpdate({ _id: id, userId }, body, {
+            const acheivement = await Acheivement.findOneAndUpdate({ _id: id, userId:userId }, body, {
               new: true,
               runValidators: true,
             });
@@ -29,14 +29,14 @@ export const eachAcheivement=async(req:Request,res:Response)=>{
           try {
             const acheivement = await Acheivement.findById(id);
             await Resume.findOneAndUpdate(
-              { resumeId: acheivement.resumeId, userId },
+              { resumeId: acheivement.resumeId, userId:userId },
               {
                 $pull: {
                     acheivement: acheivement.id,
                 },
               },
             );
-            acheivement.remove();
+            await Acheivement.findByIdAndDelete(id);
             res.status(200).json({ success: true });
           } catch (error) {
             res.status(400).json({ success: false, error });

@@ -4,17 +4,33 @@ import { Briefcase, ChevronDown, ChevronUp, Trash } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
 import ProjectForm, { TProjectSchema } from "./ProjectForm";
-import { deleteProjectField, setProjectVisibility, unsetProjectVisibility } from "@/app/store/projectSlice";
+import { deleteSingleProjects, setProjectVisibility, unsetProjectVisibility } from "@/app/store/resumeSlice";
+import { instance } from "@/app/api/instance";
+import { TProjectProps } from "@/app/store/types";
 
 const ProjectHead = () => {
   const dispatch = useDispatch();
-  const projectDetails = useSelector((state: RootState) => state.projects);
+  const projectDetails = useSelector((state: RootState) => state.resume.project);
   const [showDetails, setShowDetails] = useState<boolean>(false);
-
-  const handleTrashClick = (items: TProjectSchema) => {
-    dispatch(deleteProjectField(items));
+  const token = useSelector((state: RootState) => state.token);
+  const handleTrashClick = async(items: TProjectProps) => {
+    const delRes = await instance({
+      url:`/experience/${items._id}`,
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+     
+    });
+    console.log(delRes.data);
+   // console.log([...expeRes?.data.experience])
+     if(delRes.data.success){
+      dispatch(deleteSingleProjects(items));
+     }
+    
   };
-  const handleDownClick = (items: TProjectSchema) => {
+  const handleDownClick = (items: TProjectProps) => {
     if (showDetails) {
       dispatch(unsetProjectVisibility(items));
       setShowDetails(false);

@@ -3,17 +3,35 @@ import { Briefcase, ChevronDown, ChevronUp, Trash } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
 import SkillsForm, { TSkillSchema } from "./SkillsForm";
-import { deleteSkillField, setSkillVisibility, unsetSkillVisibility } from "@/app/store/skillSlice";
+import { deleteSingleSkills, setSkillVisibility, unsetSkillVisibility } from "@/app/store/resumeSlice";
+import { TSkillProps } from "@/app/store/types";
+import { instance } from "@/app/api/instance";
 
 const ProjectHead = () => {
   const dispatch = useDispatch();
-  const skillDetails = useSelector((state: RootState) => state.skills);
+  const skillDetails = useSelector((state: RootState) => state.resume.skill);
   const [showDetails, setShowDetails] = useState<boolean>(false);
-
-  const handleTrashClick = (items: TSkillSchema) => {
-    dispatch(deleteSkillField(items));
+  const token = useSelector((state:RootState )=>state.token);
+  const handleTrashClick =async (items: TSkillProps) => {
+    
+    const delRes = await instance({
+      url:`/experience/${items._id}`,
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+     
+    });
+    console.log(delRes.data);
+   // console.log([...expeRes?.data.experience])
+     if(delRes.data.success){
+      dispatch(deleteSingleSkills(items));
+     }
+    
+  
   };
-  const handleDownClick = (items: TSkillSchema) => {
+  const handleDownClick = (items: TSkillProps) => {
     if (showDetails) {
       dispatch(unsetSkillVisibility(items));
       setShowDetails(false);

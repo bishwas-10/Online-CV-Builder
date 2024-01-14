@@ -12,7 +12,7 @@ export const eachTraining=async(req:Request,res:Response)=>{
       switch (method) {
         case 'PUT':
           try {
-            const training = await Training.findOneAndUpdate({ _id: id, userId }, body, {
+            const training = await Training.findOneAndUpdate({ _id: id,  userId:userId  }, body, {
               new: true,
               runValidators: true,
             });
@@ -29,14 +29,14 @@ export const eachTraining=async(req:Request,res:Response)=>{
           try {
             const training = await Training.findById(id);
             await Resume.findOneAndUpdate(
-              { resumeId: training.resumeId, userId },
+              { resumeId: training.resumeId,  userId:userId  },
               {
                 $pull: {
                     training: training.id,
                 },
               },
             );
-            training.remove();
+            await Training.findByIdAndDelete(id);
             res.status(200).json({ success: true });
           } catch (error) {
             res.status(400).json({ success: false, error });

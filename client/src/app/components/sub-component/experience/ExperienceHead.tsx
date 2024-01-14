@@ -4,18 +4,33 @@ import { Briefcase, ChevronDown, ChevronUp, Trash } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
 import ExperienceForm, { TExperienceSchema } from "./ExperienceForm";
-
-import { deleteExperienceField, setExpeVisibility, unsetExpeVisibility } from "@/app/store/expeSlice";
+import { TExperienceProps } from "@/app/store/types";
+import { deleteSingleExperience, setExpeVisibility, unsetExpeVisibility } from "@/app/store/resumeSlice";
+import { instance } from "@/app/api/instance";
 
 const ExperienceHead = () => {
   const dispatch = useDispatch();
-  const expeDetails = useSelector((state: RootState) => state.experience);
+  const expeDetails = useSelector((state: RootState) => state.resume.experience);
   const [showDetails, setShowDetails] = useState<boolean>(false);
-
-  const handleTrashClick = (items: TExperienceSchema) => {
-    dispatch(deleteExperienceField(items));
+  const token = useSelector((state: RootState) => state.token);
+  const handleTrashClick =async (items: TExperienceProps) => {
+    const delRes = await instance({
+      url:`/experience/${items._id}`,
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+     
+    });
+    console.log(delRes.data);
+   // console.log([...expeRes?.data.experience])
+     if(delRes.data.success){
+      dispatch(deleteSingleExperience(items));
+     }
+    
   };
-  const handleDownClick = (items: TExperienceSchema) => {
+  const handleDownClick = (items: TExperienceProps) => {
     if (showDetails) {
       dispatch(unsetExpeVisibility(items));
       setShowDetails(false);

@@ -12,7 +12,7 @@ export const eachAward=async(req:Request,res:Response)=>{
       switch (method) {
         case 'PUT':
           try {
-            const award = await Award.findOneAndUpdate({ _id: id, userId }, body, {
+            const award = await Award.findOneAndUpdate({ _id: id,  userId:userId  }, body, {
               new: true,
               runValidators: true,
             });
@@ -29,14 +29,14 @@ export const eachAward=async(req:Request,res:Response)=>{
           try {
             const award = await Award.findById(id);
             await Resume.findOneAndUpdate(
-              { resumeId: award.resumeId, userId },
+              { resumeId: award.resumeId,  userId:userId  },
               {
                 $pull: {
                     award: award.id,
                 },
               },
             );
-            award.remove();
+            await Award.findByIdAndDelete(id);
             res.status(200).json({ success: true });
           } catch (error) {
             res.status(400).json({ success: false, error });

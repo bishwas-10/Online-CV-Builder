@@ -12,7 +12,7 @@ export const eachExperience=async(req:Request,res:Response)=>{
       switch (method) {
         case 'PUT':
           try {
-            const experience = await Experience.findOneAndUpdate({ _id: id, userId }, body, {
+            const experience = await Experience.findOneAndUpdate({ _id: id,  userId:userId  }, body, {
               new: true,
               runValidators: true,
             });
@@ -30,14 +30,14 @@ export const eachExperience=async(req:Request,res:Response)=>{
           try {
             const experience = await Experience.findById(id);
             await Resume.findOneAndUpdate(
-              { resumeId: experience.resumeId, userId },
+              { resumeId: experience.resumeId,  userId:userId  },
               {
                 $pull: {
                   experience: experience.id,
                 },
               },
             );
-            experience.remove();
+            await Experience.findByIdAndDelete(id);
             res.status(200).json({ success: true });
           } catch (error) {
             res.status(400).json({ success: false, error });

@@ -3,18 +3,34 @@ import { Briefcase, ChevronDown, ChevronUp, Trash } from "lucide-react";
 
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
-import { deleteAwardField, setAwardVisibility, unsetAwardVisibility } from "@/app/store/awardSlice";
 import AwardForm, { TAwardSchema } from "./AwardForm";
+import { deleteSingleAwards, setAwardVisibility, unsetAwardVisibility } from "@/app/store/resumeSlice";
+import { TAwardProps } from "@/app/store/types";
+import { instance } from "@/app/api/instance";
 
 const AwardHead = () => {
   const dispatch = useDispatch();
-  const awardDetails = useSelector((state: RootState) => state.awards);
+  const awardDetails = useSelector((state: RootState) => state.resume.award);
   const [showDetails, setShowDetails] = useState<boolean>(false);
+  const token = useSelector((state: RootState) => state.token);
+  const handleTrashClick = async(items: TAwardProps) => {
 
-  const handleTrashClick = (items: TAwardSchema) => {
-    dispatch(deleteAwardField(items));
+    const delRes = await instance({
+      url:`/education/${items._id}`,
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+     
+    });
+    
+   // console.log([...expeRes?.data.experience])
+     if(delRes.data.success){
+      dispatch(deleteSingleAwards(items));
+     }
   };
-  const handleDownClick = (items: TAwardSchema) => {
+  const handleDownClick = (items: TAwardProps) => {
     if (showDetails) {
       dispatch(unsetAwardVisibility(items));
       setShowDetails(false);
