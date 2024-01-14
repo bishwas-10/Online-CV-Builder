@@ -10,7 +10,7 @@ export const personals = async (req: Request, res: Response) => {
     case "POST":
       try {
         const about = await About.findOne({ userId });
-        var personal;
+        let personal;
         if (!about) {
           personal = await About.create({
             ...body,
@@ -23,7 +23,7 @@ export const personals = async (req: Request, res: Response) => {
             runValidators: true,
           });
         }
-        console.log(personal);
+        
         await Resume.findOneAndUpdate(
           { _id: body.resumeId, userId },
           {

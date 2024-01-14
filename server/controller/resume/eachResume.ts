@@ -30,7 +30,7 @@ export const eachResume = async (req: Request, res: Response) => {
           { path: "skill", model: Skills },
           { path: "project", model: Projects },
         ]);
-        console.log(resume);
+      
         if (!resume) {
           return res
             .status(404)

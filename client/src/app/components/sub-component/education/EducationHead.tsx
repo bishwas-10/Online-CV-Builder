@@ -8,16 +8,32 @@ import {
   deleteEducationField,
 } from "../../../store/eduSlice";
 import { TEducationProps } from "@/app/store/types";
-import { setEduVisibility, unsetEduVisibility } from "@/app/store/resumeSlice";
+import { deleteSingleEducation, setEduVisibility, unsetEduVisibility } from "@/app/store/resumeSlice";
+import { instance } from "@/app/api/instance";
 const EducationHead = () => {
   const dispatch = useDispatch();
   const eduDetails = useSelector((state: RootState) => state.resume.education);
   console.log(eduDetails);
-  
+  const token = useSelector((state:RootState)=>state.token);
   const [showDetails, setShowDetails] = useState<boolean>(true);
 
-  const handleTrashClick = (items: TEducationProps) => {
-    dispatch(deleteEducationField(items));
+  const handleTrashClick =async (items: TEducationProps) => {
+
+    const delRes = await instance({
+      url:`/education/${items._id}`,
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+     
+    });
+    console.log(delRes.data);
+   // console.log([...expeRes?.data.experience])
+     if(delRes.data.success){
+      dispatch(deleteSingleEducation(items));
+     }
+    
   };
   const handleDownClick = (items: TEducationProps) => {
     

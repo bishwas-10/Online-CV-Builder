@@ -11,12 +11,12 @@ export const eachEducation=async(req:Request,res:Response)=>{
       const userId = body.userId;
       switch (method) {
         case 'PUT':
-          
           try {
-            const education = await Education.findOneAndUpdate({ _id: id, userId }, body, {
+            const education = await Education.findOneAndUpdate({ _id: id, userId:userId }, body, {
               new: true,
               runValidators: true,
             });
+            
             if (!education) {
               return res.status(400).json({ success: false, error: 'Unable to edit educational data.' });
             }
@@ -29,15 +29,19 @@ export const eachEducation=async(req:Request,res:Response)=>{
         case 'DELETE':
           try {
             const education = await Education.findById(id);
+            
             await Resume.findOneAndUpdate(
-              { resumeId: education.resumeId, userId },
+              { _id: education.resumeId, userId: userId },
               {
-                $pull: {
-                  education: education.id,
-                },
+                  $pull: {
+                      education:   education.id ,
+                  },
               },
-            );
-            education.remove();
+              { new: true } // This option returns the updated document
+          );
+          
+          await Education.findByIdAndDelete(id);
+           // education.remove();
             res.status(200).json({ success: true });
           } catch (error) {
             res.status(400).json({ success: false, error });

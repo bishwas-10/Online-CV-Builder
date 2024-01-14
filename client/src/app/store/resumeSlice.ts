@@ -69,10 +69,18 @@ const resumeSlice = createSlice({
       state.experience.filter((item)=>item.jobTitle !== action.payload.jobTitle)
     },
     addEducation(state, action) {
-        state.education= [...state.education,action.payload];
+      const existingIndex = state.education.findIndex(edu => edu._id === action.payload._id);
+
+      if (existingIndex !== -1) {
+          // If there's a match, update the education item
+          state.education[existingIndex] = action.payload;
+      } else {
+          // If no match, add a new education item to the array
+          state.education = [...state.education, action.payload];
+      }
     },
     deleteSingleEducation(state,action){
-
+      state.education = state.education.filter((edu)=>edu._id!==action.payload._id )
     },
     addProjects(state, action) {
       state.project= [...state.project,action.payload];

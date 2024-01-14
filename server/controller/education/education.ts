@@ -8,6 +8,7 @@ export const education=async(req:Request,res:Response)=>{
         body,
         method,
       } = req;
+     
       const userId = body.userId;
       switch (method) {
         case 'POST':

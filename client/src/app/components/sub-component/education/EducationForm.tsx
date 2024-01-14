@@ -17,7 +17,7 @@ import { TEducationProps } from "@/app/store/types";
 export const educationSchema = z.object({
     school: z.string({required_error:"this field is required"}),
     degree: z.string({required_error:"this field is required"}),
-    _id:z.string(),
+  
     startedAt: z.string({required_error:"this field is required"}),
     endedAt: z.string({required_error:"this field is required"}),
     city:z.string({required_error:"this field is required"}),
@@ -37,8 +37,8 @@ export const educationSchema = z.object({
     }
   );
 export type TEducationSchema = z.infer<typeof educationSchema>;
-const EducationForm = ({ items }: { items: TEducationSchema }) => {
-  console.log(items);
+const EducationForm = ({ items }: { items: TEducationProps }) => {
+  
   const dispatch = useDispatch();
   const [startDate, setStartDate] = useState<string>(items?.startedAt);
   const [endDate, setEndDate] = useState<string>(items?.endedAt);
@@ -58,10 +58,10 @@ const resumeId = useSelector((state:RootState)=>state.resumeToken.resumeId);
   const onSubmit = async (data: TEducationSchema) => {
     // TODO: submit to servers
     // ...
-    
+    console.log(items._id);
     const eduRes = await instance({
-      url:`/education`,
-      method: 'POST',
+      url:items._id ? `/education/${items._id}`:`/education`,
+      method: items._id ?'PUT':'POST',
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
