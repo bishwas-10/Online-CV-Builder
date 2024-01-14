@@ -13,11 +13,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { addEducation } from "@/app/store/resumeSlice";
 import { instance } from "@/app/api/instance";
 import { RootState } from "@/app/store/store";
+import { TEducationProps } from "@/app/store/types";
 export const educationSchema = z.object({
     school: z.string({required_error:"this field is required"}),
     degree: z.string({required_error:"this field is required"}),
-    startDate: z.string({required_error:"this field is required"}),
-    endDate: z.string({required_error:"this field is required"}),
+    _id:z.string(),
+    startedAt: z.string({required_error:"this field is required"}),
+    endedAt: z.string({required_error:"this field is required"}),
     city:z.string({required_error:"this field is required"}),
     description: z.string({required_error:"this field is required"}),
     visibility:z.boolean().default(false),
@@ -25,7 +27,7 @@ export const educationSchema = z.object({
   .refine(
     (data) => {
       if (data.school) {
-        return !!data.startDate && !!data.endDate;
+        return !!data.startedAt && !!data.endedAt;
       }
       return true;
     },
@@ -36,9 +38,10 @@ export const educationSchema = z.object({
   );
 export type TEducationSchema = z.infer<typeof educationSchema>;
 const EducationForm = ({ items }: { items: TEducationSchema }) => {
+  console.log(items);
   const dispatch = useDispatch();
-  const [startDate, setStartDate] = useState<string>(items?.startDate);
-  const [endDate, setEndDate] = useState<string>(items?.endDate);
+  const [startDate, setStartDate] = useState<string>(items?.startedAt);
+  const [endDate, setEndDate] = useState<string>(items?.endedAt);
   const token = useSelector((state:RootState)=>state.token);
 const resumeId = useSelector((state:RootState)=>state.resumeToken.resumeId);
   const {
@@ -57,7 +60,7 @@ const resumeId = useSelector((state:RootState)=>state.resumeToken.resumeId);
     // ...
     
     const eduRes = await instance({
-      url: `/education`,
+      url:`/education`,
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -66,8 +69,8 @@ const resumeId = useSelector((state:RootState)=>state.resumeToken.resumeId);
       data: {
         school: data.school,
         degree: data.degree,
-        startedAt: data.startDate,
-        endedAt: data.endDate,
+        startedAt: data.startedAt,
+        endedAt: data.endedAt,
         city: data.city,
         description: data.description,
         resumeId:resumeId
@@ -165,7 +168,7 @@ const resumeId = useSelector((state:RootState)=>state.resumeToken.resumeId);
                     month: "long",
                   });
                   const year = date.getFullYear();
-                  handleInputChange("startDate", `${month} ${year}`);
+                  handleInputChange("startedAt", `${month} ${year}`);
                   setStartDate(`${month} ${year}`);
                 }
               }}
@@ -174,14 +177,14 @@ const resumeId = useSelector((state:RootState)=>state.resumeToken.resumeId);
               showMonthYearPicker
              // {...register("startDate")}
             />
-            {errors.startDate && (
-              <p className="text-red-500">{`${errors.startDate.message}`}</p>
+            {errors.startedAt && (
+              <p className="text-red-500">{`${errors.startedAt.message}`}</p>
             )}
           </div>
           <div className="flex flex-col  ">
             <StyledLabel htmlFor="endDate">End Date</StyledLabel>
             <DatePicker
-              id="endDate"
+              id="endedAt"
               value={endDate}
               className="w-[100%] text-black px-4 py-2 rounded outline-none bg-gray-200 focus:border-b-4 focus:border-b-blue-500"
               onChange={(date) => {
@@ -190,7 +193,7 @@ const resumeId = useSelector((state:RootState)=>state.resumeToken.resumeId);
                     month: "long",
                   });
                   const year = date.getFullYear();
-                  handleInputChange("endDate", `${month} ${year}`);
+                  handleInputChange("endedAt", `${month} ${year}`);
                   setEndDate(`${month} ${year}`);
                 }
               }}
@@ -199,8 +202,8 @@ const resumeId = useSelector((state:RootState)=>state.resumeToken.resumeId);
               showMonthYearPicker
               //{...register("endDate")}
             />
-            {errors.endDate && (
-              <p className="text-red-500">{`${errors.endDate.message}`}</p>
+            {errors.endedAt && (
+              <p className="text-red-500">{`${errors.endedAt.message}`}</p>
             )}
           </div>
         </div>

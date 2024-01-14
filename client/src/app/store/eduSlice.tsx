@@ -29,7 +29,7 @@ const eduSlice = createSlice({
     }
 })
 
-export const{setEducationField,deleteEducationField,setEduVisibility,unsetEduVisibility}= eduSlice.actions;
+export const{setEducationField,deleteEducationField}= eduSlice.actions;
 
 export default eduSlice.reducer;
 

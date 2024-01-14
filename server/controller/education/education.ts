@@ -11,6 +11,7 @@ export const education=async(req:Request,res:Response)=>{
       const userId = body.userId;
       switch (method) {
         case 'POST':
+          
           try {
             const education = await Education.create({
               ...body,

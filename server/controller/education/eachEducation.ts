@@ -11,6 +11,7 @@ export const eachEducation=async(req:Request,res:Response)=>{
       const userId = body.userId;
       switch (method) {
         case 'PUT':
+          
           try {
             const education = await Education.findOneAndUpdate({ _id: id, userId }, body, {
               new: true,

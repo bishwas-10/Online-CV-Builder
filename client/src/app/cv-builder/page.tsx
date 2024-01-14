@@ -13,6 +13,8 @@ import { addResume, removeResume } from "../store/resumeSlice";
 import { instance } from "../api/instance";
 import useAuth from "../utils/authCheck";
 import { useMediaQuery } from "@mui/material";
+import { useRouter } from "next/navigation";
+
 export interface PersonalData {
   firstName?: string;
   lastName?:string;
@@ -73,34 +75,40 @@ export interface Project {
   description: string;
   link: string;
 }
-const page = () => {
+const Page = () => {
   const desktop = useMediaQuery('(min-width:1024px)');
-  
+  const router = useRouter();
   const dispatch = useDispatch();
-  const token= useSelector((state:RootState)=>state.token.token);
-  const resumeId= useSelector((state:RootState)=>state.resumeToken.resumeId);
+  const token= useSelector((state:RootState)=>state.token.token) as string;
+  const resumeId= useSelector((state:RootState)=>state.resumeToken.resumeId) as string;
  
   useAuth();
   const setResumeData=async()=>{
-    const {data}=await instance({
-      url:`/resume/${resumeId}`,
-      method: 'GET',
-              headers: {
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${token}`,
-                
-              },
-    });
-    if(data.success){
-      
-      dispatch(addResume(data.resume));
+    if( !resumeId){
+    return  router.push('/resume');
     }
+    if(resumeId){
+      const {data}=await instance({
+        url:`/resume/${resumeId}`,
+        method: 'GET',
+                headers: {
+                  'Content-Type': 'application/json',
+                  Authorization: `Bearer ${token}`,
+                  
+                },
+      });
+      if(data.success){
+      
+        dispatch(addResume(data.resume));
+      }
+    }
+   
     
   }
 useEffect(()=>{
-if(resumeId){
-  setResumeData();
-}
+
+  setResumeData()
+
 return ()=>{
   dispatch(removeResume());
 }
@@ -152,4 +160,4 @@ return ()=>{
   );
 };
 
-export default page;
+export default Page;

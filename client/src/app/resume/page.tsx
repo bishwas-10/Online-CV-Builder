@@ -3,22 +3,23 @@ import Link from "next/link";
 import React from "react";
 import { LayoutPanelTop } from 'lucide-react';
 import { resumeTemplate } from "../utils/template";
-import axios from "axios";
+
 import { instance } from "../api/instance";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store/store";
 import { setResume } from "../store/resumeTokenSlice";
-import { addResume } from "../store/resumeSlice";
-import useAuth from "../utils/authCheck";
+
 import { useRouter } from "next/navigation";
 
+import GetResume from "../utils/GetResume";
+import axios from "axios";
 
-const page = () => {
+const Page = () => {
   const dispatch= useDispatch();
   
   const router = useRouter();
-  const token= useSelector((state:RootState)=>state.token.token);
-  const resumeId= useSelector((state:RootState)=>state.resumeToken.resumeId);
+  const token= useSelector((state:RootState)=>state.token.token) as string;
+  const resumeId= useSelector((state:RootState)=>state.resumeToken.resumeId) as string;
   // const resumeHandler=async(title:string)=>{
   //   const { data } = await instance({
   //   url: resumeId ? `/resume?templatename=${title}`:'/resume',
@@ -38,57 +39,48 @@ const page = () => {
   
   // }
   
-  const getResume=async()=>{
-     try {
-      if(!token){
-        return router.push('/signpage');
+  const getResume = async () => {
+    // const resumeId= useSelector((state:RootState)=>state.resumeToken.resumeId);
+    try {
+      if (!token) {
+        return router.push("/signpage");
       }
-      const  {data}  = await axios({
+      const { data } = await axios({
         url: `http://localhost:4000/api/users/resume`,
         withCredentials: true,
-        method: 'GET',
+        method: "GET",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
-          
         },
-  
       });
-      if(data.success){
-       console.log(data)
+      if (data.success) {
         dispatch(setResume(data.data._id));
-        router.push('/cv-builder');
+        router.push("/cv-builder");
       }
-      
-      
-     } catch (error:any) {
-      console.log(error)
-      if(!error.response.data.success){
+    } catch (error: any) {
+      console.log(error);
+      if (!error.response.data.success) {
         const { data } = await axios({
-              url: `http://localhost:4000/api/users/resume`,
-              withCredentials: true,
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${token}`,
-                
-              },
-              data: {
-               
-                title: 'Your Resume',
-              },
-        
-            });
-            console.log(data);
-            
-            if(data.success){
-       
-              dispatch(setResume(data.data._id));
-              router.push('/cv-builder');
-            }
+          url: `http://localhost:4000/api/users/resume`,
+          withCredentials: true,
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          data: {
+            title: "Your Resume",
+          },
+        });
+
+        if (data.success) {
+          dispatch(setResume(data.data._id));
+          router.push("/cv-builder");
+        }
       }
-     }
     }
+  };
   
     const resumeHandler=async(title:string)=>{
       try {
@@ -159,4 +151,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

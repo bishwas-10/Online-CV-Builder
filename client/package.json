@@ -41,11 +41,14 @@
     "@types/react-flatpickr": "^3.8.11",
     "@types/react-vertical-timeline-component": "^3.3.6",
     "@types/redux-persist": "^4.3.1",
+    "@typescript-eslint/eslint-plugin": "^6.18.1",
+    "@typescript-eslint/parser": "^6.18.1",
     "autoprefixer": "^10.0.1",
     "eslint": "^8",
     "eslint-config-next": "14.0.4",
+    "eslint-plugin-react-hooks": "^4.6.0",
     "postcss": "^8",
     "tailwindcss": "^3.3.0",
-    "typescript": "^5"
+    "typescript": "^5.3.3"
   }
 }

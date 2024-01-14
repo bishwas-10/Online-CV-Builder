@@ -6,27 +6,30 @@ import { RootState } from "../../../store/store";
 import EducationForm, { TEducationSchema } from "./EducationForm";
 import {
   deleteEducationField,
-  setEduVisibility,
-  unsetEduVisibility,
 } from "../../../store/eduSlice";
+import { TEducationProps } from "@/app/store/types";
+import { setEduVisibility, unsetEduVisibility } from "@/app/store/resumeSlice";
 const EducationHead = () => {
   const dispatch = useDispatch();
-  const eduDetails = useSelector((state: RootState) => state.education);
-  const [showDetails, setShowDetails] = useState<boolean>(false);
+  const eduDetails = useSelector((state: RootState) => state.resume.education);
+  console.log(eduDetails);
+  
+  const [showDetails, setShowDetails] = useState<boolean>(true);
 
-  const handleTrashClick = (items: TEducationSchema) => {
+  const handleTrashClick = (items: TEducationProps) => {
     dispatch(deleteEducationField(items));
   };
-  const handleDownClick = (items: TEducationSchema) => {
+  const handleDownClick = (items: TEducationProps) => {
     
    
-    console.log(showDetails)
+   
     if (showDetails) {
       
       dispatch(setEduVisibility(items));
+      setShowDetails(false);
     } else {
      dispatch(unsetEduVisibility(items));
-     
+     setShowDetails(true);
     }
   };
   return (
@@ -43,13 +46,13 @@ const EducationHead = () => {
                       <h1 className="text-lg text-gray-700 font-medium">
                         {items?.school}
                       </h1>
-                      <span className="text-gray-500 text-sm">{`${items.startDate}-${items.endDate}`}</span>
+                      <span className="text-gray-500 text-sm">{`${items.startedAt}-${items.endedAt}`}</span>
                     </div>
                   </div>
                   <div className="flex flex-row items-center gap-3">
                     <span
                       onClick={(e) => {
-                        setShowDetails(!showDetails);
+                        
                         handleDownClick(items)
                       }}
                       className="text-gray-500 hover:translate-y-1 transition-all"

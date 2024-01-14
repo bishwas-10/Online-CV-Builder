@@ -41,7 +41,11 @@ const resumeSlice = createSlice({
        
         draft.experience = [ ...action.payload.experience];
         draft.acheivement = [ ...action.payload.acheivement];
-        draft.education = [ ...action.payload.education];
+        draft.education =  action.payload.education.map((educationItem:TEducationProps) => ({
+          ...educationItem,
+          visibility: false
+      }));
+        // draft.education.forEach((items)=>items.visibility=false)
         draft.project = [ ...action.payload.project];
        draft.skill = [...action.payload.skill];
         draft.training = [ ...action.payload.training];
@@ -100,7 +104,16 @@ const resumeSlice = createSlice({
     deleteSingleAwards(state,action){
 
     },
-   
+    setEduVisibility(state,action){
+           
+      state.education= state.education.map((item)=> item._id===action.payload._id? { ...item, visibility: true } : item);
+       
+  },
+  unsetEduVisibility(state,action){
+     
+      state.education= state.education.map((item)=> item.school===action.payload.school? { ...item, visibility: false } : item)
+  },
+
   },
 });
 
@@ -115,7 +128,7 @@ export const {addResume,removeResume,
   addSKills,
   addTrainings,deleteSingleAcheivement,deleteSingleAwards,deleteSingleEducation,
   deleteSingleExperience,deleteSingleProjects,
-  deleteSingleSkills,deleteSingleTrainings
+  deleteSingleSkills,deleteSingleTrainings,setEduVisibility,unsetEduVisibility
   
 } = resumeSlice.actions;
 
