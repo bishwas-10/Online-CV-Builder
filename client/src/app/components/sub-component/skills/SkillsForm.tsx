@@ -1,12 +1,11 @@
-import React, { useRef, useEffect, useState } from "react";
-import { useForm, SubmitHandler } from "react-hook-form";
+import React from "react";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import {motion} from "framer-motion";
-import { StyledInput, StyledLabel, StyledTextArea } from "@/app/utils/styles";
+import { StyledInput, StyledLabel } from "@/app/utils/styles";
 import "react-datepicker/dist/react-datepicker.css";
 import { useDispatch, useSelector } from "react-redux";
-import { setskillField } from "@/app/store/skillSlice";
 import { RootState } from "@/app/store/store";
 import { instance } from "@/app/api/instance";
 import { addSKills } from "@/app/store/resumeSlice";

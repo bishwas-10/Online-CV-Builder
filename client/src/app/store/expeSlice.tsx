@@ -1,6 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { TEducationSchema } from "../components/sub-component/education/EducationForm";
-
 
 type TExperienceProps = {
     resumeId:string;

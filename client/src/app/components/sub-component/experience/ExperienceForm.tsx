@@ -1,28 +1,26 @@
 "use client";
-import React, { useRef, useEffect, useState } from "react";
-import { useForm, SubmitHandler } from "react-hook-form";
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import {motion} from "framer-motion";
+import { motion } from "framer-motion";
 import { StyledInput, StyledLabel, StyledTextArea } from "@/app/utils/styles";
 // import "flatpickr/dist/themes/material_green.css";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useDispatch, useSelector } from "react-redux";
-import { setExperienceField } from "@/app/store/expeSlice";
 import { instance } from "@/app/api/instance";
 import { RootState } from "@/app/store/store";
-import { setResume } from "@/app/store/resumeTokenSlice";
 import { addExperience } from "@/app/store/resumeSlice";
 export const experienceSchema = z
   .object({
-    jobTitle: z.string({required_error:"job title is required"}),
-    employer: z.string({required_error:"employer field is required"}),
-    startDate: z.string({required_error:"start date is required"}),
-    endDate: z.string({required_error:"end date required"}),
-    city: z.string({required_error:"city is required"}),
+    jobTitle: z.string({ required_error: "job title is required" }),
+    employer: z.string({ required_error: "employer field is required" }),
+    startDate: z.string({ required_error: "start date is required" }),
+    endDate: z.string({ required_error: "end date required" }),
+    city: z.string({ required_error: "city is required" }),
     description: z.string(),
-    visibility:z.boolean().default(false),
+    visibility: z.boolean().default(false),
   })
   .refine(
     (data) => {
@@ -39,12 +37,14 @@ export const experienceSchema = z
 export type TExperienceSchema = z.infer<typeof experienceSchema>;
 const ExperienceForm = ({ items }: { items: TExperienceSchema }) => {
   const dispatch = useDispatch();
-//   const [jobTitle, setjobTitle] = useState<string>(items?.jobTitle);
-//   const [employer, setEmployer] = useState<string>(items?.employer);
-//   const [city, setCity] = useState<string>(items?.city);
-//   const [description, setDes] = useState<string>(items?.city);
-const token = useSelector((state:RootState)=>state.token);
-const resumeId = useSelector((state:RootState)=>state.resumeToken.resumeId);
+  //   const [jobTitle, setjobTitle] = useState<string>(items?.jobTitle);
+  //   const [employer, setEmployer] = useState<string>(items?.employer);
+  //   const [city, setCity] = useState<string>(items?.city);
+  //   const [description, setDes] = useState<string>(items?.city);
+  const token = useSelector((state: RootState) => state.token);
+  const resumeId = useSelector(
+    (state: RootState) => state.resumeToken.resumeId
+  );
 
   const [startDate, setStartDate] = useState<string>(items?.startDate);
   const [endDate, setEndDate] = useState<string>(items?.endDate);
@@ -56,8 +56,7 @@ const resumeId = useSelector((state:RootState)=>state.resumeToken.resumeId);
     setValue,
   } = useForm<TExperienceSchema>({
     resolver: zodResolver(experienceSchema),
-    reValidateMode:"onChange",
-   
+    reValidateMode: "onChange",
   });
 
   const onSubmit = async (data: TExperienceSchema) => {
@@ -65,9 +64,9 @@ const resumeId = useSelector((state:RootState)=>state.resumeToken.resumeId);
     // ...
     const expeRes = await instance({
       url: `/experience`,
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
       data: {
@@ -76,18 +75,18 @@ const resumeId = useSelector((state:RootState)=>state.resumeToken.resumeId);
         startDate: data.startDate,
         endDate: data.endDate,
         city: data.city,
-        company:"bishwas",
+        company: "bishwas",
         employer: data.employer,
-        resumeId:resumeId,
+        resumeId: resumeId,
       },
     });
     console.log(expeRes.data.success);
-   // console.log([...expeRes?.data.experience])
-     if(expeRes.data.success){
-       dispatch(addExperience(expeRes?.data.experience));
-     }
-    
- // dispatch(setExperienceField(expeRes?.data.experience));
+    // console.log([...expeRes?.data.experience])
+    if (expeRes.data.success) {
+      dispatch(addExperience(expeRes?.data.experience));
+    }
+
+    // dispatch(setExperienceField(expeRes?.data.experience));
     setStartDate("");
     setEndDate("");
     reset();
@@ -127,7 +126,7 @@ const resumeId = useSelector((state:RootState)=>state.resumeToken.resumeId);
               id="employer"
               className="px-4 py-2 rounded"
               onChange={(e) => handleInputChange("employer", e.target.value)}
-               //{...register("employer",{required:true})}
+              //{...register("employer",{required:true})}
             />
             {errors.employer && (
               <span className="text-red-500">{errors.employer.message}</span>
@@ -140,8 +139,8 @@ const resumeId = useSelector((state:RootState)=>state.resumeToken.resumeId);
               id="degree"
               defaultValue={items?.jobTitle}
               className="px-4 py-2 rounded"
-            onChange={(e) => handleInputChange("jobTitle", e.target.value)}
-            //  {...register("jobTitle",{required:true})}
+              onChange={(e) => handleInputChange("jobTitle", e.target.value)}
+              //  {...register("jobTitle",{required:true})}
             />
             {errors.jobTitle && (
               <p className="text-red-500">{`${errors.jobTitle.message}`}</p>
@@ -225,7 +224,7 @@ const resumeId = useSelector((state:RootState)=>state.resumeToken.resumeId);
             className="w-full px-3 py-2 border rounded-md bg text-gray-700 
               leading-tight focus:outline-none focus:shadow-outline"
             //onChange={(e) => handleInputChange("description", e.target.value)}
-          {...register("description")}
+            {...register("description")}
           ></StyledTextArea>
           {errors.description && (
             <p className="text-red-500">{`${errors.description.message}`}</p>

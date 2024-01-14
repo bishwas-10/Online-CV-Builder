@@ -47,11 +47,11 @@ const ProjectHead = () => {
                 </div>
                 <div className="flex flex-row items-center gap-3">
                 <span
-                    onClick={(e) => handleDownClick(items)}
+                    onClick={() => handleDownClick(items)}
                     className="text-gray-500 hover:translate-y-1 transition-all"
                   >{items.visibility ? <ChevronUp/> : <ChevronDown/>}</span>
                   <Trash
-                    onClick={(e) => handleTrashClick(items)}
+                    onClick={() => handleTrashClick(items)}
                     className="text-gray-500 hover:text-red-500 transition-all"
                   />
                 </div>

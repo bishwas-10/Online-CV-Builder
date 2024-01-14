@@ -1,15 +1,11 @@
-import React, { useRef, useEffect, useState } from "react";
-import { useForm, SubmitHandler } from "react-hook-form";
+import React from "react";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { motion, AnimatePresence } from "framer-motion";
 import { StyledInput, StyledLabel, StyledTextArea } from "@/app/utils/styles";
-// import "flatpickr/dist/themes/material_green.css";
-import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useDispatch, useSelector } from "react-redux";
-import { setExperienceField } from "@/app/store/expeSlice";
-import { setProjectField } from "@/app/store/projectSlice";
 import { RootState } from "@/app/store/store";
 import { instance } from "@/app/api/instance";
 import { addProjects } from "@/app/store/resumeSlice";

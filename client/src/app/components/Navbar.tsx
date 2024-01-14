@@ -15,8 +15,8 @@ import { removeResume } from "../store/resumeTokenSlice";
 const Navbar: React.FC = () => {
   const dispatch = useDispatch();
   const navigate = useRouter();
-  const [showDiv, setShowDiv] = useState<Boolean>(false);
-  const [signDiv, setSignDiv] = useState<Boolean>(false);
+  const [showDiv, setShowDiv] = useState<boolean>(false);
+  const [signDiv, setSignDiv] = useState<boolean>(false);
   const token = useSelector((state: RootState) => state.token);
   const userDetails = useSelector((state: RootState) => state.users);
   

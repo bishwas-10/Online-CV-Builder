@@ -1,14 +1,7 @@
 "use client";
 import React, { FC, useRef } from "react";
 import {
-  Achievement,
-  Award,
-  Education,
-  Experience,
-  ExtrasData,
   PersonalData,
-  Project,
-  Training,
 } from "../cv-builder/page";
 import {
   VerticalTimeline,
@@ -16,13 +9,6 @@ import {
 } from "react-vertical-timeline-component";
 import "react-vertical-timeline-component/style.min.css";
 import { WorkflowIcon } from "lucide-react";
-import { TEducationSchema } from "../components/sub-component/education/EducationForm";
-import { TExperienceSchema } from "../components/sub-component/experience/ExperienceForm";
-import { TAchieveSchema } from "../components/sub-component/achievements/AchievementForm";
-import { TAwardSchema } from "../components/sub-component/awards/AwardForm";
-import { TTrainingSchema } from "../components/sub-component/trainings/TrainingForm";
-import { TProjectSchema } from "../components/sub-component/projects/ProjectForm";
-import { TSkillSchema } from "../components/sub-component/skills/SkillsForm";
 import { TAcheivementProps, TAwardProps, TEducationProps, TExperienceProps, TProjectProps, TSkillProps, TTrainingProps } from "../store/types";
 
 interface CvProps {
@@ -46,7 +32,6 @@ const CV: FC<CvProps> = ({
   achievementsData,
   projectData,
   skillData,
-  customStyles,
 }) => {
   const ref = useRef<HTMLDivElement>(null);
 

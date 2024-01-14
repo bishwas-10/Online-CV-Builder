@@ -1,35 +1,37 @@
-import React, { useRef, useEffect, useState } from "react";
-import { useForm, SubmitHandler } from "react-hook-form";
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { motion, AnimatePresence } from "framer-motion";
 import { StyledInput, StyledLabel, StyledTextArea } from "@/app/utils/styles";
-// import "flatpickr/dist/themes/material_green.css";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useDispatch, useSelector } from "react-redux";
-import { setTrainingField } from "@/app/store/trainingSlice";
 import { RootState } from "@/app/store/store";
 import { instance } from "@/app/api/instance";
 import { addTrainings } from "@/app/store/resumeSlice";
 export const trainingSchema = z.object({
   trainingTitle: z.string({ required_error: "training title is required" }),
-  institute:  z.string(),
+  institute: z.string(),
   description: z.string({ required_error: "description is required" }),
-  completionDate:z.string(),
+  completionDate: z.string(),
   visibility: z.boolean().default(false),
 });
 
 export type TTrainingSchema = z.infer<typeof trainingSchema>;
 const TrainingForm = ({ items }: { items: TTrainingSchema }) => {
   const dispatch = useDispatch();
-  const token = useSelector((state:RootState)=>state.token);
-  const resumeId = useSelector((state:RootState)=>state.resumeToken.resumeId);
+  const token = useSelector((state: RootState) => state.token);
+  const resumeId = useSelector(
+    (state: RootState) => state.resumeToken.resumeId
+  );
   //   const [jobTitle, setjobTitle] = useState<string>(items?.jobTitle);
   //   const [employer, setEmployer] = useState<string>(items?.employer);
   //   const [city, setCity] = useState<string>(items?.city);
   //   const [description, setDes] = useState<string>(items?.city);
-  const [completionDate, setCompletionDate] = useState<string>(items?.completionDate);
+  const [completionDate, setCompletionDate] = useState<string>(
+    items?.completionDate
+  );
   const {
     register,
     handleSubmit,
@@ -44,27 +46,27 @@ const TrainingForm = ({ items }: { items: TTrainingSchema }) => {
   const onSubmit = async (data: TTrainingSchema) => {
     // TODO: submit to servers
     // ...
-     const trainingRes = await instance({
+    const trainingRes = await instance({
       url: `/training`,
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
       data: {
         description: data.description,
-        
+
         trainingTitle: data.trainingTitle,
         institute: data.institute,
         completionDate: data.completionDate,
-        resumeId:resumeId
+        resumeId: resumeId,
       },
     });
-    
-   // console.log([...expeRes?.data.experience])
-     if(trainingRes.data.success){
-       dispatch(addTrainings(trainingRes?.data.training));
-     }
+
+    // console.log([...expeRes?.data.experience])
+    if (trainingRes.data.success) {
+      dispatch(addTrainings(trainingRes?.data.training));
+    }
     reset();
   };
   const handleInputChange = (
@@ -86,14 +88,13 @@ const TrainingForm = ({ items }: { items: TTrainingSchema }) => {
         ease: "easeInOut", // Choose an easing function (e.g., easeInOut, easeOut, etc.)
       },
     },
-    exit:{ y: -100, opacity: 0 }
+    exit: { y: -100, opacity: 0 },
   };
-  
 
   return (
     <AnimatePresence>
       <motion.div
-       key={items.trainingTitle}
+        key={items.trainingTitle}
         initial="initial"
         exit="exit"
         animate="animate"
@@ -134,33 +135,33 @@ const TrainingForm = ({ items }: { items: TTrainingSchema }) => {
                 {...register("institute", { required: true })}
               />
               {errors.institute && (
-                <span className="text-red-500">
-                  {errors.institute.message}
-                </span>
+                <span className="text-red-500">{errors.institute.message}</span>
               )}
             </div>
             <div className="flex flex-col gap-1">
-              <StyledLabel htmlFor="completionDate">Completion Date</StyledLabel>
-            <DatePicker
-              value={completionDate}
-              id="completionDate"
-              className="w-[100%] px-4 py-2 rounded outline-none bg-gray-200 focus:border-b-4 focus:border-b-blue-500"
-              onChange={(date) => {
-                if (date) {
-                  const month = date.toLocaleString("default", {
-                    month: "long",
-                  });
-                  const year = date.getFullYear();
-                  handleInputChange("completionDate", `${month} ${year}`);
-                  setCompletionDate(`${month} ${year}`);
-                }
-              }}
-              dateFormat="dd/MM/yyyy"
-              isClearable
-              showMonthYearPicker
-             // {...register("startDate")}
-            />
-             {errors.completionDate && (
+              <StyledLabel htmlFor="completionDate">
+                Completion Date
+              </StyledLabel>
+              <DatePicker
+                value={completionDate}
+                id="completionDate"
+                className="w-[100%] px-4 py-2 rounded outline-none bg-gray-200 focus:border-b-4 focus:border-b-blue-500"
+                onChange={(date) => {
+                  if (date) {
+                    const month = date.toLocaleString("default", {
+                      month: "long",
+                    });
+                    const year = date.getFullYear();
+                    handleInputChange("completionDate", `${month} ${year}`);
+                    setCompletionDate(`${month} ${year}`);
+                  }
+                }}
+                dateFormat="dd/MM/yyyy"
+                isClearable
+                showMonthYearPicker
+                // {...register("startDate")}
+              />
+              {errors.completionDate && (
                 <span className="text-red-500">
                   {errors.completionDate.message}
                 </span>
@@ -185,7 +186,6 @@ const TrainingForm = ({ items }: { items: TTrainingSchema }) => {
                 </span>
               )}
             </div>
-          
           </div>
 
           {/* Existing email, password, confirmPassword inputs */}

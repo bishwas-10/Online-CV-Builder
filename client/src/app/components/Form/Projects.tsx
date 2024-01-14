@@ -1,21 +1,16 @@
 "use client";
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
-import { RootState } from "@/app/store/store";
 import ProjectForm from "../sub-component/projects/ProjectForm";
 import ProjectHead from "../sub-component/projects/ProjectHead";
 
-
 const Projects = () => {
-  const items = useSelector((state:RootState)=> state.projects)
-  
   const [showProjectForm, setShowProjectForm] = useState<boolean>(false);
-  const initialProjectState={
-    description: '',
-    projectTitle: '',
-    projectLink:'',
-    visibility:false
-  }
+  const initialProjectState = {
+    description: "",
+    projectTitle: "",
+    projectLink: "",
+    visibility: false,
+  };
 
   return (
     <div className="py-4 px-2 border-2 w-100">
@@ -25,11 +20,11 @@ const Projects = () => {
           Add your projects that makes you stand out.
         </p>
       </div>
-      <div className="mt-6" >
+      <div className="mt-6">
         <div>
           <ProjectHead />
         </div>
-        {showProjectForm &&  <ProjectForm items={initialProjectState}/>}
+        {showProjectForm && <ProjectForm items={initialProjectState} />}
 
         <div className="mt-4 p-2">
           <button
@@ -45,6 +40,4 @@ const Projects = () => {
   );
 };
 
-
-
-export default Projects
+export default Projects;

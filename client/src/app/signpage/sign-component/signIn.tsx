@@ -2,8 +2,6 @@ import { userLogin } from '@/app/api/auth';
 import { signInFailure, signInSuccess } from '@/app/store/userSlice';
 import { StyledInput, StyledLabel } from '@/app/utils/styles';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Url } from 'next/dist/shared/lib/router/router';
-
 import React from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
@@ -28,7 +26,7 @@ const SignIn = () => {
       } = useForm<TSignInShema>({ resolver: zodResolver(signInSchema) });
       const onSubmit: SubmitHandler<TSignInShema> =async (data) => {
         const userLogInRes = await userLogin(data);
-        const {status ,message, user,token}= userLogInRes;
+        const {status , user,token}= userLogInRes;
         console.log(user)
         if(token){
           dispatch(setToken(token));

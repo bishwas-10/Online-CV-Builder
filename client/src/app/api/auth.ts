@@ -23,7 +23,7 @@ export const userLogin = async (formData: TSignInShema) => {
     const { data } = await instance.post("/users/login", formData);
     console.log(data);
     return data;
-  } catch (error: any) {
+  } catch (error) {
    
     console.log(error)
   }
@@ -34,7 +34,7 @@ export const userSignUp = async (formData:TSignUpShema) => {
     const data = await instance.post("/users/signup", formData);
     console.log(data);
     return data;
-  } catch (error:any) {
+  } catch (error) {
     console.log(error)
    
   }
@@ -45,7 +45,7 @@ export const userLogOut = async () => {
     const {data} = await instance.get("/users/signout");
     return data;
   
-  } catch (error:any) {
+  } catch (error) {
     console.log(error)
   }
 };

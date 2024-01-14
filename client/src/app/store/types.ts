@@ -1,8 +1,7 @@
 export type TExperienceProps = {
-    _id:string;
-    resumeId:string;
-    userId:string;
-    
+    _id:string | null;
+    resumeId:string | null;
+    userId:string; 
     startDate: string;
     endDate: string;
     city: string;
@@ -12,8 +11,8 @@ export type TExperienceProps = {
     employer: string;
 }
 export type TEducationProps={
-    _id:string;
-    resumeId:string;
+    _id:string | null;
+    resumeId:string | null;
     school: string;
     degree: string;
     startedAt: string;

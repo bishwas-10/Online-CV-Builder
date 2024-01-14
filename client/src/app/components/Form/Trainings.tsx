@@ -1,14 +1,9 @@
 "use client"
 import React, { useState } from 'react';
-import { RootState } from '@/app/store/store';
-
-import { useSelector } from 'react-redux';
 import TrainingForm from '../sub-component/trainings/TrainingForm';
 import TrainingHead from '../sub-component/trainings/TrainingHead';
 
 const Trainings = () => {
-  const items = useSelector((state:RootState)=> state.trainings)
-  
   const [showTrainingForm, setShowTrainingForm] = useState<boolean>(false);
   const initialTrainingState={
     trainingTitle: '',

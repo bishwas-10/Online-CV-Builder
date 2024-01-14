@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { TAchieveSchema } from "../components/sub-component/achievements/AchievementForm";
 import { TAwardSchema } from "../components/sub-component/awards/AwardForm";
 
 

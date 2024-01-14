@@ -1,5 +1,5 @@
-import React, { useRef, useEffect, useState } from "react";
-import { useForm, SubmitHandler } from "react-hook-form";
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { motion, AnimatePresence } from "framer-motion";
@@ -8,16 +8,15 @@ import { StyledInput, StyledLabel, StyledTextArea } from "@/app/utils/styles";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useDispatch, useSelector } from "react-redux";
-import { setAwardField } from "@/app/store/awardSlice";
 import { RootState } from "@/app/store/store";
 import { instance } from "@/app/api/instance";
 import { addAwards } from "@/app/store/resumeSlice";
 export const awardSchema = z.object({
   awardTitle: z.string({ required_error: "award title is required" }),
-  organization:  z.string(),
-  city:z.string(),
+  organization: z.string(),
+  city: z.string(),
   description: z.string({ required_error: "description is required" }),
-  receivedDate:z.string(),
+  receivedDate: z.string(),
   visibility: z.boolean().default(false),
 });
 
@@ -28,8 +27,10 @@ const AwardForm = ({ items }: { items: TAwardSchema }) => {
   //   const [employer, setEmployer] = useState<string>(items?.employer);
   //   const [city, setCity] = useState<string>(items?.city);
   //   const [description, setDes] = useState<string>(items?.city);
-  const token = useSelector((state:RootState)=>state.token);
-  const resumeId = useSelector((state:RootState)=>state.resumeToken.resumeId);
+  const token = useSelector((state: RootState) => state.token);
+  const resumeId = useSelector(
+    (state: RootState) => state.resumeToken.resumeId
+  );
   const [receivedDate, setReceivedDate] = useState<string>(items?.receivedDate);
   const {
     register,
@@ -47,34 +48,30 @@ const AwardForm = ({ items }: { items: TAwardSchema }) => {
     // ...
     const awardRes = await instance({
       url: `/award`,
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
       data: {
         city: data.city,
         description: data.description,
-        
         awardTitle: data.awardTitle,
         organization: data.organization,
         receivedDate: data.receivedDate,
-        resumeId:resumeId
+        resumeId: resumeId,
       },
     });
     console.log(awardRes.data.success);
-   // console.log([...expeRes?.data.experience])
-     if(awardRes.data.success){
-       dispatch(addAwards(awardRes?.data.award));
-     }
+    // console.log([...expeRes?.data.experience])
+    if (awardRes.data.success) {
+      dispatch(addAwards(awardRes?.data.award));
+    }
 
-setReceivedDate("");
+    setReceivedDate("");
     reset();
   };
-  const handleInputChange = (
-    fieldName: keyof TAwardSchema,
-    value: string
-  ) => {
+  const handleInputChange = (fieldName: keyof TAwardSchema, value: string) => {
     setValue(fieldName, value);
   };
   const variants = {
@@ -90,14 +87,13 @@ setReceivedDate("");
         ease: "easeInOut", // Choose an easing function (e.g., easeInOut, easeOut, etc.)
       },
     },
-    exit:{ y: -100, opacity: 0 }
+    exit: { y: -100, opacity: 0 },
   };
-  
 
   return (
     <AnimatePresence>
       <motion.div
-       key={items.awardTitle}
+        key={items.awardTitle}
         initial="initial"
         exit="exit"
         animate="animate"
@@ -154,33 +150,31 @@ setReceivedDate("");
                 {...register("city", { required: true })}
               />
               {errors.city && (
-                <span className="text-red-500">
-                  {errors.city.message}
-                </span>
+                <span className="text-red-500">{errors.city.message}</span>
               )}
             </div>
             <div className="flex flex-col gap-1">
               <StyledLabel htmlFor="receivedDate">Received Date</StyledLabel>
-            <DatePicker
-              value={receivedDate}
-              id="completionDate"
-              className="w-[100%] px-4 py-2 rounded outline-none bg-gray-200 focus:border-b-4 focus:border-b-blue-500"
-              onChange={(date) => {
-                if (date) {
-                  const month = date.toLocaleString("default", {
-                    month: "long",
-                  });
-                  const year = date.getFullYear();
-                  handleInputChange("receivedDate", `${month} ${year}`);
-                  setReceivedDate(`${month} ${year}`);
-                }
-              }}
-              dateFormat="dd/MM/yyyy"
-              isClearable
-              showMonthYearPicker
-             // {...register("startDate")}
-            />
-             {errors.receivedDate && (
+              <DatePicker
+                value={receivedDate}
+                id="completionDate"
+                className="w-[100%] px-4 py-2 rounded outline-none bg-gray-200 focus:border-b-4 focus:border-b-blue-500"
+                onChange={(date) => {
+                  if (date) {
+                    const month = date.toLocaleString("default", {
+                      month: "long",
+                    });
+                    const year = date.getFullYear();
+                    handleInputChange("receivedDate", `${month} ${year}`);
+                    setReceivedDate(`${month} ${year}`);
+                  }
+                }}
+                dateFormat="dd/MM/yyyy"
+                isClearable
+                showMonthYearPicker
+                // {...register("startDate")}
+              />
+              {errors.receivedDate && (
                 <span className="text-red-500">
                   {errors.receivedDate.message}
                 </span>
@@ -205,7 +199,6 @@ setReceivedDate("");
                 </span>
               )}
             </div>
-          
           </div>
 
           {/* Existing email, password, confirmPassword inputs */}

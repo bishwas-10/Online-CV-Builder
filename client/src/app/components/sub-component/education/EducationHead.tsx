@@ -1,12 +1,8 @@
 import React, { useState } from "react";
 import { Briefcase, ChevronDown, ChevronUp, Trash } from "lucide-react";
-
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
-import EducationForm, { TEducationSchema } from "./EducationForm";
-import {
-  deleteEducationField,
-} from "../../../store/eduSlice";
+import EducationForm from "./EducationForm";
 import { TEducationProps } from "@/app/store/types";
 import { deleteSingleEducation, setEduVisibility, unsetEduVisibility } from "@/app/store/resumeSlice";
 import { instance } from "@/app/api/instance";
@@ -67,7 +63,7 @@ const EducationHead = () => {
                   </div>
                   <div className="flex flex-row items-center gap-3">
                     <span
-                      onClick={(e) => {
+                      onClick={() => {
                         
                         handleDownClick(items)
                       }}
@@ -76,7 +72,7 @@ const EducationHead = () => {
                       {items.visibility ? <ChevronUp /> : <ChevronDown />}
                     </span>
                     <Trash
-                      onClick={(e) => handleTrashClick(items)}
+                      onClick={() => handleTrashClick(items)}
                       className="text-gray-500 hover:text-red-500 transition-all"
                     />
                   </div>

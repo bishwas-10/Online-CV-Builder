@@ -6,7 +6,7 @@ import { RootState } from "../store/store";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 
-const page = () => {
+const Page = () => {
   const router=useRouter();
   const [isSignedUp, setIsSignedUp] = useState<boolean>(true);
   const userDetails = useSelector((state:RootState)=>state.users);
@@ -126,7 +126,7 @@ useEffect(()=>{
                 : "Didn't have an account?"}
             </p>
             <button
-              onClick={(e) => setIsSignedUp(!isSignedUp)}
+              onClick={() => setIsSignedUp(!isSignedUp)}
               className="outline-none text-blue-600"
             >
               {isSignedUp ? "Sign up" : " Sign in"}
@@ -138,7 +138,7 @@ useEffect(()=>{
   );
 };
 
-export default page;
+export default Page;
 
 // {" "}
 // asfsefEFef

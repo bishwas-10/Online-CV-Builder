@@ -1,21 +1,17 @@
-import React, { useRef, useEffect, useState } from "react";
-import { useForm, SubmitHandler } from "react-hook-form";
+import React from "react";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { motion, AnimatePresence } from "framer-motion";
 import { StyledInput, StyledLabel, StyledTextArea } from "@/app/utils/styles";
-// import "flatpickr/dist/themes/material_green.css";
-import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useDispatch, useSelector } from "react-redux";
-import { setAchieveField } from "@/app/store/achieveSlice";
 import { RootState } from "@/app/store/store";
 import { instance } from "@/app/api/instance";
 import { addAcheivement } from "@/app/store/resumeSlice";
 export const achieveSchema = z.object({
   achieveTitle: z.string({ required_error: "achieve title is required" }),
   description: z.string({ required_error: "description is required" }),
-  
   visibility: z.boolean().default(false),
 });
 
@@ -34,7 +30,6 @@ const AcheivementForm = ({ items }: { items: TAchieveSchema }) => {
     handleSubmit,
     formState: { errors },
     reset,
-    setValue,
   } = useForm<TAchieveSchema>({
     resolver: zodResolver(achieveSchema),
     reValidateMode: "onChange",
@@ -56,7 +51,7 @@ const AcheivementForm = ({ items }: { items: TAchieveSchema }) => {
         resumeId:resumeId
       },
     });
-    console.log(acheiveRes.data.success);
+   
    // console.log([...expeRes?.data.experience])
      if(acheiveRes.data.success){
        dispatch(addAcheivement(acheiveRes?.data.acheivement));
@@ -64,12 +59,12 @@ const AcheivementForm = ({ items }: { items: TAchieveSchema }) => {
 
     reset();
   };
-  const handleInputChange = (
-    fieldName: keyof TAchieveSchema,
-    value: string
-  ) => {
-    setValue(fieldName, value);
-  };
+  // const handleInputChange = (
+  //   fieldName: keyof TAchieveSchema,
+  //   value: string
+  // ) => {
+  //   setValue(fieldName, value);
+  // };
   const variants = {
     initial: {
       opacity: 0,

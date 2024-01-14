@@ -31,9 +31,7 @@ const About = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
-    reset,
-    setValue,
+    formState: { errors }
   } = useForm<TAboutSchema>({
     resolver: zodResolver(aboutSchema),
     reValidateMode: "onChange",
@@ -70,9 +68,9 @@ const About = () => {
     
     
   };
-  const handleInputChange = (fieldName: keyof TAboutSchema, value: string) => {
-    setValue(fieldName, value);
-  };
+  // const handleInputChange = (fieldName: keyof TAboutSchema, value: string) => {
+  //   setValue(fieldName, value);
+  // };
   const variants = {
     initial: {
       opacity: 0,

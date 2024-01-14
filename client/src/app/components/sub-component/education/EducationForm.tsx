@@ -1,6 +1,6 @@
 "use client";
-import React, { useRef, useEffect, useState } from "react";
-import { useForm, SubmitHandler } from "react-hook-form";
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import {motion} from "framer-motion";
@@ -8,7 +8,6 @@ import { StyledInput, StyledLabel, StyledTextArea } from "@/app/utils/styles";
 // import "flatpickr/dist/themes/material_green.css";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { setEducationField } from "../../../store/eduSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { addEducation } from "@/app/store/resumeSlice";
 import { instance } from "@/app/api/instance";

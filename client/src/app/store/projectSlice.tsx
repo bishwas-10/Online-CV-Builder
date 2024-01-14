@@ -1,6 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { TEducationSchema } from "../components/sub-component/education/EducationForm";
-import { TExperienceSchema } from "../components/sub-component/experience/ExperienceForm";
 import { TProjectSchema } from "../components/sub-component/projects/ProjectForm";
 
 

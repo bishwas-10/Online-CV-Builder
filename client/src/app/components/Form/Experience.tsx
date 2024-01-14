@@ -1,16 +1,10 @@
 "use client";
 import React, { useState } from "react";
-import EducationForm from "../sub-component/education/EducationForm";
-import EducationHead from "../sub-component/education/EducationHead";
-import { useSelector } from "react-redux";
-import { RootState } from "@/app/store/store";
 import ExperienceForm from '../sub-component/experience/ExperienceForm';
 import ExperienceHead from '../sub-component/experience/ExperienceHead';
 
 
 const Experience = () => {
-  const items = useSelector((state:RootState)=> state.experience)
-
   const [showExpeForm, setShowExpeForm] = useState<boolean>(false);
   const initialExpeState={
     startDate:'',

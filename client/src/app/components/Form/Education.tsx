@@ -2,17 +2,17 @@
 import React, { useState } from "react";
 import EducationForm from "../sub-component/education/EducationForm";
 import EducationHead from "../sub-component/education/EducationHead";
-import { useSelector } from "react-redux";
-import { RootState } from "@/app/store/store";
+
 
 
 const Education = () => {
-  const items = useSelector((state:RootState)=> state.education)
  
   const [showEduForm, setShowEduForm] = useState<boolean>(false);
   const initialEduState={
-    startDate:'',
-    endDate: '',
+    _id:null,
+    resumeId:null,
+    startedAt:'',
+    endedAt: '',
     city:'',
     description: '',
     school: '',

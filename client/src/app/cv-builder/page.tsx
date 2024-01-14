@@ -1,14 +1,10 @@
 "use client";
 import React, { useEffect } from "react";
 import FieldSideBar from "../components/FieldSideBar";
-
-import Form from "../components/Form/Education";
-import About from "../components/Form/About";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store/store";
 import FIeldSelector from "../components/FIeldSelector";
 import CV from "@/app/template/SampleCv";
-import axios, { AxiosError } from "axios";
 import { addResume, removeResume } from "../store/resumeSlice";
 import { instance } from "../api/instance";
 import useAuth from "../utils/authCheck";

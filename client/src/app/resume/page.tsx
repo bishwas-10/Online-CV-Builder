@@ -3,15 +3,11 @@ import Link from "next/link";
 import React from "react";
 import { LayoutPanelTop } from 'lucide-react';
 import { resumeTemplate } from "../utils/template";
-
 import { instance } from "../api/instance";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store/store";
 import { setResume } from "../store/resumeTokenSlice";
-
 import { useRouter } from "next/navigation";
-
-import GetResume from "../utils/GetResume";
 import axios from "axios";
 
 const Page = () => {
@@ -58,7 +54,7 @@ const Page = () => {
         dispatch(setResume(data.data._id));
         router.push("/cv-builder");
       }
-    } catch (error: any) {
+    } catch (error:any) {
       console.log(error);
       if (!error.response.data.success) {
         const { data } = await axios({
