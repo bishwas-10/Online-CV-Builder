@@ -10,12 +10,12 @@ export interface SignResultProps {
 export interface UserProps{
  currentUser:SignResultProps |null;
  loading:boolean;
- error:boolean
+ error:string | null;
 }
 const initialState:UserProps={
     currentUser: null,
     loading: false,
-    error: false,
+    error: null,
 }
 
 const authSlice = createSlice({
@@ -28,17 +28,17 @@ const authSlice = createSlice({
           signInSuccess: (state, action) => {
             state.currentUser = action.payload;
             state.loading = false;
-            state.error = false;
+            state.error = null;
           },
-          signInFailure: (state) => {
+          signInFailure: (state,action) => {
             state.currentUser= null;
             state.loading = false;
-            state.error = true;
+            state.error = action.payload;
           },
           signOut:(state)=>{
             state.currentUser= null;
             state.loading = false;
-            state.error = true;
+            state.error = null;
           }
 
     }

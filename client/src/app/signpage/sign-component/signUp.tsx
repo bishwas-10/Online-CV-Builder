@@ -18,7 +18,10 @@ const signUpSchema = z
     message: "Password and confirm password must match",
   });
 export type TSignUpShema = z.infer<typeof signUpSchema>;
-const SignUp = () => {
+// Type '{ setIsSignedUp: Dispatch<SetStateAction<boolean>>; }' is not assignable to type 'IntrinsicAttributes & Dispatch<SetStateAction<boolean>>'.
+//   Property 'setIsSignedUp' does not exist on type 'IntrinsicAttributes & Dispatch<SetStateAction<boolean>>'.
+//yo vanyo tehi vayera any rakhdiye
+const SignUp = (setIsSignedUp: any) => {
   const {
     register,
     handleSubmit,
@@ -27,7 +30,12 @@ const SignUp = () => {
   } = useForm<TSignUpShema>({ resolver: zodResolver(signUpSchema) });
   const onSubmit: SubmitHandler<TSignUpShema> =async (data) => {
     const signUpRes = await userSignUp(data);
-    console.log(signUpRes);
+    if(signUpRes.status){
+      console.log("login successfull");
+      setIsSignedUp(true);
+    }else{
+      console.log(signUpRes.message)
+    }
     reset();
   };
   return (

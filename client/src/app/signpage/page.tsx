@@ -115,7 +115,7 @@ useEffect(()=>{
           </ul>
         </div>
         <div className="h-max   p-5  md:w-[50%]  bg-white border-2 border-gray-400">
-          {isSignedUp ? <SignIn /> : <SignUp />}
+          {isSignedUp ? <SignIn /> : <SignUp setIsSignedUp={setIsSignedUp}/>}
 
           {/* <GoogleLogin onSuccess={login as any}/> */}
 

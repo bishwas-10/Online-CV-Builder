@@ -1,14 +1,13 @@
 "use client";
 import React, { FC, useRef } from "react";
 import { PersonalData } from "../cv-builder/page";
-import html2canvas from "html2canvas";
-import jsPDF from "jspdf";
+import html2pdf from "html2pdf.js";
 import {
   VerticalTimeline,
   VerticalTimelineElement,
 } from "react-vertical-timeline-component";
 import "react-vertical-timeline-component/style.min.css";
-import { WorkflowIcon } from "lucide-react";
+import { WorkflowIcon,Printer  } from "lucide-react";
 import {
   TAcheivementProps,
   TAwardProps,
@@ -18,7 +17,9 @@ import {
   TSkillProps,
   TTrainingProps,
 } from "../store/types";
+import ReactToPrint, { useReactToPrint } from "react-to-print";
 import { ArrowDownToLine } from "lucide-react";
+import Link from "next/link";
 interface CvProps {
   personalData: PersonalData;
   educationData: TEducationProps[];
@@ -41,23 +42,40 @@ const CV: FC<CvProps> = ({
   projectData,
   skillData,
 }) => {
-  const pdfRef = useRef<HTMLDivElement>(null);
-const downloadPDf=()=>{
- const input = pdfRef.current as HTMLDivElement ;
- html2canvas(input ).then((canvas)=>{
-  const imgData = canvas.toDataURL('image/png');
-  const pdf = new jsPDF('p','mm','o4',true);
-  const pdfWidth = pdf.internal.pageSize.getWidth();
-  const pdfHeight = pdf.internal.pageSize.getHeight();
-  const imgWidth = canvas.width;
-  const imgHeight = canvas.height;
-  const ratio = Math.min(pdfWidth/imgWidth, pdfHeight/imgHeight);
-  const imgX = (pdfWidth - imgWidth* ratio)/ 2;
-  const imgY = 30;
-  pdf.addImage(imgData,'PNG', imgX, imgY, imgWidth*ratio,imgHeight*ratio);
-  pdf.save(`${personalData.firstName} resume`);
- })
-}
+  const componentRef = useRef<HTMLDivElement | null>(null);
+  // const downloadPDf = async () => {
+  //   if (pdfRef.current) {
+  //     const canvas = await html2canvas(pdfRef.current, {
+  //       scrollY: -window.scrollY,
+  //     });
+  //     const imgData = canvas.toDataURL("image/png");
+  //     const pdf = new jsPDF({
+  //       orientation: "p",
+  //       unit: "px",
+  //       format: "a4",
+  //     });
+  //     const imgWidth = pdf.internal.pageSize.getWidth();
+  //     const imgHeight = pdf.internal.pageSize.getHeight();
+  //     console.log(imgWidth, imgHeight, canvas.height);
+  //     let positionY = 0;
+  //     let totalPages = Math.ceil(canvas.height / imgHeight);
+  //     console.log(totalPages);
+  //     // Loop to add pages
+  //     for (let i = 0; i < totalPages; i++) {
+  //       pdf.addImage(imgData, "PNG", 0, positionY, imgWidth, imgHeight);
+
+  //       // Move to the next position
+  //       positionY -= imgHeight;
+
+  //       // Check if another page is needed
+  //       if (i < totalPages - 1) {
+  //         pdf.addPage();
+  //       }
+  //     }
+
+  //     // pdf.save('exportedFile.pdf');
+  //   }
+  // };
   // // Dummy text for placeholders
   // const dummyPersonalData: PersonalData = {
   //   name: "John Doe",
@@ -130,29 +148,52 @@ const downloadPDf=()=>{
   //   },
   //   // Add more training details if needed
   // ];
+  const handlePrint = useReactToPrint({
+    content: () => componentRef.current,
+  });
+
+  const handleDownload = () => {
+    const input = componentRef.current;
+
+    html2pdf(input, {
+      margin: 6,
+      filename: `${personalData.firstName}resume`,
+      image: { type: 'png', quality: 0.98 },
+      html2canvas: { scale: 2 },
+      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+      enableLinks: true,
+    });
+  };
+
   return (
     <div className="flex flex-col p-3 w-full">
       <div className="w-full h-16 px-6 flex flex-row justify-between items-center bg-gray-200">
         <span className="text-2xl tracking-wide font-bold uppercase text-blue-500">
           Your Resume
         </span>
-        <span className="flex flex-row items-center gap-1 font-medium bg-blue-500 text-white hover:text-blue-500 hover:bg-white rounded-md px-4 py-2 transition-all">
-          <button onClick={downloadPDf}>
-            Download Resume      
-          </button> <ArrowDownToLine height={18}/>
+        <span className="flex flex-row items-center gap-1 font-medium">
+          <button
+            className="flex flex-row items-center gap-1  bg-blue-500 text-white hover:text-blue-500 hover:bg-white rounded-md px-4 py-2 transition-all"
+            onClick={handlePrint}
+          >
+           
+            Print this out!<Printer height={18}/>
+          </button>
+          {/* <span className="flex flex-row items-center gap-1  bg-blue-500 text-white hover:text-blue-500 hover:bg-white rounded-md px-4 py-2 transition-all">
+            <button onClick={handleDownload}> Download this out!</button>
+
+            <ArrowDownToLine height={18} />
+          </span> */}
         </span>
       </div>
-      <div
-        ref={pdfRef}
-        className="bg-gray-100 min-h-screen w-full flex justify-center"
-      >
+      <div className="bg-gray-100 min-h-screen w-full flex justify-center">
         <div
           id="t1"
           className="bg-white w-full  overflow-scroll  rounded shadow-lg resume-a4  flex justify-between "
 
           //  style={{ fontFamily: customStyles.font }}
         >
-          <div className="w-full">
+          <div ref={componentRef} className="w-full">
             <div className="flex justify-center flex-col relative pt-8">
               <h1
                 className="pl-10 font-semibold text-t2-xl tracking-widest text-t1-black uppercase"
@@ -288,7 +329,7 @@ const downloadPDf=()=>{
                       <Paragraph classes="text-t2-sub-heading font-medium">
                         {exp.description}
                       </Paragraph>
-                      <a href={exp.projectLink}>{exp.projectLink}</a>
+                      <Link href={exp.projectLink}>{exp.projectLink}</Link>
                     </Description>
                   ))}
                 </div>

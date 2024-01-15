@@ -21,10 +21,10 @@ export const userLogin = async (formData: TSignInShema) => {
     const { data } = await instance.post("/login", formData);
     
     return data;
-  } catch (error) {
-   
-    console.log(error)
-  }
+  }  catch (error:any) {
+    return error.response.data;
+    
+   }
 };
 
 export const userSignUp = async (formData:TSignUpShema) => {
@@ -32,8 +32,8 @@ export const userSignUp = async (formData:TSignUpShema) => {
     const data = await instance.post("/signup", formData);
     
     return data;
-  } catch (error) {
-    console.log(error)
+  } catch (error:any) {
+   return error.response.data;
    
   }
 };
