@@ -6,10 +6,12 @@ import EducationForm from "./EducationForm";
 import { TEducationProps } from "@/app/store/types";
 import { deleteSingleEducation, setEduVisibility, unsetEduVisibility } from "@/app/store/resumeSlice";
 import { instance } from "@/app/api/instance";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const EducationHead = () => {
   const dispatch = useDispatch();
   const eduDetails = useSelector((state: RootState) => state.resume.education);
-  console.log(eduDetails);
+ 
   const token = useSelector((state:RootState)=>state.token);
   const [showDetails, setShowDetails] = useState<boolean>(true);
 
@@ -24,11 +26,13 @@ const EducationHead = () => {
       },
      
     });
-    console.log(delRes.data);
-   // console.log([...expeRes?.data.experience])
+  
      if(delRes.data.success){
+      toast.info("Education deleted  successfully");
       dispatch(deleteSingleEducation(items));
-     }
+     }else{
+      toast.error("error deleting education");
+    }
     
   };
   const handleDownClick = (items: TEducationProps) => {
@@ -82,6 +86,7 @@ const EducationHead = () => {
             )
           );
         })}
+        <ToastContainer autoClose={1600} />
     </>
   );
 };

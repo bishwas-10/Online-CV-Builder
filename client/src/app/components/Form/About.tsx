@@ -9,7 +9,8 @@ import { instance } from "@/app/api/instance";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/store/store";
 import { addPersonal } from "@/app/store/resumeSlice";
-
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 export const aboutSchema = z.object({
   firstName: z.string({ required_error: "First Name is required" }),
   lastName: z.string({ required_error: "Last Name is required" }),
@@ -62,8 +63,10 @@ const About = () => {
       },
     });
     if(eduRes.data.success){
-      console.log(eduRes.data)
+      toast.success("Personal Data added successfully");
       dispatch(addPersonal(eduRes.data.personal));
+    }else{
+      toast.error("error adding Personal Data")
     }
     
     
@@ -222,6 +225,7 @@ const About = () => {
           </button>
         </form>
       </motion.div>
+      <ToastContainer autoClose={1600}/>
     </div>
   );
 };

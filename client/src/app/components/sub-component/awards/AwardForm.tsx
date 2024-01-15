@@ -12,6 +12,8 @@ import { RootState } from "@/app/store/store";
 import { instance } from "@/app/api/instance";
 import { addAwards } from "@/app/store/resumeSlice";
 import { TAwardProps } from "@/app/store/types";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 export const awardSchema = z.object({
   awardTitle: z.string({ required_error: "award title is required" }),
   organization: z.string(),
@@ -24,10 +26,6 @@ export const awardSchema = z.object({
 export type TAwardSchema = z.infer<typeof awardSchema>;
 const AwardForm = ({ items }: { items: TAwardProps }) => {
   const dispatch = useDispatch();
-  //   const [jobTitle, setjobTitle] = useState<string>(items?.jobTitle);
-  //   const [employer, setEmployer] = useState<string>(items?.employer);
-  //   const [city, setCity] = useState<string>(items?.city);
-  //   const [description, setDes] = useState<string>(items?.city);
   const token = useSelector((state: RootState) => state.token);
   const resumeId = useSelector(
     (state: RootState) => state.resumeToken.resumeId
@@ -48,7 +46,7 @@ const AwardForm = ({ items }: { items: TAwardProps }) => {
     // TODO: submit to servers
     // ...
     const awardRes = await instance({
-      url:items._id ? `/acheivement/${items._id}`:`/acheivement`,
+      url:items._id ? `/award/${items._id}`:`/award`,
       method: items._id ?'PUT':'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -63,10 +61,12 @@ const AwardForm = ({ items }: { items: TAwardProps }) => {
         resumeId: resumeId,
       },
     });
-    console.log(awardRes.data.success);
-    // console.log([...expeRes?.data.experience])
+   
     if (awardRes.data.success) {
+      toast.success("Award added successfully");
       dispatch(addAwards(awardRes?.data.award));
+    }else{
+      toast.error("error adding Award");
     }
 
     setReceivedDate("");
@@ -212,7 +212,9 @@ const AwardForm = ({ items }: { items: TAwardProps }) => {
             Add
           </button>
         </form>
+           <ToastContainer autoClose={1600} />
       </motion.div>
+   
     </AnimatePresence>
   );
 };

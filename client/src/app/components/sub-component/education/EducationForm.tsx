@@ -13,6 +13,8 @@ import { addEducation } from "@/app/store/resumeSlice";
 import { instance } from "@/app/api/instance";
 import { RootState } from "@/app/store/store";
 import { TEducationProps } from "@/app/store/types";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 export const educationSchema = z.object({
     school: z.string({required_error:"this field is required"}),
     degree: z.string({required_error:"this field is required"}),
@@ -75,11 +77,13 @@ const resumeId = useSelector((state:RootState)=>state.resumeToken.resumeId);
         resumeId:resumeId
       },
     });
-    console.log(eduRes.data);
-   // console.log([...expeRes?.data.experience])
+
      if(eduRes.data.success){
+      toast.success("Education added successfully");
        dispatch(addEducation(eduRes?.data.education));
-     }
+     }else{
+      toast.error("error adding Education");
+    }
     
     setStartDate("");
     setEndDate("");
@@ -235,6 +239,7 @@ const resumeId = useSelector((state:RootState)=>state.resumeToken.resumeId);
           Add
         </button>
       </form>
+      <ToastContainer autoClose={1600} />
     </motion.div>
   );
 };

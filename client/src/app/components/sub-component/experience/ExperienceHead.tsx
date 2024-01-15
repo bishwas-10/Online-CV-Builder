@@ -7,7 +7,8 @@ import ExperienceForm, { TExperienceSchema } from "./ExperienceForm";
 import { TExperienceProps } from "@/app/store/types";
 import { deleteSingleExperience, setExpeVisibility, unsetExpeVisibility } from "@/app/store/resumeSlice";
 import { instance } from "@/app/api/instance";
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const ExperienceHead = () => {
   const dispatch = useDispatch();
   const expeDetails = useSelector((state: RootState) => state.resume.experience);
@@ -23,11 +24,12 @@ const ExperienceHead = () => {
       },
      
     });
-    console.log(delRes.data);
-   // console.log([...expeRes?.data.experience])
      if(delRes.data.success){
+      toast.info("Experience deleted successfully");
       dispatch(deleteSingleExperience(items));
-     }
+     }else{
+      toast.error("error deleting experience");
+    }
     
   };
   const handleDownClick = (items: TExperienceProps) => {
@@ -76,7 +78,7 @@ const ExperienceHead = () => {
             )
           );
         })}
-     
+     <ToastContainer autoClose={1600} />
     </>
   );
 };

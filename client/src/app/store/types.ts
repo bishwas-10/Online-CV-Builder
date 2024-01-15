@@ -1,7 +1,7 @@
 export type TExperienceProps = {
     _id:string | null;
     resumeId:string | null;
-    userId:string; 
+    userId?:string; 
     startDate: string;
     endDate: string;
     city: string;

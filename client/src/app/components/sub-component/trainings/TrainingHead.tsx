@@ -6,7 +6,8 @@ import TrainingForm, { TTrainingSchema } from "./TrainingForm";
 import { deleteSingleTrainings, setTrainingVisibility, unsetTrainingVisibility } from "@/app/store/resumeSlice";
 import { TTrainingProps } from "@/app/store/types";
 import { instance } from "@/app/api/instance";
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const TrainingHead = () => {
   const dispatch = useDispatch();
@@ -16,7 +17,7 @@ const TrainingHead = () => {
   const handleTrashClick =async (items: TTrainingProps) => {
     
     const delRes = await instance({
-      url:`/experience/${items._id}`,
+      url:`/training/${items._id}`,
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
@@ -24,11 +25,13 @@ const TrainingHead = () => {
       },
      
     });
-    console.log(delRes.data);
-   // console.log([...expeRes?.data.experience])
+
      if(delRes.data.success){
+      toast.info("Training added successfully");
       dispatch(deleteSingleTrainings(items));
-     }
+     }else{
+      toast.error("error deleting training");
+    }
     
   
   };
@@ -78,6 +81,7 @@ const TrainingHead = () => {
             )
           );
         })}
+        <ToastContainer autoClose={1600} />
     </>
   );
 };

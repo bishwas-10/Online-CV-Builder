@@ -6,6 +6,8 @@ import TrainingHead from '../sub-component/trainings/TrainingHead';
 const Trainings = () => {
   const [showTrainingForm, setShowTrainingForm] = useState<boolean>(false);
   const initialTrainingState={
+    _id:null,
+    resumeId:null,
     trainingTitle: '',
     institute:'',
     completionDate:'',

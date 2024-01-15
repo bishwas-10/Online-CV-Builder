@@ -7,7 +7,8 @@ import ProjectForm, { TProjectSchema } from "./ProjectForm";
 import { deleteSingleProjects, setProjectVisibility, unsetProjectVisibility } from "@/app/store/resumeSlice";
 import { instance } from "@/app/api/instance";
 import { TProjectProps } from "@/app/store/types";
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const ProjectHead = () => {
   const dispatch = useDispatch();
   const projectDetails = useSelector((state: RootState) => state.resume.project);
@@ -15,7 +16,7 @@ const ProjectHead = () => {
   const token = useSelector((state: RootState) => state.token);
   const handleTrashClick = async(items: TProjectProps) => {
     const delRes = await instance({
-      url:`/experience/${items._id}`,
+      url:`/project/${items._id}`,
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
@@ -23,11 +24,12 @@ const ProjectHead = () => {
       },
      
     });
-    console.log(delRes.data);
-   // console.log([...expeRes?.data.experience])
      if(delRes.data.success){
+      toast.info("Projects added successfully");
       dispatch(deleteSingleProjects(items));
-     }
+     }else{
+      toast.error("error deleting projects");
+    }
     
   };
   const handleDownClick = (items: TProjectProps) => {
@@ -77,7 +79,7 @@ const ProjectHead = () => {
             )
           );
         })}
-     
+     <ToastContainer autoClose={1600} />
     </>
   );
 };

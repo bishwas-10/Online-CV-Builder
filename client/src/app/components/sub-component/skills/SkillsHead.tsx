@@ -6,7 +6,8 @@ import SkillsForm, { TSkillSchema } from "./SkillsForm";
 import { deleteSingleSkills, setSkillVisibility, unsetSkillVisibility } from "@/app/store/resumeSlice";
 import { TSkillProps } from "@/app/store/types";
 import { instance } from "@/app/api/instance";
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const ProjectHead = () => {
   const dispatch = useDispatch();
   const skillDetails = useSelector((state: RootState) => state.resume.skill);
@@ -15,7 +16,7 @@ const ProjectHead = () => {
   const handleTrashClick =async (items: TSkillProps) => {
     
     const delRes = await instance({
-      url:`/experience/${items._id}`,
+      url:`/skill/${items._id}`,
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
@@ -23,11 +24,12 @@ const ProjectHead = () => {
       },
      
     });
-    console.log(delRes.data);
-   // console.log([...expeRes?.data.experience])
      if(delRes.data.success){
+      toast.info("Skill added successfully");
       dispatch(deleteSingleSkills(items));
-     }
+     }else{
+      toast.error("error deleting skill");
+    }
     
   
   };
@@ -78,7 +80,7 @@ const ProjectHead = () => {
             )
           );
         })}
-     
+     <ToastContainer autoClose={1600} />
     </>
   );
 };

@@ -10,6 +10,8 @@ import { RootState } from "@/app/store/store";
 import { instance } from "@/app/api/instance";
 import { addAcheivement } from "@/app/store/resumeSlice";
 import { TAcheivementProps } from "@/app/store/types";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 export const achieveSchema = z.object({
   achieveTitle: z.string({ required_error: "achieve title is required" }),
   description: z.string({ required_error: "description is required" }),
@@ -55,17 +57,15 @@ const AcheivementForm = ({ items }: { items: TAcheivementProps }) => {
    
    // console.log([...expeRes?.data.experience])
      if(acheiveRes.data.success){
+        toast.success("Acheivement added successfully");
        dispatch(addAcheivement(acheiveRes?.data.acheivement));
-     }
+     }else{
+      toast.error("error adding Acheivement");
+    }
 
     reset();
   };
-  // const handleInputChange = (
-  //   fieldName: keyof TAchieveSchema,
-  //   value: string
-  // ) => {
-  //   setValue(fieldName, value);
-  // };
+
   const variants = {
     initial: {
       opacity: 0,
@@ -148,7 +148,9 @@ const AcheivementForm = ({ items }: { items: TAcheivementProps }) => {
             Add
           </button>
         </form>
+              <ToastContainer autoClose={1600} />
       </motion.div>
+
     </AnimatePresence>
   );
 };

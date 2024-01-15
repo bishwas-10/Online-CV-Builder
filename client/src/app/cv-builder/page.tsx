@@ -13,7 +13,7 @@ import { useRouter } from "next/navigation";
 
 export interface PersonalData {
   firstName?: string;
-  lastName?:string;
+  lastName?: string;
   designation?: string;
   objective?: string;
   email?: string;
@@ -72,64 +72,53 @@ export interface Project {
   link: string;
 }
 const Page = () => {
-  const desktop = useMediaQuery('(min-width:1024px)');
+  const desktop = useMediaQuery("(min-width:1024px)");
   const router = useRouter();
   const dispatch = useDispatch();
-  const token= useSelector((state:RootState)=>state.token.token) as string;
-  const resumeId= useSelector((state:RootState)=>state.resumeToken.resumeId) as string;
- 
+  const token = useSelector((state: RootState) => state.token.token) as string;
+  const resumeId = useSelector(
+    (state: RootState) => state.resumeToken.resumeId
+  ) as string;
+
   useAuth();
-  const setResumeData=async()=>{
-    if( !resumeId){
-    return  router.push('/resume');
+  const setResumeData = async () => {
+    if (!resumeId) {
+      return router.push("/resume");
     }
-    if(resumeId){
-      const {data}=await instance({
-        url:`/resume/${resumeId}`,
-        method: 'GET',
-                headers: {
-                  'Content-Type': 'application/json',
-                  Authorization: `Bearer ${token}`,
-                  
-                },
+    if (resumeId) {
+      const { data } = await instance({
+        url: `/resume/${resumeId}`,
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
       });
-      if(data.success){
-      
+      if (data.success) {
         dispatch(addResume(data.resume));
       }
     }
-   
-    
-  }
-useEffect(()=>{
+  };
+  useEffect(() => {
+    setResumeData();
 
-  setResumeData()
-
-return ()=>{
-  dispatch(removeResume());
-}
-},[])
+    return () => {
+      dispatch(removeResume());
+    };
+  }, []);
 
   const resumeData = useSelector((state: RootState) => state.resume);
-
-  //   const dummyEducationData = useSelector((state:RootState)=>state.education)
-  //   const dummyExperienceData = useSelector((state:RootState)=>state.experience)
-  //   const dummyProjectData = useSelector((state:RootState)=>state.projects)
-  //   // Dummy text for new sections
-  //   const dummyAchievementsData = useSelector((state:RootState)=>state.achievements)
-  // const dummySkillsData = useSelector((state:RootState)=>state.skills);
-  //   const dummyAwardsData = useSelector((state:RootState)=>state.awards)
-
-  //   const dummyTrainingData = useSelector((state:RootState)=>state.trainings)
 
   const customStyles = {
     font: "Arial, sans-serif",
     // Other custom styles
   };
-  if(!desktop){
-    return <div className="h-screen w-screen flex items-center justify-center">
-      pleas open it in a desktop for better experience
-    </div>
+  if (!desktop) {
+    return (
+      <div className="h-screen w-screen flex items-center justify-center">
+        pleas open it in a desktop for better experience
+      </div>
+    );
   }
   return (
     <div>

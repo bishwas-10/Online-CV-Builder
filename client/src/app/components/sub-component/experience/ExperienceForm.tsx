@@ -13,6 +13,8 @@ import { instance } from "@/app/api/instance";
 import { RootState } from "@/app/store/store";
 import { addExperience } from "@/app/store/resumeSlice";
 import { TExperienceProps } from "@/app/store/types";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 export const experienceSchema = z
   .object({
     jobTitle: z.string({ required_error: "job title is required" }),
@@ -81,10 +83,12 @@ const ExperienceForm = ({ items }: { items: TExperienceProps }) => {
         resumeId: resumeId,
       },
     });
-    console.log(expeRes.data.success);
-    // console.log([...expeRes?.data.experience])
+
     if (expeRes.data.success) {
+      toast.success("experience added successfully");
       dispatch(addExperience(expeRes?.data.experience));
+    }else{
+      toast.error("error adding experience");
     }
 
     // dispatch(setExperienceField(expeRes?.data.experience));
@@ -242,6 +246,7 @@ const ExperienceForm = ({ items }: { items: TExperienceProps }) => {
           Add
         </button>
       </form>
+      <ToastContainer autoClose={1600} />
     </motion.div>
   );
 };

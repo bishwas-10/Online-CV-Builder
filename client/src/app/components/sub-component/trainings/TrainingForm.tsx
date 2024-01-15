@@ -11,6 +11,8 @@ import { RootState } from "@/app/store/store";
 import { instance } from "@/app/api/instance";
 import { addTrainings } from "@/app/store/resumeSlice";
 import { TTrainingProps } from "@/app/store/types";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 export const trainingSchema = z.object({
   trainingTitle: z.string({ required_error: "training title is required" }),
   institute: z.string(),
@@ -26,10 +28,7 @@ const TrainingForm = ({ items }: { items: TTrainingProps }) => {
   const resumeId = useSelector(
     (state: RootState) => state.resumeToken.resumeId
   );
-  //   const [jobTitle, setjobTitle] = useState<string>(items?.jobTitle);
-  //   const [employer, setEmployer] = useState<string>(items?.employer);
-  //   const [city, setCity] = useState<string>(items?.city);
-  //   const [description, setDes] = useState<string>(items?.city);
+
   const [completionDate, setCompletionDate] = useState<string>(
     items?.completionDate
   );
@@ -64,9 +63,11 @@ const TrainingForm = ({ items }: { items: TTrainingProps }) => {
       },
     });
 
-    // console.log([...expeRes?.data.experience])
     if (trainingRes.data.success) {
+      toast.success("Training field added successfully");
       dispatch(addTrainings(trainingRes?.data.training));
+    }else{
+      toast.error("error adding Training field");
     }
     reset();
   };
@@ -199,6 +200,7 @@ const TrainingForm = ({ items }: { items: TTrainingProps }) => {
             Add
           </button>
         </form>
+        <ToastContainer autoClose={1600} />
       </motion.div>
     </AnimatePresence>
   );

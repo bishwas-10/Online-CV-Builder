@@ -6,6 +6,8 @@ import AwardHead from '../sub-component/awards/AwardHead';
 const Trainings = () => {
   const [showAwardForm, setShowAwardForm] = useState<boolean>(false);
   const initialAwardState={
+    _id:null,
+    resumeId:null,
     awardTitle: '',
     organization:'',
     receivedDate:'',

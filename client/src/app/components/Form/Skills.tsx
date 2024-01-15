@@ -6,6 +6,8 @@ import SkillsHead from "../sub-component/skills/SkillsHead";
 const Skills = () => {
   const [showSkillForm, setShowSkillForm] = useState<boolean>(false);
   const initialProjectState = {
+    _id:null,
+    resumeId:null,
     skillTitle: "",
     level: "",
     visibility: false,

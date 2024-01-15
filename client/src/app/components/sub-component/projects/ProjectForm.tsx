@@ -10,6 +10,8 @@ import { RootState } from "@/app/store/store";
 import { instance } from "@/app/api/instance";
 import { addProjects } from "@/app/store/resumeSlice";
 import { TProjectProps } from "@/app/store/types";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 export const projectSchema = z.object({
   projectTitle: z.string({ required_error: "project title is required" }),
   description: z.string({ required_error: "description is required" }),
@@ -22,11 +24,6 @@ const ProjectForm = ({ items }: { items: TProjectProps }) => {
   const dispatch = useDispatch();
   const token = useSelector((state:RootState)=>state.token);
   const resumeId = useSelector((state:RootState)=>state.resumeToken.resumeId);
-  //   const [jobTitle, setjobTitle] = useState<string>(items?.jobTitle);
-  //   const [employer, setEmployer] = useState<string>(items?.employer);
-  //   const [city, setCity] = useState<string>(items?.city);
-  //   const [description, setDes] = useState<string>(items?.city);
-
   const {
     register,
     handleSubmit,
@@ -41,6 +38,7 @@ const ProjectForm = ({ items }: { items: TProjectProps }) => {
   const onSubmit = async (data: TProjectSchema) => {
     // TODO: submit to servers
     // ...
+   
     const projectRes = await instance({
       url:items._id ? `/project/${items._id}`:`/project`,
       method: items._id ?'PUT':'POST',
@@ -55,11 +53,12 @@ const ProjectForm = ({ items }: { items: TProjectProps }) => {
         resumeId:resumeId
       },
     });
-    console.log(projectRes.data.success);
-   // console.log([...expeRes?.data.experience])
      if(projectRes.data.success){
+      toast.success("Project added successfully");
        dispatch(addProjects(projectRes?.data.project));
-     }
+     }else{
+      toast.error("error adding Project");
+    }
 
     reset();
   };
@@ -163,6 +162,7 @@ const ProjectForm = ({ items }: { items: TProjectProps }) => {
             Add
           </button>
         </form>
+        <ToastContainer autoClose={1600} />
       </motion.div>
     </AnimatePresence>
   );

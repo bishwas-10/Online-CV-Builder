@@ -7,7 +7,8 @@ import AcheivementForm from "./AchievementForm";
 import { deleteSingleAcheivement, setAcheiveVisibility, unsetAcheiveVisibility } from "@/app/store/resumeSlice";
 import { instance } from "@/app/api/instance";
 import { TAcheivementProps } from "@/app/store/types";
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const AchievementHead = () => {
   const dispatch = useDispatch();
@@ -16,7 +17,7 @@ const AchievementHead = () => {
   const token = useSelector((state:RootState)=>state.token);
   const handleTrashClick =async (items: TAcheivementProps) => {
     const delRes = await instance({
-      url:`/education/${items._id}`,
+      url:`/acheivement/${items._id}`,
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
@@ -27,8 +28,11 @@ const AchievementHead = () => {
     
    // console.log([...expeRes?.data.experience])
      if(delRes.data.success){
+      toast.info("Acheivement deleted successfully");
       dispatch(deleteSingleAcheivement(items));
-     }
+     }else{
+      toast.error("error deleting acheivement");
+    }
   };
   const handleDownClick = (items: TAcheivementProps) => {
     if (showDetails) {
@@ -73,6 +77,7 @@ const AchievementHead = () => {
             )
           );
         })}
+        <ToastContainer autoClose={1600} />
     </>
   );
 };

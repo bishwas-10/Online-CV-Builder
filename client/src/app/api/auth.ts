@@ -1,15 +1,13 @@
 import axios from "axios";
 import { TSignInShema } from "../signpage/sign-component/signIn";
 import { TSignUpShema } from "../signpage/sign-component/signUp";
+import { instance } from "./instance";
 
 
-const instance = axios.create({
-  baseURL: "http://localhost:4000/api",
-  withCredentials: true,
-});
+
 export const getUser = async (token: string) => {
   try {
-    const { data } = await instance.get("/users", {
+    const { data } = await instance.get("/", {
       headers: { Accept: "application/json", authorization: `Bearer ${token}` },
     });
     return data;
@@ -20,8 +18,8 @@ export const getUser = async (token: string) => {
 
 export const userLogin = async (formData: TSignInShema) => {
   try {
-    const { data } = await instance.post("/users/login", formData);
-    console.log(data);
+    const { data } = await instance.post("/login", formData);
+    
     return data;
   } catch (error) {
    
@@ -31,8 +29,8 @@ export const userLogin = async (formData: TSignInShema) => {
 
 export const userSignUp = async (formData:TSignUpShema) => {
   try {
-    const data = await instance.post("/users/signup", formData);
-    console.log(data);
+    const data = await instance.post("/signup", formData);
+    
     return data;
   } catch (error) {
     console.log(error)

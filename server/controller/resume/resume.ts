@@ -20,7 +20,7 @@ export const resume = async (req: Request, res: Response) => {
           userId: "",
         };
    
-        const resume = await Resume.findOne({userId:userId});
+        const resume = await Resume.findOne({userId:userId,templateName:templatename});
       
         if (!resume) {
           return res.status(400).json({ success: false });

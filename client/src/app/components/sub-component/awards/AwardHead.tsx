@@ -7,7 +7,8 @@ import AwardForm, { TAwardSchema } from "./AwardForm";
 import { deleteSingleAwards, setAwardVisibility, unsetAwardVisibility } from "@/app/store/resumeSlice";
 import { TAwardProps } from "@/app/store/types";
 import { instance } from "@/app/api/instance";
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const AwardHead = () => {
   const dispatch = useDispatch();
   const awardDetails = useSelector((state: RootState) => state.resume.award);
@@ -16,7 +17,7 @@ const AwardHead = () => {
   const handleTrashClick = async(items: TAwardProps) => {
 
     const delRes = await instance({
-      url:`/education/${items._id}`,
+      url:`/award/${items._id}`,
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
@@ -27,8 +28,11 @@ const AwardHead = () => {
     
    // console.log([...expeRes?.data.experience])
      if(delRes.data.success){
+      toast.success("Awards deleted successfully");
       dispatch(deleteSingleAwards(items));
-     }
+     }else{
+      toast.error("error deleting awards");
+    }
   };
   const handleDownClick = (items: TAwardProps) => {
     if (showDetails) {
@@ -77,7 +81,7 @@ const AwardHead = () => {
             )
           );
         })}
-     
+     <ToastContainer autoClose={1600} />
     </>
   );
 };

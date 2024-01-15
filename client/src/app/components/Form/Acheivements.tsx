@@ -7,6 +7,8 @@ import AchievementHead from "../sub-component/achievements/AchievementHead";
 const Projects = () => {
   const [showAchieveForm, setShowAchieveForm] = useState<boolean>(false);
   const initialAchieveState={
+    _id:null,
+    resumeId:null,
     description: '',
     achieveTitle: '',
     visibility:false

@@ -7,6 +7,8 @@ import ExperienceHead from '../sub-component/experience/ExperienceHead';
 const Experience = () => {
   const [showExpeForm, setShowExpeForm] = useState<boolean>(false);
   const initialExpeState={
+    _id:null,
+    resumeId:null,
     startDate:'',
     endDate: '',
     city:'',

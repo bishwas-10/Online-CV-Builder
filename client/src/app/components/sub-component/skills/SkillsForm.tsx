@@ -10,6 +10,8 @@ import { RootState } from "@/app/store/store";
 import { instance } from "@/app/api/instance";
 import { addSKills } from "@/app/store/resumeSlice";
 import { TSkillProps } from "@/app/store/types";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 export const skillSchema = z
   .object({
     skillTitle: z.string({required_error:"Skill title is required"}),
@@ -22,11 +24,6 @@ const SkillsForm = ({ items }: { items: TSkillProps }) => {
   const dispatch = useDispatch();
   const token = useSelector((state:RootState )=>state.token);
   const resumeId = useSelector((state:RootState)=>state.resumeToken.resumeId);
-//   const [jobTitle, setjobTitle] = useState<string>(items?.jobTitle);
-//   const [employer, setEmployer] = useState<string>(items?.employer);
-//   const [city, setCity] = useState<string>(items?.city);
-//   const [description, setDes] = useState<string>(items?.city);
-
   const {
     register,
     handleSubmit,
@@ -55,11 +52,13 @@ const SkillsForm = ({ items }: { items: TSkillProps }) => {
         resumeId:resumeId
       },
     });
-    console.log(skillRes.data.success);
-   // console.log([...expeRes?.data.experience])
+
      if(skillRes.data.success){
+      toast.success("Skill added successfully");
        dispatch(addSKills(skillRes?.data.skill));
-     }
+     }else{
+      toast.error("error adding Skill");
+    }
     
     reset();
   };
@@ -131,6 +130,7 @@ const SkillsForm = ({ items }: { items: TSkillProps }) => {
           Add
         </button>
       </form>
+      <ToastContainer autoClose={1600} />
     </motion.div>
   );
 };

@@ -6,6 +6,8 @@ import ProjectHead from "../sub-component/projects/ProjectHead";
 const Projects = () => {
   const [showProjectForm, setShowProjectForm] = useState<boolean>(false);
   const initialProjectState = {
+    _id:null,
+    resumeId:null,
     description: "",
     projectTitle: "",
     projectLink: "",

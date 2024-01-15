@@ -1,49 +1,34 @@
-"use client"
+"use client";
 import Link from "next/link";
-import React from "react";
-import { LayoutPanelTop } from 'lucide-react';
+import React, { useState } from "react";
+import { LayoutPanelTop } from "lucide-react";
 import { resumeTemplate } from "../utils/template";
 import { instance } from "../api/instance";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store/store";
 import { setResume } from "../store/resumeTokenSlice";
 import { useRouter } from "next/navigation";
-import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 const Page = () => {
-  const dispatch= useDispatch();
-  
+  const dispatch = useDispatch();
+const [resumeName, setResumeName]= useState<string | null>(null);
   const router = useRouter();
-  const token= useSelector((state:RootState)=>state.token.token) as string;
-  const resumeId= useSelector((state:RootState)=>state.resumeToken.resumeId) as string;
-  // const resumeHandler=async(title:string)=>{
-  //   const { data } = await instance({
-  //   url: resumeId ? `/resume?templatename=${title}`:'/resume',
-  //     method:  resumeId? 'GET' :'POST',
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //       Authorization: `Bearer ${token}`,
-  //     },
-  //     data: {
-  //       templateName: title,
-  //       title: 'Your Resume',
-  //     },
-      
-  //   });
-    
-  //   dispatch(setResume(data?.data._id));
+  const token = useSelector((state: RootState) => state.token.token) as string;
+  const resumeId = useSelector(
+    (state: RootState) => state.resumeToken.resumeId
+  ) as string;
   
-  // }
-  
-  const getResume = async () => {
-    // const resumeId= useSelector((state:RootState)=>state.resumeToken.resumeId);
+
+  const getResume = async (title:string) => {
     try {
       if (!token) {
         return router.push("/signpage");
       }
-      const { data } = await axios({
-        url: `http://localhost:4000/api/users/resume`,
-        withCredentials: true,
+    if(!resumeId){
+      const { data } = await instance({
+        url: title?`/resume?templatename=${title}`:`/resume/?templatename=simple`,
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -51,15 +36,19 @@ const Page = () => {
         },
       });
       if (data.success) {
+    
+        toast.success("Got your resume! Update it now!")
         dispatch(setResume(data.data._id));
-        router.push("/cv-builder");
+        
       }
-    } catch (error:any) {
-      console.log(error);
+      
+     // router.push("/cv-builder");
+    }
+    } catch (error: any) {
+      console.log("paayena")
       if (!error.response.data.success) {
-        const { data } = await axios({
-          url: `http://localhost:4000/api/users/resume`,
-          withCredentials: true,
+        const { data } = await instance({
+          url: `/resume`,
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -67,49 +56,69 @@ const Page = () => {
           },
           data: {
             title: "Your Resume",
+            templateName: title
           },
         });
 
         if (data.success) {
+          toast.success("Created!! Good luck creating your resume")
           dispatch(setResume(data.data._id));
-          router.push("/cv-builder");
+         // router.push("/cv-builder");
         }
       }
     }
   };
-  
-    const resumeHandler=async(title:string)=>{
-      try {
-        if(!token){
-          return router.push('/signpage');
+
+  const resumeHandler = async (title: string) => {
+    try {
+      if (!token) {
+        return router.push("/signpage");
+      }
+      setResumeName(title);
+      if (!resumeId) {
+        return getResume(title);
+      } else{
+        const { data } = await instance({
+          url: `/resume?templatename=${title}`,
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        if (data.success) {
+      
+          toast.success("Got your resume! Update it now!")
+          dispatch(setResume(data.data._id));
+          
         }
-        if(!resumeId){
-        return getResume();
-        }else{
-          const { data } = await instance({
-              url: `/resume?templatename=${title}`,
-                method:   'GET' ,
-                headers: {
-                  'Content-Type': 'application/json',
-                  Authorization: `Bearer ${token}`,
-                },
-                data: {
-                  templateName: title,
-                  title: 'Your Resume',
-                },
-                
-              });
-              if(data.success){
-                dispatch(setResume(data?.data._id));
-                router.push('/cv-builder');
-              }
-              
+        console.log(data)
+       
+      }
+      
+    } catch (error:any) {
+      if (!error.response.data.success) {
+        const { data } = await instance({
+          url: `/resume`,
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          data: {
+            title: "Your Resume",
+            templateName: title
+          },
+        });
+
+        if (data.success) {
+          toast.success("Created!! Good luck creating your resume")
+          dispatch(setResume(data.data._id));
+         // router.push("/cv-builder");
         }
-      } catch (error) {
-        console.log(error);
       }
     }
-  //const resume= useSelector((state:RootState)=>state.resume)
+  };
 
   return (
     <div className="w-screen h-screen px-10">
@@ -122,27 +131,44 @@ const Page = () => {
           “resume rules” hiring managers look for. Stand out and get hired
           faster with field-tested resume templates.
         </p>
-        <span
-        onClick={getResume}
-          
+        {
+          resumeName ? <span onClick={()=>router.push("/cv-builder")} className="p-3 rounded-lg bg-blue-500 text-gray-100 hover:bg-blue-700 transition-all"
+          >
+            Create your {resumeName} resume
+          </span>:
+           <span
+          onClick={()=>getResume("simple")}
           className="p-3 rounded-lg bg-blue-500 text-gray-100 hover:bg-blue-700 transition-all"
         >
-          {resumeId ? "Update your resume": "Create your resume"}
+          {resumeId ? "Update your resume" : "Create your resume"}
         </span>
+        }
+       
       </div>
       <div className="mt-4 py-6 flex md:flex-row flex-wrap md:gap-10 justify-center items-center font-medium tracking-lighter text-lg border-b-2 border-gray-300">
-        <Link href={"/resume"} className="flex flex-row gap-3  opacity-60 hover:text-blue-500 transition-all"><LayoutPanelTop/>All templates</Link>
-        {
-            resumeTemplate.map((resume, index)=>{
-               return <span key={index} onClick={()=>resumeHandler(resume.name)}
-               className="flex flex-row gap-3 capitalize opacity-60 hover:text-blue-500 transition-all"
-               >
-                <span><resume.icon/></span>
-                <span>{resume.name}</span>
-               </span>
-            })
-        }
+        <Link
+          href={"/resume"}
+          className="flex flex-row gap-3  opacity-60 hover:text-blue-500 transition-all"
+        >
+          <LayoutPanelTop />
+          All templates
+        </Link>
+        {resumeTemplate.map((resume, index) => {
+          return (
+            <span
+              key={index}
+              onClick={() => resumeHandler(resume.name)}
+              className="flex flex-row gap-3 capitalize opacity-60 hover:text-blue-500 transition-all"
+            >
+              <span>
+                <resume.icon />
+              </span>
+              <span>{resume.name}</span>
+            </span>
+          );
+        })}
       </div>
+      <ToastContainer autoClose={1600} />
     </div>
   );
 };
