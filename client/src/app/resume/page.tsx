@@ -21,14 +21,14 @@ const [resumeName, setResumeName]= useState<string | null>(null);
   ) as string;
   
 
-  const getResume = async (title:string) => {
+  const getResume = async () => {
     try {
       if (!token) {
         return router.push("/signpage");
       }
     if(!resumeId){
       const { data } = await instance({
-        url: title?`/resume?templatename=${title}`:`/resume/?templatename=simple`,
+        url: `/resume`,
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -39,13 +39,16 @@ const [resumeName, setResumeName]= useState<string | null>(null);
     
         toast.success("Got your resume! Update it now!")
         dispatch(setResume(data.data._id));
-        
+        router.push("/cv-builder");
       }
+         
       
-     // router.push("/cv-builder");
+    }else{
+          router.push("/cv-builder");
     }
+
     } catch (error: any) {
-      console.log("paayena")
+
       if (!error.response.data.success) {
         const { data } = await instance({
           url: `/resume`,
@@ -56,7 +59,7 @@ const [resumeName, setResumeName]= useState<string | null>(null);
           },
           data: {
             title: "Your Resume",
-            templateName: title
+            
           },
         });
 
@@ -74,12 +77,12 @@ const [resumeName, setResumeName]= useState<string | null>(null);
       if (!token) {
         return router.push("/signpage");
       }
-      setResumeName(title);
+    
       if (!resumeId) {
-        return getResume(title);
+        return getResume();
       } else{
         const { data } = await instance({
-          url: `/resume?templatename=${title}`,
+          url: `/resume`,
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -92,7 +95,7 @@ const [resumeName, setResumeName]= useState<string | null>(null);
           dispatch(setResume(data.data._id));
           
         }
-        console.log(data)
+       
        
       }
       
@@ -132,13 +135,10 @@ const [resumeName, setResumeName]= useState<string | null>(null);
           faster with field-tested resume templates.
         </p>
         {
-          resumeName ? <span onClick={()=>router.push("/cv-builder")} className="p-3 rounded-lg bg-blue-500 text-gray-100 hover:bg-blue-700 transition-all"
-          >
-            Create your {resumeName} resume
-          </span>:
+
            <span
-          onClick={()=>getResume("simple")}
-          className="p-3 rounded-lg bg-blue-500 text-gray-100 hover:bg-blue-700 transition-all"
+          onClick={()=>getResume()}
+          className="p-3 rounded-lg bg-blue-500 text-gray-100 cursor-pointer hover:bg-blue-700 transition-all"
         >
           {resumeId ? "Update your resume" : "Create your resume"}
         </span>

@@ -1,25 +1,33 @@
 "use client";
 import React, { FC, useRef } from "react";
-import {
-  PersonalData,
-} from "../cv-builder/page";
+import { PersonalData } from "../cv-builder/page";
+import html2canvas from "html2canvas";
+import jsPDF from "jspdf";
 import {
   VerticalTimeline,
   VerticalTimelineElement,
 } from "react-vertical-timeline-component";
 import "react-vertical-timeline-component/style.min.css";
 import { WorkflowIcon } from "lucide-react";
-import { TAcheivementProps, TAwardProps, TEducationProps, TExperienceProps, TProjectProps, TSkillProps, TTrainingProps } from "../store/types";
-
+import {
+  TAcheivementProps,
+  TAwardProps,
+  TEducationProps,
+  TExperienceProps,
+  TProjectProps,
+  TSkillProps,
+  TTrainingProps,
+} from "../store/types";
+import { ArrowDownToLine } from "lucide-react";
 interface CvProps {
-  personalData: PersonalData ;
+  personalData: PersonalData;
   educationData: TEducationProps[];
   experienceData: TExperienceProps[];
   achievementsData: TAcheivementProps[];
   awardsData: TAwardProps[];
   trainingData: TTrainingProps[];
-  skillData:TSkillProps[];
-  projectData:TProjectProps[];
+  skillData: TSkillProps[];
+  projectData: TProjectProps[];
   customStyles: { font: string };
 }
 
@@ -33,8 +41,23 @@ const CV: FC<CvProps> = ({
   projectData,
   skillData,
 }) => {
-  const ref = useRef<HTMLDivElement>(null);
-
+  const pdfRef = useRef<HTMLDivElement>(null);
+const downloadPDf=()=>{
+ const input = pdfRef.current as HTMLDivElement ;
+ html2canvas(input ).then((canvas)=>{
+  const imgData = canvas.toDataURL('image/png');
+  const pdf = new jsPDF('p','mm','o4',true);
+  const pdfWidth = pdf.internal.pageSize.getWidth();
+  const pdfHeight = pdf.internal.pageSize.getHeight();
+  const imgWidth = canvas.width;
+  const imgHeight = canvas.height;
+  const ratio = Math.min(pdfWidth/imgWidth, pdfHeight/imgHeight);
+  const imgX = (pdfWidth - imgWidth* ratio)/ 2;
+  const imgY = 30;
+  pdf.addImage(imgData,'PNG', imgX, imgY, imgWidth*ratio,imgHeight*ratio);
+  pdf.save(`${personalData.firstName} resume`);
+ })
+}
   // // Dummy text for placeholders
   // const dummyPersonalData: PersonalData = {
   //   name: "John Doe",
@@ -108,210 +131,226 @@ const CV: FC<CvProps> = ({
   //   // Add more training details if needed
   // ];
   return (
-    <div
-      ref={ref}
-      className="bg-gray-100 min-h-screen p-3 w-full flex justify-center"
-    >
+    <div className="flex flex-col p-3 w-full">
+      <div className="w-full h-16 px-6 flex flex-row justify-between items-center bg-gray-200">
+        <span className="text-2xl tracking-wide font-bold uppercase text-blue-500">
+          Your Resume
+        </span>
+        <span className="flex flex-row items-center gap-1 font-medium bg-blue-500 text-white hover:text-blue-500 hover:bg-white rounded-md px-4 py-2 transition-all">
+          <button onClick={downloadPDf}>
+            Download Resume      
+          </button> <ArrowDownToLine height={18}/>
+        </span>
+      </div>
       <div
-        id="t1"
-        className="bg-white w-full  overflow-scroll  rounded shadow-lg resume-a4  flex justify-between "
-
-        //  style={{ fontFamily: customStyles.font }}
+        ref={pdfRef}
+        className="bg-gray-100 min-h-screen w-full flex justify-center"
       >
-        <div className="w-full">
-          <div className="flex justify-center flex-col relative pt-8">
-            <h1
-              className="pl-10 font-semibold text-t2-xl tracking-widest text-t1-black uppercase"
-              style={{ letterSpacing: "7px" }}
-            >
-              {personalData?.firstName }
-            </h1>
-            <h1
-              className="pl-10  font-bold text-t2-2xl text-t2-primary uppercase"
-              style={{ letterSpacing: "12px" }}
-            >
-              {personalData?.lastName}
-            </h1>
-            <h3
-              className="pr-10 top-3 font-medium text-t2-md text-t2-primary uppercase absolute w-full bg-t2-secondary text-right"
-              style={{ letterSpacing: "5px", top: "6.2rem" }}
-            >
-              {personalData?.designation}
-            </h3>
-          </div>
-          <div className="flex flex-row justify-between p-8 pt-16">
-            <div className="w-8/12">
-              {personalData?.objective && (
-                <>
-                  <Title>Career Objective</Title>
-                  <p className="mb-6 text-t2-md">{personalData?.objective}</p>
-                </>
-              )}
-              {!!educationData.length && <Title>my education</Title>}
-              <div className="flex flex-row justify-between mb-8 flex-wrap">
-                {educationData.map((edu, i) => (
-                  <Description classes="mb-3" key={i} index={i}>
-                    <Paragraph classes="text-t2-sub-heading font-bold">
-                      {`${edu?.startedAt} -${
-                        edu?.endedAt
-                      }`}
-                    </Paragraph>
-                    <Paragraph classes="text-t2-sub-heading font-bold">
-                      {edu.degree}
-                    </Paragraph>
-                    <Paragraph>{edu.school}</Paragraph>
-                    <Paragraph>{edu.city}</Paragraph>
-                  </Description>
-                ))}
-              </div>
+        <div
+          id="t1"
+          className="bg-white w-full  overflow-scroll  rounded shadow-lg resume-a4  flex justify-between "
 
-              {!!experienceData.length && (
-                <Title classes="mt-4">work experience</Title>
-              )}
-
-              <div className="flex flex-col justify-between text-black ">
-                <VerticalTimeline animate={false} lineColor="">
-                  {experienceData.map((item, index) => (
-                    <React.Fragment key={index}>
-                      <VerticalTimelineElement
-                        visible={true}
-                        contentStyle={{
-                          background: "#f3f4f6",
-                          boxShadow: "none",
-                          border: "1px solid rgba(0, 0, 0, 0.5)",
-                          textAlign: "left",
-                          padding: "0,5rem",
-                        }}
-                        contentArrowStyle={{
-                          borderRight: "0.4rem solid #9ca3af",
-                        }}
-                        icon={<WorkflowIcon className="text-gray-600" />}
-                        date={`${item.startDate}-${item.endDate}`}
-                        iconStyle={{
-                          background: "rgba(255, 255, 255, 0.5)",
-                          fontSize: "1.5rem",
-                          padding: "4px",
-                        }}
-                      >
-                        <h3 className="font-semibold capitalize">
-                          {item.jobTitle}
-                        </h3>
-                        <p className="font-normal !mt-0">{item.employer}</p>
-                        <p className="!font-light !mt-0">{item.city}</p>
-                        <p className="!mt-1 !font-normal  text-gray-700 max-w-full ">
-                          {item.description}
-                        </p>
-                      </VerticalTimelineElement>
-                    </React.Fragment>
-                  ))}
-                </VerticalTimeline>
-              </div>
-
-            
-              {!!trainingData.length && <Title classes="mt-4">Trainings</Title>}
-              <div className="flex flex-col justify-between">
-              <VerticalTimeline animate={false} lineColor="">
-                  {trainingData.map((item, index) => (
-                    <React.Fragment key={index}>
-                      <VerticalTimelineElement
-                        visible={true}
-                        contentStyle={{
-                          background: "#f3f4f6",
-                          boxShadow: "none",
-                          border: "1px solid rgba(0, 0, 0, 0.5)",
-                          textAlign: "left",
-                          padding: "0,5rem",
-                        }}
-                        contentArrowStyle={{
-                          borderRight: "0.4rem solid #9ca3af",
-                        }}
-                        icon={<WorkflowIcon className="text-gray-600" />}
-                        date={item.completionDate}
-                        iconStyle={{
-                          background: "rgba(255, 255, 255, 0.5)",
-                          fontSize: "1.5rem",
-                          padding: "4px",
-                        }}
-                      >
-                        <h3 className="font-semibold capitalize">
-                          {item.trainingTitle}
-                        </h3>
-                        <p className="font-normal !mt-0">{item.institute}</p>
-                        <p className="!mt-1 !font-normal  text-gray-700 max-w-full ">
-                          {item.description}
-                        </p>
-                        
-                      </VerticalTimelineElement>
-                    </React.Fragment>
-                  ))}
-                </VerticalTimeline>
-              </div>
-              {!!projectData.length && <Title classes="mt-4">Projects</Title>}
-              <div className="flex flex-col justify-between">
-                {projectData.map((exp, i) => (
-                  <Description classes="mb-4" key={i} index={i}>
-                    <Paragraph classes="text-t2-sub-heading font-semibold">
-                      {exp.projectTitle}
-                    </Paragraph>
-                    <Paragraph classes="text-t2-sub-heading font-medium">
-                      {exp.description}
-                    </Paragraph>
-                    <a href={exp.projectLink}>{exp.projectLink}</a>
-                  </Description>
-                ))}
-              </div>
+          //  style={{ fontFamily: customStyles.font }}
+        >
+          <div className="w-full">
+            <div className="flex justify-center flex-col relative pt-8">
+              <h1
+                className="pl-10 font-semibold text-t2-xl tracking-widest text-t1-black uppercase"
+                style={{ letterSpacing: "7px" }}
+              >
+                {personalData?.firstName}
+              </h1>
+              <h1
+                className="pl-10  font-bold text-t2-2xl text-t2-primary uppercase"
+                style={{ letterSpacing: "12px" }}
+              >
+                {personalData?.lastName}
+              </h1>
+              <h3
+                className="pr-10 top-3 font-medium text-t2-md text-t2-primary uppercase absolute w-full bg-t2-secondary text-right"
+                style={{ letterSpacing: "5px", top: "6.2rem" }}
+              >
+                {personalData?.designation}
+              </h3>
             </div>
-            <div className="w-3/12">
-              {(personalData?.email || personalData?.phoneNumber) && (
-                <Title>contact</Title>
-              )}
-              <Paragraph classes="word-keep-all">
-                {personalData?.email}
-              </Paragraph>
-              <Paragraph>{personalData?.phoneNumber}</Paragraph>
-              {!!skillData.length && <Title classes="mt-4">SKills</Title>}
-              <div className="flex flex-col justify-between">
-                {skillData.map((exp, i) => (
-                  <Description classes="mb-4 flex flex-row justify-between" key={i} index={i}>
-                    <Paragraph classes="text-t2-sub-heading font-semibold">
-                      {exp.skillTitle}
-                    </Paragraph>
-                   
-                    <Paragraph>{exp.level}</Paragraph>
-                  </Description>
-                ))}
+            <div className="flex flex-row justify-between p-8 pt-16">
+              <div className="w-8/12">
+                {personalData?.objective && (
+                  <>
+                    <Title>Career Objective</Title>
+                    <p className="mb-6 text-t2-md">{personalData?.objective}</p>
+                  </>
+                )}
+                {!!educationData.length && <Title>my education</Title>}
+                <div className="flex flex-row justify-between mb-8 flex-wrap">
+                  {educationData.map((edu, i) => (
+                    <Description classes="mb-3" key={i} index={i}>
+                      <Paragraph classes="text-t2-sub-heading font-bold">
+                        {`${edu?.startedAt} -${edu?.endedAt}`}
+                      </Paragraph>
+                      <Paragraph classes="text-t2-sub-heading font-bold">
+                        {edu.degree}
+                      </Paragraph>
+                      <Paragraph>{edu.school}</Paragraph>
+                      <Paragraph>{edu.city}</Paragraph>
+                    </Description>
+                  ))}
+                </div>
+
+                {!!experienceData.length && (
+                  <Title classes="mt-4">work experience</Title>
+                )}
+
+                <div className="flex flex-col justify-between text-black ">
+                  <VerticalTimeline animate={false} lineColor="">
+                    {experienceData.map((item, index) => (
+                      <React.Fragment key={index}>
+                        <VerticalTimelineElement
+                          visible={true}
+                          contentStyle={{
+                            background: "#f3f4f6",
+                            boxShadow: "none",
+                            border: "1px solid rgba(0, 0, 0, 0.5)",
+                            textAlign: "left",
+                            padding: "0,5rem",
+                          }}
+                          contentArrowStyle={{
+                            borderRight: "0.4rem solid #9ca3af",
+                          }}
+                          icon={<WorkflowIcon className="text-gray-600" />}
+                          date={`${item.startDate}-${item.endDate}`}
+                          iconStyle={{
+                            background: "rgba(255, 255, 255, 0.5)",
+                            fontSize: "1.5rem",
+                            padding: "4px",
+                          }}
+                        >
+                          <h3 className="font-semibold capitalize">
+                            {item.jobTitle}
+                          </h3>
+                          <p className="font-normal !mt-0">{item.employer}</p>
+                          <p className="!font-light !mt-0">{item.city}</p>
+                          <p className="!mt-1 !font-normal  text-gray-700 max-w-full ">
+                            {item.description}
+                          </p>
+                        </VerticalTimelineElement>
+                      </React.Fragment>
+                    ))}
+                  </VerticalTimeline>
+                </div>
+
+                {!!trainingData.length && (
+                  <Title classes="mt-4">Trainings</Title>
+                )}
+                <div className="flex flex-col justify-between">
+                  <VerticalTimeline animate={false} lineColor="">
+                    {trainingData.map((item, index) => (
+                      <React.Fragment key={index}>
+                        <VerticalTimelineElement
+                          visible={true}
+                          contentStyle={{
+                            background: "#f3f4f6",
+                            boxShadow: "none",
+                            border: "1px solid rgba(0, 0, 0, 0.5)",
+                            textAlign: "left",
+                            padding: "0,5rem",
+                          }}
+                          contentArrowStyle={{
+                            borderRight: "0.4rem solid #9ca3af",
+                          }}
+                          icon={<WorkflowIcon className="text-gray-600" />}
+                          date={item.completionDate}
+                          iconStyle={{
+                            background: "rgba(255, 255, 255, 0.5)",
+                            fontSize: "1.5rem",
+                            padding: "4px",
+                          }}
+                        >
+                          <h3 className="font-semibold capitalize">
+                            {item.trainingTitle}
+                          </h3>
+                          <p className="font-normal !mt-0">{item.institute}</p>
+                          <p className="!mt-1 !font-normal  text-gray-700 max-w-full ">
+                            {item.description}
+                          </p>
+                        </VerticalTimelineElement>
+                      </React.Fragment>
+                    ))}
+                  </VerticalTimeline>
+                </div>
+                {!!projectData.length && <Title classes="mt-4">Projects</Title>}
+                <div className="flex flex-col justify-between">
+                  {projectData.map((exp, i) => (
+                    <Description classes="mb-4" key={i} index={i}>
+                      <Paragraph classes="text-t2-sub-heading font-semibold">
+                        {exp.projectTitle}
+                      </Paragraph>
+                      <Paragraph classes="text-t2-sub-heading font-medium">
+                        {exp.description}
+                      </Paragraph>
+                      <a href={exp.projectLink}>{exp.projectLink}</a>
+                    </Description>
+                  ))}
+                </div>
               </div>
-              {!!achievementsData.length && <Title classes="mt-4">Achievements</Title>}
-              <div className="flex flex-col justify-between">
-                {achievementsData.map((exp, i) => (
-                  <Description classes="mb-4" key={i} index={i}>
-                    <Paragraph classes="text-t2-sub-heading font-semibold">
-                      {exp.achieveTitle}
-                    </Paragraph>
-                   
-                    <Paragraph>{exp.description}</Paragraph>
-                  </Description>
-                ))}
-              </div>
-              {!!awardsData.length && <Title classes="mt-4">Awards</Title>}
-              <div className="flex flex-col justify-between">
-                {awardsData.map((exp, i) => (
-                  <Description classes="mb-4" key={i} index={i}>
-                    <Paragraph classes="text-t2-sub-heading font-semibold">
-                      {exp.awardTitle}
-                    </Paragraph>
-                    <Paragraph classes="text-t2-sub-heading font-medium">
-                      {exp.organization}
-                    </Paragraph>
-                    <Paragraph classes="text-t2-sub-heading font-medium">
-                      {exp.receivedDate}
-                    </Paragraph>
-                    <Paragraph classes="text-t2-sub-heading font-medium">
-                      {exp.city}
-                    </Paragraph>
-                    <Paragraph>{exp.description}</Paragraph>
-                  </Description>
-                ))}
+              <div className="w-3/12">
+                {(personalData?.email || personalData?.phoneNumber) && (
+                  <Title>contact</Title>
+                )}
+                <Paragraph classes="word-keep-all">
+                  {personalData?.email}
+                </Paragraph>
+                <Paragraph>{personalData?.phoneNumber}</Paragraph>
+                {!!skillData.length && <Title classes="mt-4">SKills</Title>}
+                <div className="flex flex-col justify-between">
+                  {skillData.map((exp, i) => (
+                    <Description
+                      classes="mb-4 flex flex-row justify-between"
+                      key={i}
+                      index={i}
+                    >
+                      <Paragraph classes="text-t2-sub-heading font-semibold">
+                        {exp.skillTitle}
+                      </Paragraph>
+
+                      <Paragraph>{exp.level}</Paragraph>
+                    </Description>
+                  ))}
+                </div>
+                {!!achievementsData.length && (
+                  <Title classes="mt-4">Achievements</Title>
+                )}
+                <div className="flex flex-col justify-between">
+                  {achievementsData.map((exp, i) => (
+                    <Description classes="mb-4" key={i} index={i}>
+                      <Paragraph classes="text-t2-sub-heading font-semibold">
+                        {exp.achieveTitle}
+                      </Paragraph>
+
+                      <Paragraph>{exp.description}</Paragraph>
+                    </Description>
+                  ))}
+                </div>
+                {!!awardsData.length && <Title classes="mt-4">Awards</Title>}
+                <div className="flex flex-col justify-between">
+                  {awardsData.map((exp, i) => (
+                    <Description classes="mb-4" key={i} index={i}>
+                      <Paragraph classes="text-t2-sub-heading font-semibold">
+                        {exp.awardTitle}
+                      </Paragraph>
+                      <Paragraph classes="text-t2-sub-heading font-medium">
+                        {exp.organization}
+                      </Paragraph>
+                      <Paragraph classes="text-t2-sub-heading font-medium">
+                        {exp.receivedDate}
+                      </Paragraph>
+                      <Paragraph classes="text-t2-sub-heading font-medium">
+                        {exp.city}
+                      </Paragraph>
+                      <Paragraph>{exp.description}</Paragraph>
+                    </Description>
+                  ))}
+                </div>
               </div>
             </div>
           </div>

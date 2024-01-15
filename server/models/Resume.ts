@@ -3,7 +3,6 @@ import mongoose from "mongoose";
 interface ResumeProps {
   title: string;
   template: boolean;
-  templateName: string;
   userId: string;
   about?:   mongoose.Schema.Types.ObjectId [];
   experience?:  mongoose.Schema.Types.ObjectId [];
@@ -26,10 +25,6 @@ const ResumeSchema = new mongoose.Schema<ResumeProps>(
     template: {
       type: Boolean,
       default: false,
-    },
-    templateName: {
-      type: String,
-      default: "Simple",
     },
     userId: {
       type: String,

@@ -14,13 +14,13 @@ export const resume = async (req: Request, res: Response) => {
   switch (method) {
     case "GET":
       try {
-        const { templatename } = req.query;
+       
         const filterObj: FilterProps = {
           template: false, // Provide a default value or the appropriate value based on your logic
           userId: "",
         };
    
-        const resume = await Resume.findOne({userId:userId,templateName:templatename});
+        const resume = await Resume.findOne({userId:userId});
       
         if (!resume) {
           return res.status(400).json({ success: false });
@@ -37,7 +37,6 @@ export const resume = async (req: Request, res: Response) => {
         const resume = await Resume.create({
           title,
           userId,
-          templateName: body.templateName,
         });
        
         if (!resume) {
