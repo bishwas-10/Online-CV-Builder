@@ -124,7 +124,7 @@ const [resumeName, setResumeName]= useState<string | null>(null);
   };
 
   return (
-    <div className="w-screen h-screen px-10">
+    <div className="w-screen h-screen px-10 mt-20">
       <div className="h-[50%] mt-5 w-full flex flex-col items-center justify-center md:gap-8 gap-4 px-80 text-center">
         <h1 className="text-5xl font-extrabold px-10">
           Job-winning resume templates{" "}
@@ -168,6 +168,24 @@ const [resumeName, setResumeName]= useState<string | null>(null);
           );
         })}
       </div>
+      <div className="h-80 bg-black">
+
+</div>
+<div className="h-80 bg-black">
+
+</div>
+<div className="h-80 bg-black">
+
+</div>
+<div className="h-80 bg-black">
+
+</div>
+<div className="h-80 bg-black">
+
+</div>
+<div className="h-80 bg-black">
+
+</div>
       <ToastContainer autoClose={1600} />
     </div>
   );

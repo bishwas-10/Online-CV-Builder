@@ -9,6 +9,8 @@ import { boolean, z } from "zod";
 import { useRouter } from "next/navigation";
 import { setToken } from "@/app/store/tokenSlice";
 import { RootState } from "@/app/store/store";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const signInSchema = z.object({
   email: z.string().email(),
   password: z.string().min(8).max(16),
@@ -36,12 +38,14 @@ const SignIn = () => {
       }
 
       dispatch(signInSuccess(user));
+      toast.success("user logged in successfully");
       router.back();
       reset();
     } else {
       dispatch(signInFailure(userLogInRes.message));
       setIsErrorOccured(true);
-      console.log(userLogInRes.message);
+      toast.error("Error logging in!!");
+    
     }
   };
   return (
@@ -81,6 +85,7 @@ const SignIn = () => {
       >
         Sign in
       </button>
+      <ToastContainer autoClose={1600} />
     </form>
   );
 };

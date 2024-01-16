@@ -121,7 +121,7 @@ const Page = () => {
     );
   }
   return (
-    <div>
+    <div className="">
       <div className="flex flex-row ">
         <FieldSideBar />
         <div className="w-[35%]">

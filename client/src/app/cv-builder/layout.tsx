@@ -12,7 +12,7 @@ export default function RootLayout({
 }) {
   return (
    
-      <div className="h-max">
+      <div className="h-max mt-20">
       
         {children}
         </div>

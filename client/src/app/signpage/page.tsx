@@ -3,12 +3,14 @@ import React, { useEffect, useState } from "react";
 import SignIn from "./sign-component/signIn";
 import SignUp from "./sign-component/signUp";
 import { RootState } from "../store/store";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
-
+import { setIsSignedUp } from "../store/userSlice";
+import { GoogleLogin } from "@react-oauth/google";
 const Page = () => {
+  const dispatch = useDispatch();
   const router=useRouter();
-  const [isSignedUp, setIsSignedUp] = useState<boolean>(true);
+  const isSignedUp= useSelector((state:RootState)=>state.users.isSignedUp);
   const userDetails = useSelector((state:RootState)=>state.users);
 useEffect(()=>{
  if(userDetails?.currentUser){
@@ -16,12 +18,12 @@ useEffect(()=>{
  }
 },[])
   return (
-    <div className="bg-gray-200  w-full py-10 px-10 min-h-screen  flex md:flex-row flex-col md:items-start items-center md:justify-center">
+    <div className="mt-20 bg-gray-200  w-full py-10 px-10 min-h-screen  flex md:flex-row flex-col md:items-start items-center md:justify-center">
       <div className="flex md:flex-row rounded-md  bg-white flex-col  h-max">
         <div className="flex items-center p-10 md:w-[50%] w-full ">
           <ul className="w-full flex flex-col gap-2 transition-all">
-            <li className="w-full bg-red-500 hover:bg-red-600 flex justify-center rounded-md">
-              <a
+            <li className="w-full flex justify-center rounded-md">
+              {/* <a
                 href=""
                 className="py-2 w-full flex justify-center items-center gap-2 text-white font-normal "
               >
@@ -41,7 +43,8 @@ useEffect(()=>{
                   ></path>
                 </svg>
                 Continue with Google
-              </a>
+              </a> */}
+              <GoogleLogin onSuccess={(response)=>console.log(response)} onError={()=>console.log('error')}/>
             </li>
             <li className="w-full bg-blue-700 hover:bg-blue-800 flex justify-center rounded-md">
               <a
@@ -115,7 +118,7 @@ useEffect(()=>{
           </ul>
         </div>
         <div className="h-max   p-5  md:w-[50%]  bg-white border-2 border-gray-400">
-          {isSignedUp ? <SignIn /> : <SignUp setIsSignedUp={setIsSignedUp}/>}
+          {isSignedUp ? <SignIn /> : <SignUp />}
 
           {/* <GoogleLogin onSuccess={login as any}/> */}
 
@@ -126,7 +129,7 @@ useEffect(()=>{
                 : "Didn't have an account?"}
             </p>
             <button
-              onClick={() => setIsSignedUp(!isSignedUp)}
+              onClick={() => dispatch(setIsSignedUp(!isSignedUp))}
               className="outline-none text-blue-600"
             >
               {isSignedUp ? "Sign up" : " Sign in"}

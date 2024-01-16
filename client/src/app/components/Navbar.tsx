@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { ChevronDown, ChevronRight } from "lucide-react";
 import { resumeTemplate } from "../utils/template";
@@ -11,15 +11,16 @@ import { instance } from "../api/instance";
 import { removeToken } from "../store/tokenSlice";
 import { removeResume } from "../store/resumeTokenSlice";
 
-
 const Navbar: React.FC = () => {
+  const [prevScrollPos, setPrevScrollPos] = useState<number>(0);
+  const [visible, setVisible] = useState<boolean>(true);
   const dispatch = useDispatch();
   const navigate = useRouter();
   const [showDiv, setShowDiv] = useState<boolean>(false);
   const [signDiv, setSignDiv] = useState<boolean>(false);
   const token = useSelector((state: RootState) => state.token);
   const userDetails = useSelector((state: RootState) => state.users);
-  
+
   const handleSignOut = async () => {
     const data = await instance({
       url: "/signout",
@@ -33,11 +34,36 @@ const Navbar: React.FC = () => {
       dispatch(signOut());
       dispatch(removeToken());
       dispatch(removeResume());
-      navigate.push("/signpage")
+      navigate.push("/signpage");
     }
   };
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollPos = window.scrollY;
+
+      if (currentScrollPos > prevScrollPos) {
+        // Scrolling down
+        setVisible(false);
+      } else {
+        // Scrolling up
+        setVisible(true);
+      }
+
+      setPrevScrollPos(currentScrollPos);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [prevScrollPos]);
+
   return (
-    <div className=" px-10 min-w-full h-20  shadow-md flex flex-row items-center justify-between">
+    <div
+      className={`fixed z-10 top-0 px-10 min-w-full h-20  shadow-md flex flex-row items-center justify-between
+     transition-all duration-500 ${
+       visible ? "bg-white shadow-lg" : "hidden"
+     }`}
+    >
       <div>Logo</div>
       <div className=" h-full flex flex-row items-center justify-between text-md gap-6 font-medium">
         <Link
@@ -144,6 +170,7 @@ const Navbar: React.FC = () => {
           </div>
         )}
       </div>
+     
     </div>
   );
 };

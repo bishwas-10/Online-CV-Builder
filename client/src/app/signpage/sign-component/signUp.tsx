@@ -1,9 +1,14 @@
 import { userSignUp } from "@/app/api/auth";
+import { RootState } from "@/app/store/store";
+import { setIsSignedUp, signUpFailure } from "@/app/store/userSlice";
 import { StyledInput, StyledLabel } from "@/app/utils/styles";
 import { zodResolver } from "@hookform/resolvers/zod";
-import React from "react";
+import React, { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
 import { z } from "zod";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const signUpSchema = z
   .object({
     username: z.string({ required_error: "username is required" }),
@@ -21,7 +26,10 @@ export type TSignUpShema = z.infer<typeof signUpSchema>;
 // Type '{ setIsSignedUp: Dispatch<SetStateAction<boolean>>; }' is not assignable to type 'IntrinsicAttributes & Dispatch<SetStateAction<boolean>>'.
 //   Property 'setIsSignedUp' does not exist on type 'IntrinsicAttributes & Dispatch<SetStateAction<boolean>>'.
 //yo vanyo tehi vayera any rakhdiye
-const SignUp = (setIsSignedUp: any) => {
+const SignUp = () => {
+  const dispatch = useDispatch();
+  const errorMessage = useSelector((state: RootState) => state.users.signedUpError);
+  const [isErrorOccurred , setIsErrorOccured]= useState<boolean>(false);
   const {
     register,
     handleSubmit,
@@ -31,12 +39,17 @@ const SignUp = (setIsSignedUp: any) => {
   const onSubmit: SubmitHandler<TSignUpShema> =async (data) => {
     const signUpRes = await userSignUp(data);
     if(signUpRes.status){
-      console.log("login successfull");
-      setIsSignedUp(true);
+      
+    
+      toast.success(`signed up successfull`);
+        reset();
+       setTimeout(()=> dispatch(setIsSignedUp(true)), 1000)
     }else{
-      console.log(signUpRes.message)
+      dispatch(signUpFailure(signUpRes.message));
+      setIsErrorOccured(true);
+      toast.error(`${signUpRes.message}`)
     }
-    reset();
+  
   };
   return (
     <>
@@ -95,6 +108,7 @@ const SignUp = (setIsSignedUp: any) => {
         {errors.confirmPassword && (
           <span className="text-red-500">{errors.confirmPassword.message}</span>
         )}
+       {isErrorOccurred && <span className="text-red-500">{errorMessage}</span>}
           <button
               type="submit"
               className="mb-6  w-full bg-blue-500 text-white py-2 rounded-md focus:outline-none focus:bg-blue-600 hover:bg-blue-600"
@@ -102,6 +116,7 @@ const SignUp = (setIsSignedUp: any) => {
              Sign up
             </button>
       </form>
+      <ToastContainer autoClose={600} />
     </>
   );
 };
