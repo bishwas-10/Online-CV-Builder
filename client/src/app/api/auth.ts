@@ -38,6 +38,23 @@ export const userSignUp = async (formData:TSignUpShema) => {
   }
 };
 
+type GoogleProps ={
+  name:string,
+  picture:string,
+  sub:string,
+  email:string
+}
+export const userGoogleLogin= async (formData:GoogleProps) => {
+  try {
+    const { data } = await instance.post("/google", formData);
+    
+    return data;
+  } catch (error:any) {
+   return error.response.data;
+   
+  }
+};
+
 export const userLogOut = async () => {
   try {
     const {data} = await instance.get("/users/signout");

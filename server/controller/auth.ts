@@ -118,6 +118,76 @@ const signUpSchema = z
       res.status(500).send({status:false, message:"internal server error"})
     }
   };
+  //google sign in
+  export const google = async (
+    req: Request,
+    res: Response
+  ) => {
+    try {
+      const user = await User.findOne({ email: req.body.email });
+  
+      if (user) {
+        const token = createSecretToken(user._id);
+       
+        const existingUser = {
+          _id: user._id,
+          username: user.username,
+          email: req.body.email,
+          password: user.password,
+          
+        };
+        const { password: hashedPassword, ...rest } = existingUser;
+
+        const expiryDate = new Date(Date.now() + 7200000); //1hour
+        const refreshToken = createRefreshToken(existingUser._id);
+      res
+        .cookie("refresh_token", refreshToken, {
+          expires: expiryDate,
+          httpOnly: true,
+          sameSite: "none",
+          secure: true,
+        })
+        .status(200)
+        .send({ status: true, message: "user logged in successfully", rest,token });
+      } else {
+        const generatedPassword =
+          Math.random().toString(36).slice(-8) +
+          Math.random().toString(36).slice(-8);
+              
+      const hashedPassword =  await hashPassword(generatedPassword);
+  
+        const newUser = await User.create({
+          username:
+            req.body.name.split(" ").join("").toLowerCase() +
+            Math.random().toString(36).slice(-8),
+          email: req.body.email,
+          password: hashedPassword,
+          
+        });
+  
+        await newUser.save();
+  
+        const token = createSecretToken(newUser._id);
+    
+        const { password: hashedPassword2, ...rest } = newUser;
+      
+        const expiryDate = new Date(Date.now() + 6000); // 1 hour
+  
+        res
+          .cookie("refresh_token", token, {
+            httpOnly: false,
+            expires: expiryDate,
+             secure: true,
+             sameSite:"none" 
+          })
+          .status(200)
+          .json(rest);
+       
+      }
+    } catch (error) {
+      res.status(500).send({status:false, message:"internal server error"})
+    }
+  };
 
 //user
 

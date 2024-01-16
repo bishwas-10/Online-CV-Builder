@@ -5,13 +5,48 @@ import SignUp from "./sign-component/signUp";
 import { RootState } from "../store/store";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
-import { setIsSignedUp } from "../store/userSlice";
-import { GoogleLogin } from "@react-oauth/google";
+import { setIsSignedUp, signInFailure, signInSuccess } from "../store/userSlice";
+import { CredentialResponse, GoogleLogin } from "@react-oauth/google";
+import {jwtDecode} from 'jwt-decode';
+import { userGoogleLogin } from "../api/auth";
+import { setToken } from "../store/tokenSlice";
+import { ToastContainer, toast } from "react-toastify";
 const Page = () => {
   const dispatch = useDispatch();
   const router=useRouter();
   const isSignedUp= useSelector((state:RootState)=>state.users.isSignedUp);
   const userDetails = useSelector((state:RootState)=>state.users);
+
+
+  const successGoogleLogin=async(response:CredentialResponse)=>{
+    const decoded:{
+      name:string,
+      picture:string,
+      sub:string,
+      email:string,
+    } =  jwtDecode(response.credential as string);
+    const {name, picture, email, sub}=decoded;
+    const googleLoginRes = await userGoogleLogin({name, picture,email,sub})
+  
+    if (googleLoginRes.status) {
+      const { status, rest, token } = googleLoginRes;
+
+      if (token) {
+        dispatch(setToken(token));
+      }
+
+      dispatch(signInSuccess(rest));
+      toast.success("user logged in successfully");
+      router.back();
+      
+    } else {
+      dispatch(signInFailure("error loggin in!please try again later"));
+     
+      toast.error("Error logging in!!");
+    
+    }
+  }
+
 useEffect(()=>{
  if(userDetails?.currentUser){
   router.push('/')
@@ -44,7 +79,7 @@ useEffect(()=>{
                 </svg>
                 Continue with Google
               </a> */}
-              <GoogleLogin onSuccess={(response)=>console.log(response)} onError={()=>console.log('error')}/>
+              <GoogleLogin onSuccess={(response)=>successGoogleLogin(response)} onError={()=>toast.error("Error logging in!!")}/>
             </li>
             <li className="w-full bg-blue-700 hover:bg-blue-800 flex justify-center rounded-md">
               <a
@@ -137,6 +172,7 @@ useEffect(()=>{
           </div>
         </div>
       </div>
+      <ToastContainer autoClose={600} />
     </div>
   );
 };
