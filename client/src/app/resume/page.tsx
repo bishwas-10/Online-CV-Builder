@@ -171,21 +171,8 @@ const [resumeName, setResumeName]= useState<string | null>(null);
       <div className="h-80 bg-black">
 
 </div>
-<div className="h-80 bg-black">
 
-</div>
-<div className="h-80 bg-black">
 
-</div>
-<div className="h-80 bg-black">
-
-</div>
-<div className="h-80 bg-black">
-
-</div>
-<div className="h-80 bg-black">
-
-</div>
       <ToastContainer autoClose={1600} />
     </div>
   );

@@ -17,8 +17,7 @@ import {
   TSkillProps,
   TTrainingProps,
 } from "../store/types";
-import ReactToPrint, { useReactToPrint } from "react-to-print";
-import { ArrowDownToLine } from "lucide-react";
+import  { useReactToPrint } from "react-to-print";
 import Link from "next/link";
 interface CvProps {
   personalData: PersonalData;
@@ -196,13 +195,13 @@ const CV: FC<CvProps> = ({
           <div ref={componentRef} className="w-full">
             <div className="flex justify-center flex-col relative pt-8">
               <h1
-                className="pl-10 font-semibold text-t2-xl tracking-widest text-t1-black uppercase"
+                className="pl-10 font-semibold text-xl tracking-widest text-t1-black uppercase"
                 style={{ letterSpacing: "7px" }}
               >
                 {personalData?.firstName}
               </h1>
               <h1
-                className="pl-10  font-bold text-t2-2xl text-t2-primary uppercase"
+                className="pl-10  font-bold text-2xl text-t2-primary uppercase"
                 style={{ letterSpacing: "12px" }}
               >
                 {personalData?.lastName}
@@ -227,13 +226,13 @@ const CV: FC<CvProps> = ({
                   {educationData.map((edu, i) => (
                     <Description classes="mb-3" key={i} index={i}>
                       <Paragraph classes="text-t2-sub-heading font-bold">
-                        {`${edu?.startedAt} -${edu?.endedAt}`}
+                        {edu.school}
                       </Paragraph>
                       <Paragraph classes="text-t2-sub-heading font-bold">
                         {edu.degree}
                       </Paragraph>
-                      <Paragraph>{edu.school}</Paragraph>
-                      <Paragraph>{edu.city}</Paragraph>
+                      <Paragraph classes="text-t2-sub-heading">{`${edu?.startedAt} -${edu?.endedAt}`}</Paragraph>
+                      <Paragraph >{edu.city}</Paragraph>
                     </Description>
                   ))}
                 </div>
@@ -269,7 +268,8 @@ const CV: FC<CvProps> = ({
                           <h3 className="font-semibold capitalize">
                             {item.jobTitle}
                           </h3>
-                          <p className="font-normal !mt-0">{item.employer}</p>
+                          <p className="font-normal text-lg !mt-0">{item.company},</p>
+                          <p className="font-normal !mt-0">{item.employer},</p>
                           <p className="!font-light !mt-0">{item.city}</p>
                           <p className="!mt-1 !font-normal  text-gray-700 max-w-full ">
                             {item.description}
@@ -338,10 +338,14 @@ const CV: FC<CvProps> = ({
                 {(personalData?.email || personalData?.phoneNumber) && (
                   <Title>contact</Title>
                 )}
-                <Paragraph classes="word-keep-all">
+                <Paragraph classes="word-keep-all ">
                   {personalData?.email}
                 </Paragraph>
                 <Paragraph>{personalData?.phoneNumber}</Paragraph>
+                <Paragraph classes="word-keep-all">
+                  {personalData?.city}
+                </Paragraph>
+                <Paragraph>{personalData?.address}</Paragraph>
                 {!!skillData.length && <Title classes="mt-4">SKills</Title>}
                 <div className="flex flex-col justify-between">
                   {skillData.map((exp, i) => (

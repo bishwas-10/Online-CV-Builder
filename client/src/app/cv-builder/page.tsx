@@ -10,6 +10,7 @@ import { instance } from "../api/instance";
 import useAuth from "../utils/authCheck";
 import { useMediaQuery } from "@mui/material";
 import { useRouter } from "next/navigation";
+import { signOut } from "../store/userSlice";
 
 export interface PersonalData {
   firstName?: string;
@@ -18,6 +19,8 @@ export interface PersonalData {
   objective?: string;
   email?: string;
   phoneNumber?: string;
+  city?:string;
+  address?:string;
 }
 
 export interface Education {
@@ -86,6 +89,7 @@ const Page = () => {
       return router.push("/resume");
     }
     if (resumeId) {
+     try {
       const { data } = await instance({
         url: `/resume/${resumeId}`,
         method: "GET",
@@ -97,6 +101,15 @@ const Page = () => {
       if (data.success) {
         dispatch(addResume(data.resume));
       }
+     } catch (error:any) {
+      console.log(error.response.data.status);
+      if(error.response.data.status===false){
+        console.log(error.response.data.message);
+        dispatch(removeResume());
+        dispatch(signOut());
+        router.push("/signpage")
+      }
+     }
     }
   };
   useEffect(() => {

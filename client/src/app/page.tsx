@@ -4,9 +4,9 @@ import { ToastContainer } from "react-toastify";
 
 export default function Home() {
   return (
-    <main className="h-max mt-20">
-      <div className="w-screen bg-gray-100 h-max py-10">
-        <div className="h-[50%] w-full flex flex-col items-center justify-center md:gap-8 gap-4 px-80 text-center">
+    <main className=" mt-20 w-[100%] bg-gray-800">
+      <div className="w-full bg-gray-100  py-10">
+        <div className="h-[50%]  flex flex-col items-center justify-center md:gap-8 gap-4 md:px-60 px-20 text-center">
           <h1 className="text-5xl font-extrabold px-10">
             "Your Journey, Your Story – Let's Build It Together."
           </h1>
@@ -30,7 +30,7 @@ export default function Home() {
           </span>
         </div>
 
-        <div className="mt-4 flex items-center justify-center  h-max bg-gray-300 overflow-hidden">
+        <div className="mt-4 py-2 flex items-center justify-center  h-max bg-gray-300 overflow-hidden">
           <div className=" w-max h-max flex items-start ">
             <Image
             height={4000}
@@ -41,7 +41,7 @@ export default function Home() {
             />
           </div>
         </div>
-        <div className="py-10 h-[50%] bg-white w-full flex flex-col items-center justify-center md:gap-8 gap-4 px-80 text-center">
+        <div className="py-10 h-[50%] bg-white  flex flex-col items-center justify-center md:gap-8 gap-4 md:px-60 px-20 text-center">
          <span className="text-lg font-bold text-gray-700">Level up your job hunt!!</span>
           <h1 className="text-5xl font-extrabold ">
             "Build a resume that gets more job offers"
@@ -51,15 +51,18 @@ export default function Home() {
           and it all starts with your resume. Here's how to make your application stand out today:
           </p>
 
-      <div className="flex flex-row gap-8 items-center justify-center">
-        <div className="w-60 h-max p-4 bg-gray-200 rounded-md">
-        <p className="uppercase text-xl font-bold">pick a resume template</p>
+      <div className="flex flex-col w-screen p-6 bg-gray-200 md:flex-row gap-8 items-center justify-center">
+        <div className="md:w-60 w-[80%] h-56 p-8 bg-gray-100 rounded-md shadow-lg flex flex-col justify-between">
+        <p className="uppercase text-xl font-bold">sign in and pick a resume template</p>
+        <span className="text-gray-500">With a good resume template, you don't need to worry about details like formatting.</span>
         </div>
-        <div className="w-60 h-40 bg-gray-200 rounded-md">
-
+        <div className="md:w-60 w-[80%] h-56 p-6 bg-gray-100 rounded-md shadow-lg flex flex-col justify-between">
+        <p className="uppercase text-xl font-bold">customize each section</p>
+        <span className="text-gray-500">Fill in your personal information and work experience.</span>
         </div>
-        <div className="w-60 h-40 bg-gray-200 rounded-md">
-
+        <div className="md:w-60 w-[80%] h-56 px-6 bg-gray-100 rounded-md shadow-lg flex flex-col justify-between py-8">
+        <p className="uppercase text-xl font-bold">Download/print your resume</p>
+        <span className="text-gray-500">Download or print your resume with ease.</span>
         </div>
       </div>
 

@@ -1,11 +1,5 @@
 import fieldReducer from './fieldSlice';
-import eduReducer from './eduSlice';
-import expeReducer from './expeSlice';
-import projectReducer from './projectSlice';
-import skillReducer from './skillSlice';
-import achieveReducer from './achieveSlice';
-import trainingReducer from './trainingSlice';
-import awardReducer from './awardSlice';
+
 import userReducer from './userSlice';
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import storage from "redux-persist/lib/storage";
@@ -15,13 +9,6 @@ import resumeTokenReducer from './resumeTokenSlice';
 import resumeReducer from './resumeSlice';
 const rootReducer = combineReducers({
    field: fieldReducer,
-   education: eduReducer,
-   experience:expeReducer,
-   projects: projectReducer,
-   skills:skillReducer,
-   achievements:achieveReducer,
-   trainings:trainingReducer,
-   awards:awardReducer,
    users:userReducer,
    token:tokenReducer,
    resumeToken:resumeTokenReducer,

@@ -37,7 +37,7 @@ const Page = () => {
 
       dispatch(signInSuccess(rest));
       toast.success("user logged in successfully");
-      router.back();
+      router.push("/resume");
       
     } else {
       dispatch(signInFailure("error loggin in!please try again later"));

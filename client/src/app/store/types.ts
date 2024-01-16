@@ -5,6 +5,7 @@ export type TExperienceProps = {
     startDate: string;
     endDate: string;
     city: string;
+    company:string;
     description: string;
     visibility: boolean;
     jobTitle: string;

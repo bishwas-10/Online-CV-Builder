@@ -59,7 +59,7 @@ const Navbar: React.FC = () => {
 
   return (
     <div
-      className={`fixed z-10 top-0 px-10 min-w-full h-20  shadow-md flex flex-row items-center justify-between
+      className={`fixed z-10 top-0 px-10 w-full h-20  shadow-md flex flex-row items-center justify-between
      transition-all duration-500 ${
        visible ? "bg-white shadow-lg" : "hidden"
      }`}

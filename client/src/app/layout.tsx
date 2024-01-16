@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "./components/Navbar";
 import ReduxProvider from "./components/ReduxProvider";
 import { GoogleOAuthProvider } from "@react-oauth/google";
+import Footer from "./components/Footer";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -25,6 +26,7 @@ export default function RootLayout({
           <ReduxProvider>
             <Navbar />
             {children}
+            <Footer/>
           </ReduxProvider>
         </GoogleOAuthProvider>
       </body>
