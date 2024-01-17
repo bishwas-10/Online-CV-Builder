@@ -7,7 +7,7 @@ html{
     --line-color: #e5e7eb;
 }
 .resume-a4 {
-   max-height: 297mm;
+   min-height: 297mm;
    max-width: 210mm;
   }
   

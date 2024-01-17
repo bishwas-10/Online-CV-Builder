@@ -13,6 +13,7 @@ import { produce } from "immer";
 type TInitialProps = {
   personal: {};
   resumeMeta: {};
+  templateName:string;
   experience: TExperienceProps[];
   acheivement: TAcheivementProps[];
   education: TEducationProps[];
@@ -25,6 +26,7 @@ type TInitialProps = {
 const initialState: TInitialProps = {
   personal: {},
   resumeMeta: {},
+  templateName:"Simple",
   experience: [],
   acheivement: [],
   education: [],
@@ -45,7 +47,7 @@ const resumeSlice = createSlice({
       return produce(state, (draft) => {
         draft.personal = { ...action.payload.about[0] };
         draft.resumeMeta = { ...action.payload.resumeMeta };
-
+draft.templateName=action.payload.templateName;
         draft.experience = action.payload.experience.map(
           (item: TExperienceProps) => ({
             ...item,

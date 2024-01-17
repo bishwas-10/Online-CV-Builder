@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import FieldSideBar from "../components/FieldSideBar";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store/store";
@@ -11,7 +11,10 @@ import useAuth from "../utils/authCheck";
 import { useMediaQuery } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { signOut } from "../store/userSlice";
-
+import ProfessionalCV from "../template/Professional";
+import html2pdf from "html2pdf.js";
+import { Printer  } from "lucide-react";
+import { useReactToPrint } from "react-to-print";
 export interface PersonalData {
   firstName?: string;
   lastName?: string;
@@ -78,6 +81,7 @@ const Page = () => {
   const desktop = useMediaQuery("(min-width:1024px)");
   const router = useRouter();
   const dispatch = useDispatch();
+  const componentRef = useRef<HTMLDivElement | null>(null);
   const token = useSelector((state: RootState) => state.token.token) as string;
   const resumeId = useSelector(
     (state: RootState) => state.resumeToken.resumeId
@@ -99,6 +103,7 @@ const Page = () => {
         },
       });
       if (data.success) {
+        
         dispatch(addResume(data.resume));
       }
      } catch (error:any) {
@@ -119,12 +124,79 @@ const Page = () => {
       dispatch(removeResume());
     };
   }, []);
-
-  const resumeData = useSelector((state: RootState) => state.resume);
-
   const customStyles = {
     font: "Arial, sans-serif",
     // Other custom styles
+  };
+  const resumeData = useSelector((state: RootState) => state.resume);
+console.log(resumeData.templateName)
+const template = resumeData.templateName ;
+
+let selectedTemplate;
+switch (template) {
+  case "Simple":
+    selectedTemplate = <CV
+    personalData={resumeData.personal}
+    educationData={resumeData.education}
+    experienceData={resumeData.experience}
+    achievementsData={resumeData.acheivement}
+    awardsData={resumeData.award}
+    trainingData={resumeData.training}
+    skillData={resumeData.skill}
+    projectData={resumeData.project}
+    customStyles={customStyles}
+  />;
+    break;
+
+  case "Professional":
+    selectedTemplate =  <ProfessionalCV
+    personalData={resumeData.personal}
+    educationData={resumeData.education}
+    experienceData={resumeData.experience}
+    achievementsData={resumeData.acheivement}
+    awardsData={resumeData.award}
+    trainingData={resumeData.training}
+    skillData={resumeData.skill}
+    projectData={resumeData.project}
+    customStyles={customStyles}
+  />
+    break;
+  // case "Awards":
+  //   selectedTemplate = <Professional />;
+  //   break;
+  // case "Trainings":
+  //   selectedTemplate = <Trainings />;
+
+  //   break;
+  default:
+    selectedTemplate = <CV
+    personalData={resumeData.personal}
+    educationData={resumeData.education}
+    experienceData={resumeData.experience}
+    achievementsData={resumeData.acheivement}
+    awardsData={resumeData.award}
+    trainingData={resumeData.training}
+    skillData={resumeData.skill}
+    projectData={resumeData.project}
+    customStyles={customStyles}
+  />;
+}
+ 
+  const handlePrint = useReactToPrint({
+    content: () => componentRef.current,
+  });
+
+  const handleDownload = () => {
+    const input = componentRef.current;
+
+    html2pdf(input, {
+      margin: 6,
+      filename: `yourresume`,
+      image: { type: 'png', quality: 0.98 },
+      html2canvas: { scale: 2 },
+      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+      enableLinks: true,
+    });
   };
   if (!desktop) {
     return (
@@ -141,7 +213,7 @@ const Page = () => {
           <FIeldSelector />
         </div>
         <div className="min-w-[60%] flex justify-center">
-          <CV
+          {/* <CV
             personalData={resumeData.personal}
             educationData={resumeData.education}
             experienceData={resumeData.experience}
@@ -151,7 +223,41 @@ const Page = () => {
             skillData={resumeData.skill}
             projectData={resumeData.project}
             customStyles={customStyles}
-          />
+          /> */}
+          <div className="flex flex-col p-3 w-full">
+      <div className="w-full h-16 px-6 flex flex-row justify-between items-center bg-gray-200">
+        <span className="text-2xl tracking-wide font-bold uppercase text-blue-500">
+          Your Resume
+        </span>
+        <span className="flex flex-row items-center gap-1 font-medium">
+          <button
+            className="flex flex-row items-center gap-1  bg-blue-500 text-white hover:text-blue-500 hover:bg-white rounded-md px-4 py-2 transition-all"
+            onClick={handlePrint}
+          >
+           
+            Print this out!<Printer height={18}/>
+          </button>
+          {/* <span className="flex flex-row items-center gap-1  bg-blue-500 text-white hover:text-blue-500 hover:bg-white rounded-md px-4 py-2 transition-all">
+            <button onClick={handleDownload}> Download this out!</button>
+
+            <ArrowDownToLine height={18} />
+          </span> */}
+        </span>
+      </div>
+      <div className=" overflow-scroll bg-gray-100 min-h-screen w-full flex justify-center">
+        <div
+         ref={componentRef} 
+          id="t1"
+          className="bg-white w-full   rounded shadow-lg resume-a4  flex justify-between "
+
+          //  style={{ fontFamily: customStyles.font }}
+        >
+         
+        {selectedTemplate}
+        </div>
+      </div>
+    </div>
+           
         </div>
       </div>
     </div>

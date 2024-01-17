@@ -21,14 +21,14 @@ const [resumeName, setResumeName]= useState<string | null>(null);
   ) as string;
   
 
-  const getResume = async () => {
+  const getResume = async (title: string) => {
     try {
       if (!token) {
         return router.push("/signpage");
       }
     if(!resumeId){
       const { data } = await instance({
-        url: `/resume`,
+        url:`/resume?templateName=${title}`,
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -59,7 +59,7 @@ const [resumeName, setResumeName]= useState<string | null>(null);
           },
           data: {
             title: "Your Resume",
-            
+            templateName:title
           },
         });
 
@@ -79,15 +79,18 @@ const [resumeName, setResumeName]= useState<string | null>(null);
       }
     
       if (!resumeId) {
-        return getResume();
+        return getResume(title);
       } else{
         const { data } = await instance({
-          url: `/resume`,
+          url: `/resume?templateName=${title}`,
           method: "GET",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
+          data:{
+            templateName:title
+          }
         });
         if (data.success) {
       
@@ -117,7 +120,7 @@ const [resumeName, setResumeName]= useState<string | null>(null);
         if (data.success) {
           toast.success("Created!! Good luck creating your resume")
           dispatch(setResume(data.data._id));
-         // router.push("/cv-builder");
+          router.push("/cv-builder");
         }
       }
     }
@@ -137,7 +140,7 @@ const [resumeName, setResumeName]= useState<string | null>(null);
         {
 
            <span
-          onClick={()=>getResume()}
+          onClick={()=>getResume("simple")}
           className="p-3 rounded-lg bg-blue-500 text-gray-100 cursor-pointer hover:bg-blue-700 transition-all"
         >
           {resumeId ? "Update your resume" : "Create your resume"}

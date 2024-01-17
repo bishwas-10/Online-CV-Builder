@@ -7,25 +7,36 @@ interface FilterProps {
   userId: string;
 }
 export const resume = async (req: Request, res: Response) => {
-  const { body, method } = req;
-  
-  const {userId} = body;
+  const {
+    query: { templateName },
+    body,
+    method,
+  } = req;
 
+  const { userId } = body;
+  
   switch (method) {
     case "GET":
       try {
-       
         const filterObj: FilterProps = {
           template: false, // Provide a default value or the appropriate value based on your logic
           userId: "",
         };
-   
-        const resume = await Resume.findOne({userId:userId});
-      
+        await Resume.updateOne(
+          { userId: userId }, // The condition to match the document
+          { $set: { templateName: templateName } }
+        ); // The update operation})
+        const resume = await Resume.findOne({ userId: userId });
+
         if (!resume) {
           return res.status(400).json({ success: false });
         }
-        res.status(200).json({ success: true, data: resume });
+        res
+          .status(200)
+          .json({
+            success: true,
+            data: resume,
+          });
       } catch (error) {
         res.status(400).json({ success: false });
       }
@@ -33,12 +44,13 @@ export const resume = async (req: Request, res: Response) => {
 
     case "POST":
       try {
-        const { title } = body;
+        const { title, templateName } = body;
         const resume = await Resume.create({
           title,
           userId,
+          templateName,
         });
-       
+
         if (!resume) {
           return res.status(400).json({ success: false });
         }
