@@ -11,7 +11,7 @@ export default function Home() {
             "Your Journey, Your Story – Let's Build It Together."
           </h1>
           <p className="text-lg text-gray-700">
-            At [Your App Name], we believe in the power of a well-crafted
+            At <b> Online CV-Builder</b>, we believe in the power of a well-crafted
             resume. Our innovative resume builder combines simplicity with
             sophistication, enabling you to showcase your skills and experiences
             effortlessly. Elevate your job search with resumes that make an

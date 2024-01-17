@@ -66,7 +66,7 @@ const [resumeName, setResumeName]= useState<string | null>(null);
         if (data.success) {
           toast.success("Created!! Good luck creating your resume")
           dispatch(setResume(data.data._id));
-         // router.push("/cv-builder");
+          router.push("/cv-builder");
         }
       }
     }
@@ -96,7 +96,7 @@ const [resumeName, setResumeName]= useState<string | null>(null);
       
           toast.success("Got your resume! Update it now!")
           dispatch(setResume(data.data._id));
-          
+          router.push("/cv-builder");
         }
        
        
@@ -161,7 +161,7 @@ const [resumeName, setResumeName]= useState<string | null>(null);
             <span
               key={index}
               onClick={() => resumeHandler(resume.name)}
-              className="flex flex-row gap-3 capitalize opacity-60 hover:text-blue-500 transition-all"
+              className="flex flex-row gap-3 cursor-pointer capitalize opacity-60 hover:text-blue-500 transition-all"
             >
               <span>
                 <resume.icon />

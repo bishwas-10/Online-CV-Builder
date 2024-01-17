@@ -60,9 +60,7 @@ const Navbar: React.FC = () => {
   return (
     <div
       className={`fixed z-10 top-0 px-10 w-full h-20  shadow-md flex flex-row items-center justify-between
-     transition-all duration-500 ${
-       visible ? "bg-white shadow-lg" : "hidden"
-     }`}
+     transition-all duration-500 ${visible ? "bg-white shadow-lg" : "hidden"}`}
     >
       <div>Logo</div>
       <div className=" h-full flex flex-row items-center justify-between text-md gap-6 font-medium">
@@ -91,7 +89,6 @@ const Navbar: React.FC = () => {
                 href={"/resume"}
                 className="text-blue-500 hover:text-blue-700 py-1 "
               >
-                {" "}
                 View all
               </Link>
             </div>
@@ -99,7 +96,7 @@ const Navbar: React.FC = () => {
               {resumeTemplate.map((resume, index) => {
                 return (
                   <Link
-                    href={`/resume/${resume.to}`}
+                    href={`/resume`}
                     key={index}
                     className="w-[48%] h-max group cursor-pointer"
                   >
@@ -170,7 +167,6 @@ const Navbar: React.FC = () => {
           </div>
         )}
       </div>
-     
     </div>
   );
 };

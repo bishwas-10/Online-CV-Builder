@@ -10,6 +10,7 @@ import Skills from "./Form/Skills";
 import Achievements from "./Form/Acheivements";
 import Awards from "./Form/Awards";
 import Trainings from "./Form/Trainings";
+import Template from "./Template";
 
 const FIeldSelector = () => {
   const fieldName = useSelector(

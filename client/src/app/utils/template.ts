@@ -6,19 +6,22 @@ interface ResumeProps{
     icon:LucideIcon;
     description:string;
     to:string;
+    image?:string;
 }
 export const resumeTemplate:ResumeProps[]=[
     {
         name:"simple",
         icon:Sparkles,
         description:"Clean, timeless templates with a classic balanced structure. A perfect basic canvas",
-        to :"/simple"
+        to :"/simple",
+        image:"/images/simple.jpg"
     },
     {
         name:"Professional",
         icon:ShieldPlus,
         description:"Job-winning templates to showcase professionalism, dependability, and expertise",
-        to :"/professional"
+        to :"/professional",
+        image:"/images/professional.jpg"
     },
     {
         name:"Creative",

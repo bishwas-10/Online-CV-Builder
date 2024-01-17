@@ -105,6 +105,7 @@ const Page = () => {
       if (data.success) {
         
         dispatch(addResume(data.resume));
+        console.log(data.resume)
       }
      } catch (error:any) {
       console.log(error.response.data.status);
@@ -123,7 +124,7 @@ const Page = () => {
     return () => {
       dispatch(removeResume());
     };
-  }, []);
+  }, [resumeId]);
   const customStyles = {
     font: "Arial, sans-serif",
     // Other custom styles
@@ -244,11 +245,11 @@ switch (template) {
           </span> */}
         </span>
       </div>
-      <div className=" overflow-scroll bg-gray-100 min-h-screen w-full flex justify-center">
+      <div className=" bg-gray-100 h-[1000px] overflow-scroll w-full flex justify-center">
         <div
          ref={componentRef} 
           id="t1"
-          className="bg-white w-full   rounded shadow-lg resume-a4  flex justify-between "
+          className="bg-white w-full  rounded shadow-lg resume-a4 h-max  flex justify-between "
 
           //  style={{ fontFamily: customStyles.font }}
         >

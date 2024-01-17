@@ -1,5 +1,6 @@
 import { FC } from "react";
 import { CvProps } from "./SampleCv";
+import Link from "next/link";
 
 const ProfessionalCV: FC<CvProps> = ({
   personalData,
@@ -12,7 +13,7 @@ const ProfessionalCV: FC<CvProps> = ({
   skillData,
 }) => {
   return (
-    <div className="w-full py-6 h-max mt-4 ml-2 px-4">
+    <div className="w-full py-6 h-full mt-4 ml-2 px-4 ">
       <div className="flex flex-col gap-4" id="personal_section ">
         <div className="flex flex-col items-center">
           <h1 className="uppercase font-semibold tracking-widest text-2xl">
@@ -36,7 +37,7 @@ const ProfessionalCV: FC<CvProps> = ({
         <h1 className="text-lg font-medium tracking-widest w-full border-b-4 pb-2  uppercase">
           Experience
         </h1>
-        {experienceData.map((exp, index) => {
+        {experienceData?.map((exp, index) => {
           return (
             <div
               key={index}
@@ -88,7 +89,7 @@ const ProfessionalCV: FC<CvProps> = ({
         <h1 className="text-lg font-medium tracking-widest w-full border-b-4 pb-2  uppercase">
           Projects
         </h1>
-        {projectData.map((exp, index) => {
+        {projectData?.map((exp, index) => {
           return (
             <div
               key={index}
@@ -96,7 +97,7 @@ const ProfessionalCV: FC<CvProps> = ({
             >
               <div className="flex flex-col py-2">
                <span className="text-lg font-normal"> {exp.projectTitle}</span>
-               <span className="text-md font-normal"> {exp.projectLink}</span>
+               {/* <Link href={exp.projectLink}  className="text-md font-normal"> {exp.projectLink}</Link> */}
 
                 <span className="text-gray-700">{exp.description}</span>
               </div>
@@ -109,7 +110,7 @@ const ProfessionalCV: FC<CvProps> = ({
         <h1 className="text-lg font-medium tracking-widest w-full border-b-4 pb-2  uppercase">
           Acheivements
         </h1>
-        {achievementsData.map((exp, index) => {
+        {achievementsData?.map((exp, index) => {
           return (
             <div
               key={index}
@@ -128,7 +129,7 @@ const ProfessionalCV: FC<CvProps> = ({
         <h1 className="text-lg font-medium tracking-widest w-full border-b-4 pb-2  uppercase">
           Training
         </h1>
-        {trainingData.map((exp, index) => {
+        {trainingData?.map((exp, index) => {
           return (
             <div
               key={index}
@@ -154,7 +155,7 @@ const ProfessionalCV: FC<CvProps> = ({
         <h1 className="text-lg font-medium tracking-widest w-full border-b-4 pb-2  uppercase">
           Awards
         </h1>
-        {awardsData.map((exp, index) => {
+        {awardsData?.map((exp, index) => {
           return (
             <div
               key={index}
@@ -180,9 +181,9 @@ const ProfessionalCV: FC<CvProps> = ({
         <h1 className="text-lg font-medium tracking-widest w-full border-b-4 pb-2  uppercase">
           Skills
         </h1>
-        {skillData.map((exp, index) => {
+        {skillData?.map((exp, index) => {
           return (
-           <span className="p-1">{exp.skillTitle},</span>
+           <span key={index} className="p-1">{exp.skillTitle},</span>
           );
         })}
         </div>

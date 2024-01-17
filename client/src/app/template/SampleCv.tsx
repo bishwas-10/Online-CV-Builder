@@ -150,7 +150,7 @@ const CV: FC<CvProps> = ({
  
 
   return (
-     <div className="w-full ">
+     <div className="w-full resume-a4 overflow-scroll">
             <div className="flex justify-center flex-col relative pt-8">
               <h1
                 className="pl-10 font-semibold text-xl tracking-widest text-t1-black uppercase"
