@@ -13,6 +13,7 @@ const Experience = () => {
     endDate: '',
     city:'',
     description: '',
+    company:'',
     jobTitle: '',
     employer: '',
     visibility:false
