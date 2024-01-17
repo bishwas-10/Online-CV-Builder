@@ -124,7 +124,8 @@ const Navbar: React.FC = () => {
         {userDetails?.currentUser ? (
           <span
             onMouseEnter={() => setSignDiv(true)}
-            onMouseLeave={() => setSignDiv(false)}
+           // onBlur={()=>setSignDiv(false)}
+            onMouseLeave={() =>setSignDiv(false) }
             className="relative font-bold text-md flex flex-row items-center gap-1 text-yellow-600 border-2 px-2 py-1 border-yellow-300"
           >
             {userDetails?.currentUser?.username}{" "}

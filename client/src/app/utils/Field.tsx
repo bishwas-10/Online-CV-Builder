@@ -8,11 +8,7 @@ export interface FieldProps{
 }
 
 export const fieldTemplate:FieldProps[]=[
-    {
-        name:"Templates",
-        icon:LayoutPanelTop,
-        to :"/simple",
-    },
+    
     {
         name:"About",
         icon:CircleUserRound,

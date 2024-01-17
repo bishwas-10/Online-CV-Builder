@@ -14,7 +14,7 @@ const Footer = () => {
             <X className="h-5 w-6 bg-red-400 rounded-r-lg" />
           </a>
         </span>
-        <span className="text-[12px]">© 2020-2023, online-cv-builder.com, Inc. or its affiliates</span>
+        <span className="text-[12px]">© 2020-2024, online-cv-builder.com, Inc. or its affiliates</span>
       </div>
     </footer>
   );

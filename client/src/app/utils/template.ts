@@ -27,12 +27,14 @@ export const resumeTemplate:ResumeProps[]=[
         name:"Creative",
         icon:HandMetal ,
         description:"A current and stylish feel for forward-thinking candidates in innovative fields",
-        to :"/creative"
+        to :"/creative",
+        image:"/images/creative.png"
     },
     {
         name:"Modern",
         icon:ShieldCheck ,
         description:"A current and stylish feel for forward-thinking candidates in innovative fields",
-        to :"/modern"
+        to :"/modern",
+        image:"/images/modern.jpg"
     }
 ]
