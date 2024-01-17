@@ -1,6 +1,5 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ToastContainer } from "react-toastify";
 
 export default function Home() {
   return (
@@ -8,7 +7,7 @@ export default function Home() {
       <div className="w-full bg-gray-100  py-10">
         <div className="h-[50%]  flex flex-col items-center justify-center md:gap-8 gap-4 md:px-60 px-20 text-center">
           <h1 className="text-5xl font-extrabold px-10">
-            "Your Journey, Your Story – Let's Build It Together."
+          &quot;Your Journey, Your Story – Let&apos;s Build It Together.&quot;
           </h1>
           <p className="text-lg text-gray-700">
             At <b> Online CV-Builder</b>, we believe in the power of a well-crafted
@@ -22,7 +21,7 @@ export default function Home() {
             href={"/resume"}
             className="p-4 rounded-lg bg-blue-500 text-gray-100 cursor-pointer hover:bg-blue-700 transition-all"
           >
-            Let's Build It!!
+            Let&apos;s Build It!!
           </Link>
 
           <span className="font-bold text-sm text-green-500">
@@ -44,17 +43,17 @@ export default function Home() {
         <div className="py-10 h-[50%] bg-white  flex flex-col items-center justify-center md:gap-8 gap-4 md:px-60 px-20 text-center">
          <span className="text-lg font-bold text-gray-700">Level up your job hunt!!</span>
           <h1 className="text-5xl font-extrabold ">
-            "Build a resume that gets more job offers"
+          &quot;Build a resume that gets more job offers&quot;
           </h1>
           <p className="text-lg text-gray-700">
           Landing more interviews and earning better job offers is only a few steps away, 
-          and it all starts with your resume. Here's how to make your application stand out today:
+          and it all starts with your resume. Here&apos;s how to make your application stand out today:
           </p>
 
       <div className="flex flex-col w-screen p-6 bg-gray-200 md:flex-row gap-8 items-center justify-center">
         <div className="md:w-60 w-[80%] h-56 p-8 bg-gray-100 rounded-md shadow-lg flex flex-col justify-between">
         <p className="uppercase text-xl font-bold">sign in and pick a resume template</p>
-        <span className="text-gray-500">With a good resume template, you don't need to worry about details like formatting.</span>
+        <span className="text-gray-500">With a good resume template, you don&apos;t need to worry about details like formatting.</span>
         </div>
         <div className="md:w-60 w-[80%] h-56 p-6 bg-gray-100 rounded-md shadow-lg flex flex-col justify-between">
         <p className="uppercase text-xl font-bold">customize each section</p>
