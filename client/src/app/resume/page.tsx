@@ -119,7 +119,7 @@ const Page = () => {
 
   return (
     <div className="w-screen py-10 px-6 md:px-10 mt-20">
-      <div className="h-[50%] mt-5 w-full flex flex-col items-center justify-center md:gap-8 gap-4 px-40 md:px-60 text-center">
+      <div className="h-[50%] mt-5 w-full flex flex-col items-center justify-center md:gap-8 gap-4 px-20 md:px-60 text-center">
         <h1 className="text-5xl font-extrabold px-10">
           Job-winning resume templates{" "}
         </h1>

@@ -10,7 +10,7 @@ import { useRouter } from "next/navigation";
 import { instance } from "../api/instance";
 import { removeToken } from "../store/tokenSlice";
 import { removeResume } from "../store/resumeTokenSlice";
-
+import { Brain } from 'lucide-react';
 const Navbar: React.FC = () => {
   const [prevScrollPos, setPrevScrollPos] = useState<number>(0);
   const [visible, setVisible] = useState<boolean>(true);
@@ -62,7 +62,7 @@ const Navbar: React.FC = () => {
       className={`fixed z-10 top-0 px-10 w-full h-20  shadow-md flex flex-row items-center justify-between
      transition-all duration-500 ${visible ? "bg-white shadow-lg" : "hidden"}`}
     >
-      <div>Logo</div>
+      <Link href={"/"} className="flex flex-row gap-2 font-bold cursor-pointer text-blue-500 text-2xl items-center"><Brain/><span>CV BUILDER</span></Link>
       <div className=" h-full flex flex-row items-center justify-between text-md gap-6 font-medium">
         <Link
           href={"/resume"}

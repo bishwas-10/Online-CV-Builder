@@ -5,29 +5,32 @@ import SignUp from "./sign-component/signUp";
 import { RootState } from "../store/store";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
-import { setIsSignedUp, signInFailure, signInSuccess } from "../store/userSlice";
+import {
+  setIsSignedUp,
+  signInFailure,
+  signInSuccess,
+} from "../store/userSlice";
 import { CredentialResponse, GoogleLogin } from "@react-oauth/google";
-import {jwtDecode} from 'jwt-decode';
+import { jwtDecode } from "jwt-decode";
 import { userGoogleLogin } from "../api/auth";
 import { setToken } from "../store/tokenSlice";
 import { ToastContainer, toast } from "react-toastify";
 const Page = () => {
   const dispatch = useDispatch();
-  const router=useRouter();
-  const isSignedUp= useSelector((state:RootState)=>state.users.isSignedUp);
-  const userDetails = useSelector((state:RootState)=>state.users);
+  const router = useRouter();
+  const isSignedUp = useSelector((state: RootState) => state.users.isSignedUp);
+  const userDetails = useSelector((state: RootState) => state.users);
 
+  const successGoogleLogin = async (response: CredentialResponse) => {
+    const decoded: {
+      name: string;
+      picture: string;
+      sub: string;
+      email: string;
+    } = jwtDecode(response.credential as string);
+    const { name, picture, email, sub } = decoded;
+    const googleLoginRes = await userGoogleLogin({ name, picture, email, sub });
 
-  const successGoogleLogin=async(response:CredentialResponse)=>{
-    const decoded:{
-      name:string,
-      picture:string,
-      sub:string,
-      email:string,
-    } =  jwtDecode(response.credential as string);
-    const {name, picture, email, sub}=decoded;
-    const googleLoginRes = await userGoogleLogin({name, picture,email,sub})
-  
     if (googleLoginRes.status) {
       const { status, rest, token } = googleLoginRes;
 
@@ -38,20 +41,18 @@ const Page = () => {
       dispatch(signInSuccess(rest));
       toast.success("user logged in successfully");
       router.push("/resume");
-      
     } else {
       dispatch(signInFailure("error loggin in!please try again later"));
-     
-      toast.error("Error logging in!!");
-    
-    }
-  }
 
-useEffect(()=>{
- if(userDetails?.currentUser){
-  router.push('/')
- }
-},[])
+      toast.error("Error logging in!!");
+    }
+  };
+
+  useEffect(() => {
+    if (userDetails?.currentUser) {
+      router.push("/");
+    }
+  }, []);
   return (
     <div className="mt-20 bg-gray-200  w-full py-10 px-10 min-h-screen  flex md:flex-row flex-col md:items-start items-center md:justify-center">
       <div className="flex md:flex-row rounded-md  bg-white flex-col  h-max">
@@ -79,11 +80,14 @@ useEffect(()=>{
                 </svg>
                 Continue with Google
               </a> */}
-              <GoogleLogin onSuccess={(response)=>successGoogleLogin(response)} onError={()=>toast.error("Error logging in!!")}/>
+              <GoogleLogin
+                onSuccess={(response) => successGoogleLogin(response)}
+                onError={() => toast.error("Error logging in!!")}
+              />
             </li>
             <li className="w-full bg-blue-700 hover:bg-blue-800 flex justify-center rounded-md">
-              <a
-                href=""
+              <span
+                onClick={() => toast.error("not available at the moment")}
                 className="py-2 w-full flex justify-center items-center gap-2 text-white font-normal "
               >
                 <svg
@@ -102,11 +106,11 @@ useEffect(()=>{
                   ></path>
                 </svg>{" "}
                 Continue with Facebook
-              </a>
+              </span>
             </li>
             <li className="w-full bg-blue-500 hover:bg-blue-600 flex justify-center rounded-md">
-              <a
-                href=""
+              <span
+                onClick={() => toast.error("not available at the moment")}
                 className="py-2 w-full flex justify-center items-center gap-2 text-white font-normal "
               >
                 <svg
@@ -125,11 +129,11 @@ useEffect(()=>{
                   ></path>
                 </svg>{" "}
                 Continue with Linkedin
-              </a>
+              </span>
             </li>
             <li className="w-full bg-black hover:bg-gray-800 flex justify-center rounded-md">
-              <a
-                href=""
+              <span
+                onClick={() => toast.error("not available at the moment")}
                 className="py-2 w-full flex justify-center items-center gap-2 text-white font-normal "
               >
                 <svg
@@ -148,7 +152,7 @@ useEffect(()=>{
                   ></path>
                 </svg>{" "}
                 Continue with Github
-              </a>
+              </span>
             </li>
           </ul>
         </div>

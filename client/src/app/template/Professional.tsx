@@ -34,104 +34,94 @@ const ProfessionalCV: FC<CvProps> = ({
         </span>
       </div>
       <div className="mt-8" id="experience-section">
+        <h1 className="text-lg font-medium tracking-widest w-full border-b-4 pb-2  uppercase">
+          Experience
+        </h1>
         {experienceData?.map((exp, index) => {
           return (
-            <>
-              <h1 className="text-lg font-medium tracking-widest w-full border-b-4 pb-2  uppercase">
-                Experience
-              </h1>{" "}
-              <div
-                key={index}
-                className="flex flex-row justify-between items-center"
-              >
-                <div className="flex flex-col py-2">
-                  <span className="text-lg font-normal"> {exp.jobTitle}</span>
-                  <span className="text-gray-700">{exp.description}</span>
-                </div>
-                <div className="flex flex-col items-end">
-                  <span className="text-lg font-normal">{exp.company}</span>
-                  <span className="text-gray-700">
-                    {exp.startDate}-{exp.endDate}
-                  </span>
-                  <span></span>
-                </div>
+            <div
+              key={index}
+              className="flex flex-row justify-between items-center"
+            >
+              <div className="flex flex-col py-2">
+                <span className="text-lg font-normal"> {exp.jobTitle}</span>
+                <span className="text-gray-700">{exp.description}</span>
               </div>
-            </>
+              <div className="flex flex-col items-end">
+                <span className="text-lg font-normal">{exp.company}</span>
+                <span className="text-gray-700">
+                  {exp.startDate}-{exp.endDate}
+                </span>
+                <span></span>
+              </div>
+            </div>
           );
         })}
       </div>
       <div className="mt-8" id="education-section">
+       {!!educationData.length && <h1 className="text-lg font-medium tracking-widest w-full border-b-4 pb-2  uppercase">
+          Education
+        </h1>}
         {educationData.map((exp, index) => {
           return (
-            <>
-              <h1 className="text-lg font-medium tracking-widest w-full border-b-4 pb-2  uppercase">
-                Education
-              </h1>{" "}
-              <div
-                key={index}
-                className="flex flex-row justify-between items-center"
-              >
-                <div className="flex flex-col py-2">
-                  <span className="text-lg font-normal"> {exp.degree}</span>
-                  <span className="text-gray-700">{exp.description}</span>
-                </div>
-                <div className="flex flex-col items-end">
-                  <span className="text-lg font-normal">{exp.school}</span>
-                  <span className="text-gray-700">
-                    {exp.startedAt}-{exp.endedAt}
-                  </span>
-                  <span></span>
-                </div>
+            <div
+              key={index}
+              className="flex flex-row justify-between items-center"
+            >
+              <div className="flex flex-col py-2">
+                <span className="text-lg font-normal"> {exp.degree}</span>
+                <span className="text-gray-700">{exp.description}</span>
               </div>
-            </>
+              <div className="flex flex-col items-end">
+                <span className="text-lg font-normal">{exp.school}</span>
+                <span className="text-gray-700">
+                  {exp.startedAt}-{exp.endedAt}
+                </span>
+                <span></span>
+              </div>
+            </div>
           );
         })}
       </div>
       <div className="mt-8" id="project-section">
+      {!!projectData.length && <h1 className="text-lg font-medium tracking-widest w-full border-b-4 pb-2  uppercase">
+          Projects
+        </h1>} 
         {projectData?.map((exp, index) => {
           return (
-            <>
-              <h1 className="text-lg font-medium tracking-widest w-full border-b-4 pb-2  uppercase">
-                Projects
-              </h1>{" "}
-              <div
-                key={index}
-                className="flex flex-row justify-between items-center"
-              >
-                <div className="flex flex-col py-2">
-                  <span className="text-lg font-normal">
-                    {" "}
-                    {exp.projectTitle}
-                  </span>
-                  {/* <Link href={exp.projectLink}  className="text-md font-normal"> {exp.projectLink}</Link> */}
+            <div
+              key={index}
+              className="flex flex-row justify-between items-center"
+            >
+              <div className="flex flex-col py-2">
+                <span className="text-lg font-normal"> {exp.projectTitle}</span>
+                <Link href={exp.projectLink} className="text-md font-normal">
+                  {" "}
+                  {exp.projectLink}
+                </Link>
 
-                  <span className="text-gray-700">{exp.description}</span>
-                </div>
+                <span className="text-gray-700">{exp.description}</span>
               </div>
-            </>
+            </div>
           );
         })}
       </div>
       <div className="mt-8" id="acheivement-section">
+      {!!achievementsData.length &&<h1 className="text-lg font-medium tracking-widest w-full border-b-4 pb-2  uppercase">
+          Acheivements
+        </h1>} 
         {achievementsData?.map((exp, index) => {
           return (
             <>
-              <h1 className="text-lg font-medium tracking-widest w-full border-b-4 pb-2  uppercase">
-                Acheivements
-              </h1>
               <div
                 key={index}
                 className="flex flex-row justify-between items-center"
               >
                 <div className="flex flex-col py-2">
                   <span className="text-lg font-normal">
-                    {" "}
                     {exp.achieveTitle}
                   </span>
-                  <span className="text-md font-normal">
-                    {" "}
-                    {exp.description}
-                  </span>
+                  <span className="text-md font-normal">{exp.description}</span>
                 </div>
               </div>
             </>
@@ -139,20 +129,20 @@ const ProfessionalCV: FC<CvProps> = ({
         })}
       </div>
       <div className="mt-8" id="training-section">
+      {!!trainingData.length && <h1 className="text-lg font-medium tracking-widest w-full border-b-4 pb-2  uppercase">
+          Training
+        </h1>}
         {trainingData?.map((exp, index) => {
           return (
             <>
-              {" "}
-              <h1 className="text-lg font-medium tracking-widest w-full border-b-4 pb-2  uppercase">
-                Training
-              </h1>
+             
               <div
                 key={index}
                 className="flex flex-row justify-between items-center"
               >
                 <div className="flex flex-col py-2">
                   <span className="text-lg font-normal">
-                    {" "}
+                   
                     {exp.trainingTitle}
                   </span>
                   <span className="text-gray-700">{exp.description}</span>
@@ -168,12 +158,12 @@ const ProfessionalCV: FC<CvProps> = ({
         })}
       </div>
       <div className="mt-8" id="awards-section">
+      {!!awardsData.length &&<h1 className="text-lg font-medium tracking-widest w-full border-b-4 pb-2  uppercase">
+          Awards
+        </h1>} 
         {awardsData?.map((exp, index) => {
           return (
             <>
-              <h1 className="text-lg font-medium tracking-widest w-full border-b-4 pb-2  uppercase">
-                Awards
-              </h1>{" "}
               <div
                 key={index}
                 className="flex flex-row justify-between items-center"
@@ -195,16 +185,14 @@ const ProfessionalCV: FC<CvProps> = ({
         })}
       </div>
       <div className="mt-8" id="skills-section">
+      {!!skillData.length && <h1 className="text-lg font-medium tracking-widest w-full border-b-4 pb-2  uppercase">
+          Skills
+        </h1>} 
         {skillData?.map((exp, index) => {
           return (
-            <>
-              <h1 className="text-lg font-medium tracking-widest w-full border-b-4 pb-2  uppercase">
-                Skills
-              </h1>{" "}
-              <span key={index} className="p-1">
-                {exp.skillTitle},
-              </span>
-            </>
+            <span key={index} className="p-1">
+              {exp.skillTitle},
+            </span>
           );
         })}
       </div>

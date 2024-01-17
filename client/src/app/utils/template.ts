@@ -14,7 +14,7 @@ export const resumeTemplate:ResumeProps[]=[
         icon:Sparkles,
         description:"Clean, timeless templates with a classic balanced structure. A perfect basic canvas",
         to :"/simple",
-        image:"/images/simple.jpg"
+        image:"/images/creative.png"
     },
     {
         name:"Professional",
@@ -28,7 +28,7 @@ export const resumeTemplate:ResumeProps[]=[
         icon:HandMetal ,
         description:"A current and stylish feel for forward-thinking candidates in innovative fields",
         to :"/creative",
-        image:"/images/creative.png"
+        image:"/images/simple.jpg"
     },
     {
         name:"Modern",

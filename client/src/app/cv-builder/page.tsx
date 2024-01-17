@@ -15,6 +15,7 @@ import ProfessionalCV from "../template/Professional";
 import html2pdf from "html2pdf.js";
 import { Printer  } from "lucide-react";
 import { useReactToPrint } from "react-to-print";
+import Simple from "../template/Simple";
 export interface PersonalData {
   firstName?: string;
   lastName?: string;
@@ -135,7 +136,20 @@ const template = resumeData.templateName ;
 
 let selectedTemplate;
 switch (template) {
-  case "Simple":
+  case "simple":
+    selectedTemplate = <Simple
+    personalData={resumeData.personal}
+    educationData={resumeData.education}
+    experienceData={resumeData.experience}
+    achievementsData={resumeData.acheivement}
+    awardsData={resumeData.award}
+    trainingData={resumeData.training}
+    skillData={resumeData.skill}
+    projectData={resumeData.project}
+    customStyles={customStyles}
+  />;
+    break;
+  case "Creative":
     selectedTemplate = <CV
     personalData={resumeData.personal}
     educationData={resumeData.education}
