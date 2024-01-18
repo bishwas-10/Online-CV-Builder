@@ -28,7 +28,7 @@ export interface CvProps {
   trainingData: TTrainingProps[];
   skillData: TSkillProps[];
   projectData: TProjectProps[];
-  customStyles: { font: string };
+  customStyles?: { font: string };
 }
 
 const CV: FC<CvProps> = ({

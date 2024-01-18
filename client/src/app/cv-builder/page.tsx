@@ -106,12 +106,12 @@ const Page = () => {
       if (data.success) {
         
         dispatch(addResume(data.resume));
-        console.log(data.resume)
+       
       }
      } catch (error:any) {
       console.log(error.response.data.status);
       if(error.response.data.status===false){
-        console.log(error.response.data.message);
+       
         dispatch(removeResume());
         dispatch(signOut());
         router.push("/signpage")
@@ -131,8 +131,8 @@ const Page = () => {
     // Other custom styles
   };
   const resumeData = useSelector((state: RootState) => state.resume);
-console.log(resumeData.templateName)
-const template = resumeData.templateName ;
+
+const template = resumeData?.templateName ;
 
 let selectedTemplate;
 switch (template) {
@@ -146,7 +146,7 @@ switch (template) {
     trainingData={resumeData.training}
     skillData={resumeData.skill}
     projectData={resumeData.project}
-    customStyles={customStyles}
+
   />;
     break;
   case "Creative":
@@ -159,7 +159,7 @@ switch (template) {
     trainingData={resumeData.training}
     skillData={resumeData.skill}
     projectData={resumeData.project}
-    customStyles={customStyles}
+  
   />;
     break;
 
@@ -173,7 +173,7 @@ switch (template) {
     trainingData={resumeData.training}
     skillData={resumeData.skill}
     projectData={resumeData.project}
-    customStyles={customStyles}
+    
   />
     break;
   // case "Awards":
@@ -193,7 +193,7 @@ switch (template) {
     trainingData={resumeData.training}
     skillData={resumeData.skill}
     projectData={resumeData.project}
-    customStyles={customStyles}
+   
   />;
 }
  
