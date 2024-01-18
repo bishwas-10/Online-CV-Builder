@@ -3,7 +3,7 @@ import axios from "axios";
 
 
 export const instance = axios.create({
-    baseURL: "http://localhost:4000/api/users",
+    baseURL: "https://online-cv-builder.onrender.com/api/users",
     withCredentials: true,
     
   });

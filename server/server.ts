@@ -9,7 +9,7 @@ import allRouter from './routes/fieldRouter/allRoute';
 const app = express();
 
 app.use(cors({
-    origin:'http://localhost:3000',
+    origin:'https://online-cv-builder.vercel.app',
     methods: "GET,POST, PUT, DELETE, PATCH",
     credentials: true,
     exposedHeaders: ['Access-Control-Allow-Origin'],
