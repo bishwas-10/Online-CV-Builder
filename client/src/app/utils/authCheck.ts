@@ -3,7 +3,8 @@ import { useRouter } from "next/navigation";
 import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
 
-const useAuth = (redirectPath = "/signpage") => {
+const useAuth = () => {
+  const redirectPath = "/signpage"
   const router = useRouter();
   const isAuthenticated = !!useSelector(
     (state: RootState) => state.token.token

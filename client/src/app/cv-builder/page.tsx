@@ -16,69 +16,64 @@ import html2pdf from "html2pdf.js";
 import { Printer  } from "lucide-react";
 import { useReactToPrint } from "react-to-print";
 import Simple from "../template/Simple";
-export interface PersonalData {
-  firstName?: string;
-  lastName?: string;
-  designation?: string;
-  objective?: string;
-  email?: string;
-  phoneNumber?: string;
-  city?:string;
-  address?:string;
-}
+//  interface PersonalData {
+//   firstName?: string;
+//   lastName?: string;
+//   designation?: string;
+//   objective?: string;
+//   email?: string;
+//   phoneNumber?: string;
+//   city?:string;
+//   address?:string;
+// }
 
-export interface Education {
-  id: number;
-  startedAt: string;
-  endedAt: string;
-  major: string;
-  institution: string;
-  country: string;
-}
+//  interface Education {
+//   id: number;
+//   startedAt: string;
+//   endedAt: string;
+//   major: string;
+//   institution: string;
+//   country: string;
+// }
 
-export interface Experience {
-  id: number;
-  startedAt: string;
-  endedAt: string;
-  country: string;
-  years: string;
-  designation: string;
-  company: string;
-  description: string;
-}
+//  interface Experience {
+//   id: number;
+//   startedAt: string;
+//   endedAt: string;
+//   country: string;
+//   years: string;
+//   designation: string;
+//   company: string;
+//   description: string;
+// }
 
-export interface ExtrasData {
-  id: number;
-  title: string;
-  type: string;
-  items: string[];
-}
 
-export interface Achievement {
-  id: number;
-  title: string;
-  description: string;
-}
 
-export interface Award {
-  id: number;
-  title: string;
-  description: string;
-}
+//  interface Achievement {
+//   id: number;
+//   title: string;
+//   description: string;
+// }
 
-export interface Training {
-  id: number;
-  title: string;
-  institution: string;
-  year: string;
-}
-export interface Project {
-  id: number;
-  title: string;
-  description: string;
-  link: string;
-}
-const Page = () => {
+//  interface Award {
+//   id: number;
+//   title: string;
+//   description: string;
+// }
+
+//  interface Training {
+//   id: number;
+//   title: string;
+//   institution: string;
+//   year: string;
+// }
+//  interface Project {
+//   id: number;
+//   title: string;
+//   description: string;
+//   link: string;
+// }
+const CvBuilder = () => {
   const desktop = useMediaQuery("(min-width:1024px)");
   const router = useRouter();
   const dispatch = useDispatch();
@@ -109,7 +104,7 @@ const Page = () => {
        
       }
      } catch (error:any) {
-      console.log(error.response.data.status);
+  
       if(error.response.data.status===false){
        
         dispatch(removeResume());
@@ -126,10 +121,10 @@ const Page = () => {
       dispatch(removeResume());
     };
   }, [resumeId]);
-  const customStyles = {
-    font: "Arial, sans-serif",
-    // Other custom styles
-  };
+  // const customStyles = {
+  //   font: "Arial, sans-serif",
+  //   // Other custom styles
+  // };
   const resumeData = useSelector((state: RootState) => state.resume);
 
 const template = resumeData?.templateName ;
@@ -201,18 +196,18 @@ switch (template) {
     content: () => componentRef.current,
   });
 
-  const handleDownload = () => {
-    const input = componentRef.current;
+  // const handleDownload = () => {
+  //   const input = componentRef.current;
 
-    html2pdf(input, {
-      margin: 6,
-      filename: `yourresume`,
-      image: { type: 'png', quality: 0.98 },
-      html2canvas: { scale: 2 },
-      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
-      enableLinks: true,
-    });
-  };
+  //   html2pdf(input, {
+  //     margin: 6,
+  //     filename: `yourresume`,
+  //     image: { type: 'png', quality: 0.98 },
+  //     html2canvas: { scale: 2 },
+  //     jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+  //     enableLinks: true,
+  //   });
+  // };
   if (!desktop) {
     return (
       <div className="h-screen w-screen flex items-center justify-center">
@@ -228,17 +223,7 @@ switch (template) {
           <FIeldSelector />
         </div>
         <div className="min-w-[60%] flex justify-center">
-          {/* <CV
-            personalData={resumeData.personal}
-            educationData={resumeData.education}
-            experienceData={resumeData.experience}
-            achievementsData={resumeData.acheivement}
-            awardsData={resumeData.award}
-            trainingData={resumeData.training}
-            skillData={resumeData.skill}
-            projectData={resumeData.project}
-            customStyles={customStyles}
-          /> */}
+         
           <div className="flex flex-col p-3 w-full">
       <div className="w-full h-16 px-6 flex flex-row justify-between items-center bg-gray-200">
         <span className="text-2xl tracking-wide font-bold uppercase text-blue-500">
@@ -279,4 +264,4 @@ switch (template) {
   );
 };
 
-export default Page;
+export default CvBuilder;
