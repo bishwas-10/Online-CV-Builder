@@ -107,10 +107,10 @@ const signUpSchema = z
   
       res
         .cookie("refresh_token", refreshToken, {
+          httpOnly: false,
           expires: expiryDate,
-          httpOnly: true,
-          sameSite: "none",
           secure: true,
+          sameSite:"none" 
         })
         .status(200)
         .send({ status: true, message: "user logged in successfully", user,token });
@@ -142,10 +142,10 @@ const signUpSchema = z
         const refreshToken = createRefreshToken(existingUser._id);
       res
         .cookie("refresh_token", refreshToken, {
-          expires: expiryDate,
-          httpOnly: true,
-          sameSite: "none",
-          secure: true,
+          httpOnly: false,
+      expires: expiryDate,
+      secure: true,
+      sameSite:"none" 
         })
         .status(200)
         .send({ status: true, message: "user logged in successfully", rest,token });
@@ -177,8 +177,8 @@ const signUpSchema = z
           .cookie("refresh_token", token, {
             httpOnly: false,
             expires: expiryDate,
-             secure: true,
-             sameSite:"none" 
+            secure: true,
+            sameSite:"none" 
           })
           .status(200)
           .json(rest);
