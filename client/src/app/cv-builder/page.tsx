@@ -16,16 +16,16 @@ import html2pdf from "html2pdf.js";
 import { Printer  } from "lucide-react";
 import { useReactToPrint } from "react-to-print";
 import Simple from "../template/Simple";
-//  interface PersonalData {
-//   firstName?: string;
-//   lastName?: string;
-//   designation?: string;
-//   objective?: string;
-//   email?: string;
-//   phoneNumber?: string;
-//   city?:string;
-//   address?:string;
-// }
+export interface PersonalData {
+  firstName?: string;
+  lastName?: string;
+  designation?: string;
+  objective?: string;
+  email?: string;
+  phoneNumber?: string;
+  city?:string;
+  address?:string;
+}
 
 //  interface Education {
 //   id: number;
