@@ -218,7 +218,7 @@ export const signOut=(req:Request, res:Response)=>{
   try {
     
     res.clearCookie("refresh_token").status(200).send({status:true,message:"signout succesfull"});
-    res.status(200).send({status:true,message:"signout successfull"})
+  
   } catch (error) {
     res.status(500).send({status:false, message:"internal server error"})
   }
