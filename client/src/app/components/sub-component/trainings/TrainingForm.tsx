@@ -200,7 +200,6 @@ const TrainingForm = ({ items }: { items: TTrainingProps }) => {
             Add
           </button>
         </form>
-        <ToastContainer autoClose={1600} />
       </motion.div>
     </AnimatePresence>
   );

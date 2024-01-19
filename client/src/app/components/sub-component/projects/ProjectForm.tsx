@@ -162,7 +162,7 @@ const ProjectForm = ({ items }: { items: TProjectProps }) => {
             Add
           </button>
         </form>
-        <ToastContainer autoClose={1600} />
+        
       </motion.div>
     </AnimatePresence>
   );

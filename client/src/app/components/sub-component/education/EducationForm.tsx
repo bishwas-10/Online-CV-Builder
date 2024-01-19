@@ -239,7 +239,7 @@ const resumeId = useSelector((state:RootState)=>state.resumeToken.resumeId);
           Add
         </button>
       </form>
-      <ToastContainer autoClose={1600} />
+    
     </motion.div>
   );
 };

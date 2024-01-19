@@ -46,7 +46,7 @@ const Simple: FC<CvProps> = ({
                 Acheivements
               </h1>{achievementsData?.map((exp, index) => {
           return (
-            <>
+            
               
               <div
                 key={index}
@@ -63,7 +63,7 @@ const Simple: FC<CvProps> = ({
                   </span>
                 </div>
               </div>
-            </>
+            
           );
         })}
       </div>

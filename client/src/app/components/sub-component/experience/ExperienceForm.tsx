@@ -118,7 +118,7 @@ const ExperienceForm = ({ items }: { items: TExperienceProps }) => {
     },
   };
   return (
-    <motion.div initial="initial" animate="animate" variants={variants}>
+    <> <motion.div initial="initial" animate="animate" variants={variants}>
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col gap-y-2 mt-4 ease-in-out"
@@ -259,8 +259,11 @@ const ExperienceForm = ({ items }: { items: TExperienceProps }) => {
           Add
         </button>
       </form>
-      <ToastContainer autoClose={1600} />
+     
     </motion.div>
+   
+    </>
+   
   );
 };
 

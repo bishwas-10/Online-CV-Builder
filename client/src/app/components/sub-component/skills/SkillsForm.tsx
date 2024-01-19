@@ -130,7 +130,6 @@ const SkillsForm = ({ items }: { items: TSkillProps }) => {
           Add
         </button>
       </form>
-      <ToastContainer autoClose={1600} />
     </motion.div>
   );
 };
