@@ -22,6 +22,7 @@ export const experienceSchema = z
     startDate: z.string({ required_error: "start date is required" }),
     endDate: z.string({ required_error: "end date required" }),
     city: z.string({ required_error: "city is required" }),
+    company: z.string({ required_error: "company is required" }),
     description: z.string(),
     visibility: z.boolean().default(false),
   })
@@ -78,7 +79,7 @@ const ExperienceForm = ({ items }: { items: TExperienceProps }) => {
         startDate: data.startDate,
         endDate: data.endDate,
         city: data.city,
-        company: "bishwas",
+        company: data.company,
         employer: data.employer,
         resumeId: resumeId,
       },
@@ -151,6 +152,18 @@ const ExperienceForm = ({ items }: { items: TExperienceProps }) => {
               <p className="text-red-500">{`${errors.jobTitle.message}`}</p>
             )}
           </div>
+        </div>
+        <div className="flex flex-col  ">
+          <StyledLabel htmlFor="company">Company</StyledLabel>
+          <StyledInput
+            type="text"
+            id="company"
+            defaultValue={items?.company}
+            className="px-4 py-2 rounded"
+            onChange={(e) => handleInputChange("company", e.target.value)}
+            // {...register("city",{required:true})}
+          />
+          {errors.company && <p className="text-red-500">{errors.company.message}</p>}
         </div>
         <div className="flex flex-col  ">
           <StyledLabel htmlFor="city">City</StyledLabel>

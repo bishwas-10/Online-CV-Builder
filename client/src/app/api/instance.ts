@@ -1,6 +1,6 @@
 import axios from "axios";
 
-
+//https://online-cv-builder.onrender.com
 
 export const instance = axios.create({
     baseURL: "https://online-cv-builder.onrender.com/api/users",
@@ -8,4 +8,4 @@ export const instance = axios.create({
     
   });
 
-  
+ // http://localhost:4000

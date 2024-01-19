@@ -8,6 +8,7 @@ import authRouter from './routes/auth';
 import allRouter from './routes/fieldRouter/allRoute';
 const app = express();
 app.set("trust proxy", 1); // trust first proxy
+//http://localhost:3000,https://online-cv-builder.vercel.app
 app.use(cors({
     origin:'https://online-cv-builder.vercel.app',
     methods: "GET,POST, PUT, DELETE, PATCH",

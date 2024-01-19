@@ -16,6 +16,7 @@ import html2pdf from "html2pdf.js";
 import { Printer  } from "lucide-react";
 import { useReactToPrint } from "react-to-print";
 import Simple from "../template/Simple";
+import Modern from "../template/Modern";
 export interface PersonalData {
   firstName?: string;
   lastName?: string;
@@ -170,6 +171,19 @@ switch (template) {
     projectData={resumeData.project}
     
   />
+    break;
+    case "Modern":
+    selectedTemplate = <Modern
+    personalData={resumeData.personal}
+    educationData={resumeData.education}
+    experienceData={resumeData.experience}
+    achievementsData={resumeData.acheivement}
+    awardsData={resumeData.award}
+    trainingData={resumeData.training}
+    skillData={resumeData.skill}
+    projectData={resumeData.project}
+  
+  />;
     break;
   // case "Awards":
   //   selectedTemplate = <Professional />;

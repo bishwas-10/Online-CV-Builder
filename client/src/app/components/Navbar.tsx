@@ -70,7 +70,7 @@ const Navbar: React.FC = () => {
           onFocus={() => setShowDiv(true)}
           onBlur={() => setShowDiv(false)}
           onMouseLeave={() => setShowDiv(false)}
-          className={`relative flex h-full flex-row items-center gap-0.5 md:gap-1  cursor-pointer hover:text-blue-500 transition-all ${
+          className={`relative md:flex hidden  h-full flex-row items-center gap-0.5 md:gap-1  cursor-pointer hover:text-blue-500 transition-all ${
             showDiv && "text-blue-500"
           }`}
         >
@@ -116,7 +116,7 @@ const Navbar: React.FC = () => {
             </div>
           </div>
         )}
-        <span className="flex flex-row items-center hover:text-blue-500 cursor-pointer ">
+        <span className=" md:flex hidden flex-row items-center hover:text-blue-500 cursor-pointer ">
           Support
         </span>
 
