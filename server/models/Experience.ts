@@ -9,7 +9,7 @@ interface ExperienceProps{
    startDate:string;
    endDate:string;
    city:string;
-   description:string;
+   description?:string;
 }
 
 
@@ -47,7 +47,7 @@ const ExperienceSchema = new mongoose.Schema<ExperienceProps>(
     },
     description: {
       type: String,
-      required: [true, 'Please enter the description for this experience.'],
+      
     },
     city: {
       type: String,

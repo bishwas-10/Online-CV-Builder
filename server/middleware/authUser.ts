@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import jwt, { JwtPayload, VerifyErrors } from "jsonwebtoken";
+import jwt, { JwtPayload, TokenExpiredError, VerifyErrors } from "jsonwebtoken";
 import "dotenv/config";
 import createSecretToken from "../utils/secretToken";
 
@@ -47,9 +47,9 @@ const authUser =  (req: Request, res: Response, next: NextFunction) => {
         }
 
         jwt.verify(token, process.env.TOKEN_KEY as string, { complete: true }, async function(error: VerifyErrors | null, decoded: any) {
-            if (error) {
-               
+            if (error instanceof TokenExpiredError) {
                 return refresh(req, res, next);
+             
             }
             if (decoded) {
                 
