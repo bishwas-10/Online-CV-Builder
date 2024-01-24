@@ -2,7 +2,7 @@
   "name": "client",
   "version": "0.1.0",
   "private": true,
-  "proxy": "https://online-cv-builder.onrender.com",
+  "proxy": "https://online-cv-builder-s6fx.vercel.app",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
