@@ -34,7 +34,7 @@ const Modern: FC<CvProps> = ({
         </span>
       </div>
       <div className="flex flex-row w-full h-full mt-6 p-2">
-        <div className="min-w-4/12 h-full bg-gray-100 flex flex-col gap-4 pl-2">
+        <div className="min-w-4/12 px-2 h-full bg-gray-100 flex flex-col gap-4 ">
           <Title classes="mt-4">contact</Title>
 
           <div className="flex flex-col gap-2 text-gray-800">

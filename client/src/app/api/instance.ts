@@ -7,5 +7,5 @@ export const instance = axios.create({
     withCredentials: true,
     
   });
-//https://online-cv-builder-s6fx.vercel.app/
+
  // http://localhost:4000
