@@ -47,8 +47,13 @@ const authUser =  (req: Request, res: Response, next: NextFunction) => {
         }
 
         jwt.verify(token, process.env.TOKEN_KEY as string, { complete: true }, async function(error: VerifyErrors | null, decoded: any) {
-            if (error instanceof TokenExpiredError) {
-                return refresh(req, res, next);
+            if (error ) {
+                if( error instanceof TokenExpiredError){
+                   return refresh(req, res, next);  
+                }else{
+                    return res.status(403).send({ status: false, message: "Token invalid" }); 
+                }
+               
              
             }
             if (decoded) {
