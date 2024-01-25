@@ -24,7 +24,7 @@ export const trainingSchema = z.object({
 export type TTrainingSchema = z.infer<typeof trainingSchema>;
 const TrainingForm = ({ items }: { items: TTrainingProps }) => {
   const dispatch = useDispatch();
-  const token = useSelector((state: RootState) => state.token);
+  const token = useSelector((state: RootState) => state.token.token);
   const resumeId = useSelector(
     (state: RootState) => state.resumeToken.resumeId
   );

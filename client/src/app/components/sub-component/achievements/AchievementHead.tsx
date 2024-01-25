@@ -14,7 +14,7 @@ const AchievementHead = () => {
   const dispatch = useDispatch();
   const achieveDetails = useSelector((state: RootState) => state.resume.acheivement);
   const [showDetails, setShowDetails] = useState<boolean>(false);
-  const token = useSelector((state:RootState)=>state.token);
+  const token = useSelector((state:RootState)=>state.token.token);
   const handleTrashClick =async (items: TAcheivementProps) => {
     const delRes = await instance({
       url:`/acheivement/${items._id}`,

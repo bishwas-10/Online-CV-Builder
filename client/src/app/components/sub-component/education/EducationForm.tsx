@@ -43,7 +43,7 @@ const EducationForm = ({ items }: { items: TEducationProps }) => {
   const dispatch = useDispatch();
   const [startDate, setStartDate] = useState<string>(items?.startedAt);
   const [endDate, setEndDate] = useState<string>(items?.endedAt);
-  const token = useSelector((state:RootState)=>state.token);
+  const token = useSelector((state:RootState)=>state.token.token);
 const resumeId = useSelector((state:RootState)=>state.resumeToken.resumeId);
   const {
     register,
@@ -59,7 +59,7 @@ const resumeId = useSelector((state:RootState)=>state.resumeToken.resumeId);
   const onSubmit = async (data: TEducationSchema) => {
     // TODO: submit to servers
     // ...
-    console.log(items._id);
+  
     const eduRes = await instance({
       url:items._id ? `/education/${items._id}`:`/education`,
       method: items._id ?'PUT':'POST',

@@ -13,7 +13,7 @@ const ExperienceHead = () => {
   const dispatch = useDispatch();
   const expeDetails = useSelector((state: RootState) => state.resume.experience);
   const [showDetails, setShowDetails] = useState<boolean>(false);
-  const token = useSelector((state: RootState) => state.token);
+  const token = useSelector((state: RootState) => state.token.token);
   const handleTrashClick =async (items: TExperienceProps) => {
     const delRes = await instance({
       url:`/experience/${items._id}`,

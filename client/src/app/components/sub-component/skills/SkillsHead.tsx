@@ -12,7 +12,7 @@ const ProjectHead = () => {
   const dispatch = useDispatch();
   const skillDetails = useSelector((state: RootState) => state.resume.skill);
   const [showDetails, setShowDetails] = useState<boolean>(false);
-  const token = useSelector((state:RootState )=>state.token);
+  const token = useSelector((state:RootState )=>state.token.token);
   const handleTrashClick =async (items: TSkillProps) => {
     
     const delRes = await instance({
@@ -25,7 +25,7 @@ const ProjectHead = () => {
      
     });
      if(delRes.data.success){
-      toast.info("Skill added successfully");
+      toast.info("Skill deleted successfully");
       dispatch(deleteSingleSkills(items));
      }else{
       toast.error("error deleting skill");

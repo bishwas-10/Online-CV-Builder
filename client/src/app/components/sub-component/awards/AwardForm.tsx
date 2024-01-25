@@ -26,7 +26,7 @@ export const awardSchema = z.object({
 export type TAwardSchema = z.infer<typeof awardSchema>;
 const AwardForm = ({ items }: { items: TAwardProps }) => {
   const dispatch = useDispatch();
-  const token = useSelector((state: RootState) => state.token);
+  const token = useSelector((state: RootState) => state.token.token);
   const resumeId = useSelector(
     (state: RootState) => state.resumeToken.resumeId
   );

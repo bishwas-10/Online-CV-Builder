@@ -27,7 +27,7 @@ export const aboutSchema = z.object({
 export type TAboutSchema = z.infer<typeof aboutSchema>;
 const About = () => {
   const dispatch = useDispatch();
-  const token = useSelector((state:RootState)=>state.token);
+  const token = useSelector((state:RootState)=>state.token.token);
   const resumeId = useSelector((state:RootState)=>state.resumeToken.resumeId);
   const {
     register,

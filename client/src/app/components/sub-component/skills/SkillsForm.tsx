@@ -22,7 +22,7 @@ export const skillSchema = z
 export type TSkillSchema = z.infer<typeof skillSchema>;
 const SkillsForm = ({ items }: { items: TSkillProps }) => {
   const dispatch = useDispatch();
-  const token = useSelector((state:RootState )=>state.token);
+  const token = useSelector((state:RootState )=>state.token.token);
   const resumeId = useSelector((state:RootState)=>state.resumeToken.resumeId);
   const {
     register,

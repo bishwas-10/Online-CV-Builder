@@ -13,7 +13,7 @@ const AwardHead = () => {
   const dispatch = useDispatch();
   const awardDetails = useSelector((state: RootState) => state.resume.award);
   const [showDetails, setShowDetails] = useState<boolean>(false);
-  const token = useSelector((state: RootState) => state.token);
+  const token = useSelector((state: RootState) => state.token.token);
   const handleTrashClick = async(items: TAwardProps) => {
 
     const delRes = await instance({

@@ -21,7 +21,7 @@ export const achieveSchema = z.object({
 export type TAchieveSchema = z.infer<typeof achieveSchema>;
 const AcheivementForm = ({ items }: { items: TAcheivementProps }) => {
   const dispatch = useDispatch();
-  const token = useSelector((state:RootState)=>state.token);
+  const token = useSelector((state:RootState)=>state.token.token);
   const resumeId = useSelector((state:RootState)=>state.resumeToken.resumeId);
   //   const [jobTitle, setjobTitle] = useState<string>(items?.jobTitle);
   //   const [employer, setEmployer] = useState<string>(items?.employer);

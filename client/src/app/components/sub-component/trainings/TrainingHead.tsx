@@ -13,7 +13,7 @@ const TrainingHead = () => {
   const dispatch = useDispatch();
   const trainingDetails = useSelector((state: RootState) => state.resume.training);
   const [showDetails, setShowDetails] = useState<boolean>(false);
-  const token = useSelector((state:RootState )=>state.token);
+  const token = useSelector((state:RootState )=>state.token.token);
   const handleTrashClick =async (items: TTrainingProps) => {
     
     const delRes = await instance({

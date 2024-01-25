@@ -13,7 +13,7 @@ const ProjectHead = () => {
   const dispatch = useDispatch();
   const projectDetails = useSelector((state: RootState) => state.resume.project);
   const [showDetails, setShowDetails] = useState<boolean>(false);
-  const token = useSelector((state: RootState) => state.token);
+  const token = useSelector((state: RootState) => state.token.token);
   const handleTrashClick = async(items: TProjectProps) => {
     const delRes = await instance({
       url:`/project/${items._id}`,

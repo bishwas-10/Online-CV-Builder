@@ -12,7 +12,7 @@ const EducationHead = () => {
   const dispatch = useDispatch();
   const eduDetails = useSelector((state: RootState) => state.resume.education);
  
-  const token = useSelector((state:RootState)=>state.token);
+  const token = useSelector((state:RootState)=>state.token.token);
   const [showDetails, setShowDetails] = useState<boolean>(true);
 
   const handleTrashClick =async (items: TEducationProps) => {

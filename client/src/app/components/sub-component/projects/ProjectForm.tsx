@@ -22,7 +22,7 @@ export const projectSchema = z.object({
 export type TProjectSchema = z.infer<typeof projectSchema>;
 const ProjectForm = ({ items }: { items: TProjectProps }) => {
   const dispatch = useDispatch();
-  const token = useSelector((state:RootState)=>state.token);
+  const token = useSelector((state:RootState)=>state.token.token);
   const resumeId = useSelector((state:RootState)=>state.resumeToken.resumeId);
   const {
     register,

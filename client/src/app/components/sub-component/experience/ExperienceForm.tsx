@@ -45,7 +45,7 @@ const ExperienceForm = ({ items }: { items: TExperienceProps }) => {
   //   const [employer, setEmployer] = useState<string>(items?.employer);
   //   const [city, setCity] = useState<string>(items?.city);
   //   const [description, setDes] = useState<string>(items?.city);
-  const token = useSelector((state: RootState) => state.token);
+  const token = useSelector((state: RootState) => state.token.token);
   const resumeId = useSelector(
     (state: RootState) => state.resumeToken.resumeId
   );
