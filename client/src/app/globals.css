@@ -3,6 +3,12 @@
 @tailwind utilities;
 
 
+* {
+  cursor: inherit;
+}
+body {
+  overflow-x: hidden;
+}
 html{
     --line-color: #e5e7eb;
 }
@@ -10,7 +16,7 @@ html{
    min-height: 297mm;
    max-width: 210mm;
   }
-  
+
   img {
     height: 100%;
     width: 100%;
@@ -20,3 +26,18 @@ html{
   .clip-half {
     clip-path: polygon(0% 0%, 100% 0%, 100% 50%, 0% 50%);
   }
+
+/* For WebKit (Chrome, Safari) */
+::-webkit-scrollbar {
+  width: 12px; /* Width of the scrollbar */
+}
+
+::-webkit-scrollbar-track {
+  background-color: transparent; /* Make the track transparent */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #3498db; /* Blue color for the thumb */
+  border-radius: 6px; /* Roundness of the thumb */
+  border: 3px solid transparent; /* Add space around the thumb */
+}
