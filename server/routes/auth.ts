@@ -1,23 +1,21 @@
 import express, { Request, Response } from "express";
-import {logIn, signOut, signUp,google } from "../controller/auth";
-
-
+import { logIn, signOut, signUp, google } from "../controller/auth";
 
 const router = express.Router();
 const app = express();
 
-  /**
-   * @openapi
-   * /api/users/trying:
-   *  get:
-   *     tags:
-   *     - Healthcheck
-   *     description: Responds if the app is up and running
-   *     responses:
-   *       200:
-   *         description: App is up and running
-   */
-  router.get("/trying", (req: Request, res: Response) => res.sendStatus(200));
+/**
+ * @openapi
+ * /api/users/trying:
+ *  get:
+ *     tags:
+ *     - Healthcheck
+ *     description: Responds if the app is up and running
+ *     responses:
+ *       200:
+ *         description: App is up and running
+ */
+router.get("/trying", (req: Request, res: Response) => res.sendStatus(200));
 
 /**
  * @openapi
@@ -45,13 +43,48 @@ const app = express();
  *         description: Bad request
  */
 
-router.post('/login',logIn);
+router.post("/login", logIn);
 
-router.post('/signup',signUp);
+/**
+ * @openapi
+ * /api/users/signup:
+ *  post:
+ *      tags:
+ *      - Sign Up
+ *      summary: Endpoint to create a new user
+ *      requestBody:
+ *        required: true
+ *        content:
+ *          application/json:
+ *             schema:
+ *                $ref: '#/components/schemas/signUpUserInput'
+ *      responses:
+ *         200:
+ *           description: Success
+ *           content:
+ *             application/json:
+ *               schema:
+ *                  $ref: '#/components/schemas/signUpUserResponse'
+ *         409:
+ *           description: Conflict
+ *           content:
+ *             application/json:
+ *               schema:
+ *                 $ref: '#/components/schemas/errorResponseSchema'
+ *         500:
+ *           description: Server Error
+ *           content:
+ *             application/json:
+ *               schema:
+ *                 $ref: '#/components/schemas/errorResponseSchema'
+ *
+ */
 
-router.post('/google',google);
+router.post("/signup", signUp);
 
-router.get('/signout',signOut);
+router.post("/google", google);
+
+router.get("/signout", signOut);
 // router.get("/", authUser, getUser);
 
 export default router;
