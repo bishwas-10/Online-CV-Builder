@@ -21,19 +21,7 @@ const persistConfig ={
    storage,
    whitelist: ['users','resumeToken','token']
 }
-// export const store = configureStore({
-//    reducer:{
-//     field: fieldReducer,
-//     education: eduReducer,
-//     experience:expeReducer,
-//     projects: projectReducer,
-//     skills:skillReducer,
-//     achievements:achieveReducer,
-//     trainings:trainingReducer,
-//     awards:awardReducer,
-//     users:userReducer
-//    }
-// })
+
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 

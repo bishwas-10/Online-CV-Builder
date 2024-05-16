@@ -1,7 +1,7 @@
 
 # Online CV Builder
 
-Create a professional resume in a few minutes.
+## Create a professional resume in a few minutes.
 
 This resume builder features include a user-friendly interface , add ,delete ,edit  information easily, and robust form handling capabilities powered by zod and react form hook. Additionally, users can customize their resumes with any selected resume template, giving them the ability to personalize the appearance of their information even further. If the user wants to finish the task later or wants to edit in future , this feature is also available. All your provided data will be saved in database once you submit the form and OFCOURSE you can print it.
 
