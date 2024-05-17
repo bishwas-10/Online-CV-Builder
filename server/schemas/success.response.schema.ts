@@ -3,13 +3,12 @@
  * @openapi
  * components:
  *  schemas:
- *    errorResponseSchema:
+ *    successResponse:
  *      type: object
  *      properties:
  *         status:
  *           type: boolean
- *           default: false
+ *           default: true
  *         message:
  *           type: string
- *           default: Internal Server Error
  */

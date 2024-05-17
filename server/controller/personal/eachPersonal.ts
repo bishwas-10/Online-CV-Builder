@@ -38,7 +38,7 @@ export const eachPersonal=async(req:Request,res:Response)=>{
               },
             );
             await personal.findByIdAndDelete(id);
-            res.status(200).json({ success: true });
+            res.status(200).json({ success: true ,message:"updated successfully"});
           } catch (error) {
             res.status(400).json({ success: false, error });
           }

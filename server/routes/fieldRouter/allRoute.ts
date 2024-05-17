@@ -22,6 +22,75 @@ import { personals } from '../../controller/personal/personal';
 
 const router = express.Router();
 //personal
+
+/**
+ * @openapi
+ * /api/personal/{id}:
+ *  put:
+ *     tags:
+ *     - Personal Data
+ *     summary: Endpoint for update personal data
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The ID of the personal data
+ *     requestBody:
+ *         required: true
+ *         content:
+ *           application/json:
+ *             schema:
+ *                $ref: '#/components/schemas/personalDataInputSchema' 
+ *     responses:
+ *       200:
+ *         description: success
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                   default: true
+ *                 personal:
+ *                   $ref: '#/components/schemas/personalDataInputSchema'
+ *       400:
+ *         description: success
+ *         content:
+ *           application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/errorResponseSchema'
+ *  delete:
+ *     tags:
+ *     - Personal Data
+ *     summary: Endpoint for delete personal data
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The ID of the personal data
+ *     responses:
+ *       200:
+ *         description: success
+ *         content:
+ *           application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/successResponse'
+ *       400:
+ *         description: success
+ *         content:
+ *           application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/errorResponseSchema'
+ *       
+ *       
+ *     
+ */
+
 router.use('/personal/:id',authUser,eachPersonal);
 router.use('/personal',authUser,personals);
 //achievement
