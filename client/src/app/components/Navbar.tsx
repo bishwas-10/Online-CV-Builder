@@ -136,13 +136,13 @@ const Navbar: React.FC = () => {
               <div className="w-full absolute flex gap-2 flex-col  items-center font-normal top-9 text-black bg-gray-100 border-1 border-black  rounder-md h-max ">
                 <span
                   onClick={handleSignOut}
-                  className="w-full  text-center py-2 cursor-pointer hover:bg-gray-300 transition-all "
+                  className="w-full  text-center py-2 cursor-pointer hover:bg-gray-300 transition-all cursor-pointer"
                 >
                   Sign out
                 </span>
                 <Link
                   href="/"
-                  className="w-full text-center py-3 cursor-pointer hover:bg-gray-300 transition-all "
+                  className="w-full text-center py-3 cursor-pointer hover:bg-gray-300 transition-all cursor-pointer"
                 >
                   User Profile
                 </Link>
@@ -154,13 +154,13 @@ const Navbar: React.FC = () => {
             <div className="w-full flex flex-row items-center ">
               <Link
                 href="/signpage"
-                className="px-4 py-2  text-blue-800 hover:text-blue-500 font-medium tracking-wide transition-all"
+                className="px-4 py-2  text-blue-800 hover:text-blue-500 font-medium tracking-wide transition-all cursor-pointer"
               >
                 Log In
               </Link>
               <Link
                 href="/signpage"
-                className="px-4 py-2  bg-blue-600 rounded-md text-gray-100 hover:bg-blue-800 transition-all  font-medium  tracking-wide"
+                className="px-4 py-2  bg-blue-600 rounded-md text-gray-100 hover:bg-blue-800 transition-all  font-medium  tracking-wide cursor-pointer"
               >
                 Sign up
               </Link>
