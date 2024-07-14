@@ -95,8 +95,7 @@ const ProfessionalCV: FC<CvProps> = ({
             >
               <div className="flex flex-col py-2">
                 <span className="text-lg font-normal"> {exp.projectTitle}</span>
-                <Link href={exp.projectLink} className="text-md font-normal">
-                  {" "}
+                <Link href={exp.projectLink} target="_blank" rel="noopener noreferrer" className="text-md font-normal">
                   {exp.projectLink}
                 </Link>
 
