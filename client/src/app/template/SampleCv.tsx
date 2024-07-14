@@ -287,7 +287,7 @@ const CV: FC<CvProps> = ({
                       <Paragraph classes="text-t2-sub-heading font-medium">
                         {exp.description}
                       </Paragraph>
-                      <Link href={exp.projectLink}>{exp.projectLink}</Link>
+                      <Link href={exp.projectLink} target="_blank" rel="noopener noreferrer">{exp.projectLink}</Link>
                     </Description>
                   ))}
                 </div>
