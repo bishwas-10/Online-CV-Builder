@@ -135,7 +135,7 @@ const Simple: FC<CvProps> = ({
                     
                     {exp.projectTitle}
                   </span>
-                  <Link href={exp.projectLink}  className="text-md font-normal"> {exp.projectLink}</Link>
+                  <Link href={exp.projectLink} target="_blank" rel="noopener noreferrer"  className="text-md font-normal"> {exp.projectLink}</Link>
 
                   <span className="text-gray-700">{exp.description}</span>
                 </div>
