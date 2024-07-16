@@ -59,9 +59,11 @@ const ProfessionalCV: FC<CvProps> = ({
         })}
       </div>
       <div className="mt-8" id="education-section">
-       {!!educationData.length && <h1 className="text-lg font-medium tracking-widest w-full border-b-4 pb-2  uppercase">
-          Education
-        </h1>}
+        {!!educationData.length && (
+          <h1 className="text-lg font-medium tracking-widest w-full border-b-4 pb-2  uppercase">
+            Education
+          </h1>
+        )}
         {educationData.map((exp, index) => {
           return (
             <div
@@ -84,9 +86,11 @@ const ProfessionalCV: FC<CvProps> = ({
         })}
       </div>
       <div className="mt-8" id="project-section">
-      {!!projectData.length && <h1 className="text-lg font-medium tracking-widest w-full border-b-4 pb-2  uppercase">
-          Projects
-        </h1>} 
+        {!!projectData.length && (
+          <h1 className="text-lg font-medium tracking-widest w-full border-b-4 pb-2  uppercase">
+            Projects
+          </h1>
+        )}
         {projectData?.map((exp, index) => {
           return (
             <div
@@ -106,9 +110,11 @@ const ProfessionalCV: FC<CvProps> = ({
         })}
       </div>
       <div className="mt-8" id="acheivement-section">
-      {!!achievementsData.length &&<h1 className="text-lg font-medium tracking-widest w-full border-b-4 pb-2  uppercase">
-          Acheivements
-        </h1>} 
+        {!!achievementsData.length && (
+          <h1 className="text-lg font-medium tracking-widest w-full border-b-4 pb-2  uppercase">
+            Acheivements
+          </h1>
+        )}
         {achievementsData?.map((exp, index) => {
           return (
             <>
@@ -128,20 +134,20 @@ const ProfessionalCV: FC<CvProps> = ({
         })}
       </div>
       <div className="mt-8" id="training-section">
-      {!!trainingData.length && <h1 className="text-lg font-medium tracking-widest w-full border-b-4 pb-2  uppercase">
-          Training
-        </h1>}
+        {!!trainingData.length && (
+          <h1 className="text-lg font-medium tracking-widest w-full border-b-4 pb-2  uppercase">
+            Training
+          </h1>
+        )}
         {trainingData?.map((exp, index) => {
           return (
             <>
-             
               <div
                 key={index}
                 className="flex flex-row justify-between items-center"
               >
                 <div className="flex flex-col py-2">
                   <span className="text-lg font-normal">
-                   
                     {exp.trainingTitle}
                   </span>
                   <span className="text-gray-700">{exp.description}</span>
@@ -157,9 +163,11 @@ const ProfessionalCV: FC<CvProps> = ({
         })}
       </div>
       <div className="mt-8" id="awards-section">
-      {!!awardsData.length &&<h1 className="text-lg font-medium tracking-widest w-full border-b-4 pb-2  uppercase">
-          Awards
-        </h1>} 
+        {!!awardsData.length && (
+          <h1 className="text-lg font-medium tracking-widest w-full border-b-4 pb-2  uppercase">
+            Awards
+          </h1>
+        )}
         {awardsData?.map((exp, index) => {
           return (
             <>
@@ -184,9 +192,11 @@ const ProfessionalCV: FC<CvProps> = ({
         })}
       </div>
       <div className="mt-8" id="skills-section">
-      {!!skillData.length && <h1 className="text-lg font-medium tracking-widest w-full border-b-4 pb-2  uppercase">
-          Skills
-        </h1>} 
+        {!!skillData.length && (
+          <h1 className="text-lg font-medium tracking-widest w-full border-b-4 pb-2  uppercase">
+            Skills
+          </h1>
+        )}
         {skillData?.map((exp, index) => {
           return (
             <span key={index} className="p-1">
