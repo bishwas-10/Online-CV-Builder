@@ -1,0 +1,9 @@
+{
+  "name": "cv-front-e2e",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/cv-front-e2e/src",
+  "tags": [],
+  "implicitDependencies": ["cv-front"],
+  "// targets": "to see all targets run: nx show project cv-front-e2e --web",
+  "targets": {}
+}
