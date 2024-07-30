@@ -37,17 +37,17 @@ const SignUp = () => {
     reset,
   } = useForm<TSignUpShema>({ resolver: zodResolver(signUpSchema) });
   const onSubmit: SubmitHandler<TSignUpShema> =async (data) => {
-    const signUpRes = await userSignUp(data);
-    if(signUpRes.status){
+    const signUpRes:any = await userSignUp(data);
+    if(signUpRes?.status){
       
     
       toast.success(`signed up successfull`);
         reset();
        setTimeout(()=> dispatch(setIsSignedUp(true)), 1000)
     }else{
-      dispatch(signUpFailure(signUpRes.message));
+      dispatch(signUpFailure(signUpRes?.message));
       setIsErrorOccured(true);
-      toast.error(`${signUpRes.message}`)
+      toast.error(`${signUpRes?.message}`)
     }
   
   };
